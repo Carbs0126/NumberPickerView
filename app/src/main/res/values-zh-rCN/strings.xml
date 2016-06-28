@@ -15,9 +15,9 @@
     <string name="get_data">获取数据</string>
 
     <string-array name="test_display_1">
-        <item>《鹅》</item>
+        <item>《咏鹅》</item>
         <item>鹅鹅鹅</item>
-        <item>去项向天歌</item>
+        <item>曲项向天歌</item>
         <item>白毛浮绿水</item>
         <item>红掌拨清波</item>
     </string-array>
