@@ -4,7 +4,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-    <cn.carbswang.android.library.NumberPickerView
+    <cn.carbswang.android.numberpickerview.library.NumberPickerView
         android:id="@+id/picker"
         android:layout_width="wrap_content"
         android:layout_height="240dp"

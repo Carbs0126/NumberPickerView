@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import cn.carbswang.android.library.NumberPickerView;
+import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 
 /**
  * Created by Carbs.Wang.

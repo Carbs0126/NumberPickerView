@@ -14,7 +14,7 @@
         android:layout_marginTop="18dp"
         android:background="#08333333">
 
-        <cn.carbswang.android.library.NumberPickerView
+        <cn.carbswang.android.numberpickerview.library.NumberPickerView
             android:id="@+id/picker_hour"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -30,7 +30,7 @@
             app:npv_TextSizeSelected="20sp"
             app:npv_WrapSelectorWheel="true"/>
 
-        <cn.carbswang.android.library.NumberPickerView
+        <cn.carbswang.android.numberpickerview.library.NumberPickerView
             android:id="@+id/picker_minute"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -46,7 +46,7 @@
             app:npv_TextSizeSelected="20sp"
             app:npv_WrapSelectorWheel="true"/>
 
-        <cn.carbswang.android.library.NumberPickerView
+        <cn.carbswang.android.numberpickerview.library.NumberPickerView
             android:id="@+id/picker_half_day"
             android:layout_width="0dp"
             android:layout_height="match_parent"
