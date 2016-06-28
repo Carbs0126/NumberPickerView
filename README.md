@@ -112,11 +112,10 @@ another NumberPicker with more flexible attributes
 ```
 使用此方法时需要注意保证数据改变前后的minValue值不变。
 
-4.另，`NumberPickerView`提供了平滑滚动的方法：
-```
-    public void smoothScrollToValue(int fromValue, int toValue, boolean needRespond)
-```
-    此方法与`setValue(int)`方法相同之处是可以动态设置当前显示的item，不同之处在于此方法可以使`NumberPickerView`平滑的从滚动，即从`fromValue`值挑选最近路径滚动到`toValue`，第三个参数`needRespond`用来标识在滑动过程中是否响应`onValueChanged`回调函数。因为多个`NumberPickerView`在联动时，很可能不同的`NumberPickerView`的停止时间不同，如果在此时响应了`onValueChanged`回调，就可能再次联动，造成数据不准确，将`needRespond`置为`false`，可避免在滑动中响应回调函数。
+4.另，NumberPickerView提供了平滑滚动的方法：<br>
+    `public void smoothScrollToValue(int fromValue, int toValue, boolean needRespond)`<br>
+    
+此方法与`setValue(int)`方法相同之处是可以动态设置当前显示的item，不同之处在于此方法可以使`NumberPickerView`平滑的从滚动，即从`fromValue`值挑选最近路径滚动到`toValue`，第三个参数`needRespond`用来标识在滑动过程中是否响应`onValueChanged`回调函数。因为多个`NumberPickerView`在联动时，很可能不同的`NumberPickerView`的停止时间不同，如果在此时响应了`onValueChanged`回调，就可能再次联动，造成数据不准确，将`needRespond`置为`false`，可避免在滑动中响应回调函数。
     
 ###主要原理
 
