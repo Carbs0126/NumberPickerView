@@ -5,7 +5,11 @@ another NumberPicker with more flexible attributes
 在平时开发中会用到NumberPicker组件，但是默认风格的`NumberPicker`具有一些不灵活的属性，且定制起来比较麻烦，且缺少一些过渡动效，因此在应用开发时，一般采用自定义的控件来完成选择功能。
 ###控件截图
 
-![Example Image][1]
+![Example Image][1]<br>
+效果图
+
+![Example Image][2]<br>
+静态截图以及渐变效果
 
 ###说明
 `NumberPickerView`是一款与android原生`NumberPicker`具有类似界面以及类似功能的`View`。
@@ -48,6 +52,62 @@ another NumberPicker with more flexible attributes
     OnScrollListener
 ```
 
+###使用方法
+1.导入至工程
+```
+    compile 'cn.carbswang.android:NumberPickerView:1.0.0'
+```
+或者
+```
+    <dependency>
+      <groupId>cn.carbswang.android</groupId>
+      <artifactId>NumberPickerView</artifactId>
+      <version>1.0.0</version>
+      <type>pom</type>
+    </dependency>
+```
+2.通过布局声明NumberPickerView
+```
+    <cn.carbswang.android.library.NumberPickerView
+        android:id="@+id/picker"
+        android:layout_width="wrap_content"
+        android:layout_height="240dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="#11333333"
+        android:contentDescription="test_number_picker_view"
+        app:npv_ItemPaddingHorizental="5dp"
+        app:npv_ItemPaddingVertical="5dp"
+        app:npv_ShowCount="5"
+        app:npv_TextSizeNormal="16sp"
+        app:npv_TextSizeSelected="20sp"
+        app:npv_WrapSelectorWheel="true"/>
+
+```
+3.Java代码中使用：
+  1)若设置的数据(String[] mDisplayedValues)不会再次改变，可以使用如下方式进行设置：（与NumberPicker的设置方式一致）
+```
+        picker.setMinValue(minValue);
+        picker.setMaxValue(maxValue);
+        picker.setValue(value);
+```
+  2)若设置的数据(String[] mDisplayedValues)会改变，可以使用如下组合方式进行设置：（与NumberPicker的更改数据方式一致）
+```
+        int minValue = getMinValue();
+        int oldMaxValue = getMaxValue();
+        int oldSpan = oldMaxValue - minValue + 1;
+        int newMaxValue = display.length - 1;
+        int newSpan = newMaxValue - minValue + 1;
+        if (newSpan > oldSpan) {
+            setDisplayedValues(display);
+            setMaxValue(newMaxValue);
+        } else {
+            setMaxValue(newMaxValue);
+            setDisplayedValues(display);
+        }
+```
+    或者直接使用NumberPickerView提供的方法`refreshByNewDisplayedValues(String[] display)`，使用此方法时需要注意保证数据改变前后的minValue值不变。
+    
 ###主要原理
 
 ####1.滚动效果的产生：
@@ -83,3 +143,4 @@ email: yeah0126@yeah.net
     limitations under the License.
 
 [1]: https://github.com/Carbs0126/Screenshot/blob/master/numberpickerview.gif
+[2]: https://github.com/Carbs0126/Screenshot/blob/master/numberpickerviewall.jpg
