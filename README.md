@@ -106,10 +106,8 @@ another NumberPicker with more flexible attributes
             setDisplayedValues(display);
         }
 ```
-    或者直接使用NumberPickerView提供的方法：
-```    
-    refreshByNewDisplayedValues(String[] display)
-```
+或者直接使用NumberPickerView提供的方法：<br>
+    `refreshByNewDisplayedValues(String[] display)`<br>
 使用此方法时需要注意保证数据改变前后的minValue值不变。
 
 4.另，NumberPickerView提供了平滑滚动的方法：<br>
