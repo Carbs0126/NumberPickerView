@@ -1,0 +1,75 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/time_picker"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_marginBottom="18dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="18dp"
+        android:background="#08333333">
+
+        <cn.carbswang.android.library.NumberPickerView
+            android:id="@+id/picker_hour"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:contentDescription="picker_hour"
+            app:npv_HintText="@string/hour_hint"
+            app:npv_ItemPaddingHorizental="5dp"
+            app:npv_ItemPaddingVertical="5dp"
+            app:npv_ShowCount="3"
+            app:npv_TextArray="@array/hour_display"
+            app:npv_TextSizeNormal="16sp"
+            app:npv_TextSizeSelected="20sp"
+            app:npv_WrapSelectorWheel="true"/>
+
+        <cn.carbswang.android.library.NumberPickerView
+            android:id="@+id/picker_minute"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:contentDescription="picker_minute"
+            app:npv_HintText="@string/minute_hint"
+            app:npv_ItemPaddingHorizental="5dp"
+            app:npv_ItemPaddingVertical="5dp"
+            app:npv_ShowCount="3"
+            app:npv_TextArray="@array/minute_display"
+            app:npv_TextSizeNormal="16sp"
+            app:npv_TextSizeSelected="20sp"
+            app:npv_WrapSelectorWheel="true"/>
+
+        <cn.carbswang.android.library.NumberPickerView
+            android:id="@+id/picker_half_day"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:contentDescription="picker_half_day"
+            app:npv_ItemPaddingHorizental="5dp"
+            app:npv_ItemPaddingVertical="5dp"
+            app:npv_ShowCount="3"
+            app:npv_TextArray="@array/half_day"
+            app:npv_TextSizeNormal="16sp"
+            app:npv_TextSizeSelected="20sp"
+            app:npv_WrapSelectorWheel="false"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_get_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/time_picker"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/get_data"
+        android:textAllCaps="false"/>
+</RelativeLayout>

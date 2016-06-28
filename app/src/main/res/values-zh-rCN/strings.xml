@@ -1,0 +1,130 @@
+<resources>
+    <string name="app_name">NumberPickerView</string>
+    <string name="switch_wrap_mode">转换wrap模式</string>
+    <string name="switch_wrap_mode_true">转换wrap模式 | 当前 : true</string>
+    <string name="switch_wrap_mode_false">转换wrap模式 | 当前 : false</string>
+    <string name="content_1">设置内容一</string>
+    <string name="content_2">设置内容二</string>
+    <string name="scroll_downwards_2">向下滑动2个单元</string>
+    <string name="get_current_content">获取当前选中内容</string>
+    <string name="to_time_picker_view">TimePickerView</string>
+    <string name="activity_time_picker">TimePickerView</string>
+    <string name="picked_content_is">选中的内容是：</string>
+    <string name="hour_hint">时</string>
+    <string name="minute_hint">分</string>
+    <string name="get_data">获取数据</string>
+
+    <string-array name="test_display_1">
+        <item>《鹅》</item>
+        <item>鹅鹅鹅</item>
+        <item>去项向天歌</item>
+        <item>白毛浮绿水</item>
+        <item>红掌拨清波</item>
+    </string-array>
+
+    <string-array name="test_display_2">
+        <item>《水调头歌》</item>
+        <item>明月几时有</item>
+        <item>把酒问清天</item>
+        <item>不知天上宫阙</item>
+        <item>今夕是何年</item>
+        <item>我欲乘风归去</item>
+        <item>又恐琼楼玉宇</item>
+        <item>高处不胜寒</item>
+        <item>起舞弄清影</item>
+        <item>何似在人间</item>
+        <item>转朱阁</item>
+        <item>低绮户</item>
+        <item>照无眠</item>
+        <item>不应有恨</item>
+        <item>何事长向别时圆</item>
+        <item>人有悲欢离合</item>
+        <item>月有阴晴圆缺</item>
+        <item>此事古难全</item>
+        <item>但愿人长久</item>
+        <item>千里共婵娟</item>
+    </string-array>
+
+    <string-array name="hour_display">
+        <item>12</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+    </string-array>
+
+    <string-array name="minute_display">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+        <item>49</item>
+        <item>50</item>
+        <item>51</item>
+        <item>52</item>
+        <item>53</item>
+        <item>54</item>
+        <item>55</item>
+        <item>56</item>
+        <item>57</item>
+        <item>58</item>
+        <item>59</item>
+    </string-array>
+
+    <string-array name="half_day">
+        <item>上午</item>
+        <item>下午</item>
+    </string-array>
+</resources>
