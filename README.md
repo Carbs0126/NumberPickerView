@@ -1,0 +1,85 @@
+# NumberPickerView
+another NumberPicker with more flexible attributes
+
+##前言
+在平时开发中会用到NumberPicker组件，但是默认风格的`NumberPicker`具有一些不灵活的属性，且定制起来比较麻烦，且缺少一些过渡动效，因此在应用开发时，一般采用自定义的控件来完成选择功能。
+###控件截图
+
+![Example Image][1]
+
+###说明
+`NumberPickerView`是一款与android原生`NumberPicker`具有类似界面以及类似功能的`View`。
+主要功能同样是从多个候选项中通过上下滚动的方式选择需要的选项，但是与`NumberPicker`相比较，有几个主要不同点，下面是两者的不同之处。
+
+####原始控件特性-NumberPicker
+1. 显示窗口只能显示3个备选选项；
+2. 在fling时阻力较大，无法快速滑动；
+3. 在选中与非选中状态切换比较生硬；
+4. 批量改变选项中的内容时，没有动画效果；
+5. 动态设置wrap模式时(`setWrapSelectorWheel()`方法)，会有“暂时显示不出部分选项”的问题；
+6. 选中位置没有文字说明；
+7. 代码中不能控制选项滑动滚动到某一item；
+
+####自定义控件特性-NumberPickerView
+1. 显示窗口可以显示多个备选选项；
+2. fling时滑动速度较快，且可以设置摩擦力；
+3. 在选中与非选中的状态滑动时，具有渐变的动画效果，包括文字放大缩小以及颜色的渐变；
+4. 在批量改变选项中的内容时，可以选择是否采用友好的滑动效果；
+5. 可以动态的设置是否wrap，即，是否循环滚动；
+6. 选中位置可以添加文字说明，可控制文字字体大小颜色等；
+7. 具有在代码中动态的滑动到某一位置的功能；
+8. 支持`wrap_content`，支持item的padding
+9. 提供多种属性，优化UI效果
+10. 在滑动过程中不响应`onValueChanged()`
+11. 点击上下单元格，可以自动滑动到对应的点击对象。
+12. 兼容NumberPicker的重要方法和接口：
+```
+    兼容的方法有：
+    setOnValueChangedListener()
+    setOnScrollListener()
+    setDisplayedValues()/getDisplayedValues()
+    setWrapSelectorWheel()/getWrapSelectorWheel()
+    setMinValue()/getMinValue()
+    setMaxValue()/getMaxValue()
+    setValue()/getValue()
+    
+    兼容的内部接口有：
+    OnValueChangeListener
+    OnScrollListener
+```
+
+###主要原理
+
+####1.滚动效果的产生：
+`Scroller` + `VelocityTracker` + `onDraw(Canvas canvas)`
+
+####2.自动校准位置。
+`Handler` 刷新当前位置
+
+####3.渐变的UI效果
+渐变UI效果同样是通过计算当前滑动的坐标以及某个item与中间显示位置的差值比例，来确定此item中的字体大小以及颜色。
+
+###将NumberPicker改为NumberPickerView
+
+要替代项目中使用的NumberPicker，只需要将涉及NumberPicker的代码（如回调中传入了NumberPicker、使用了NumberPicker的内部接口）改为NumberPickerView即可。
+
+欢迎大家不吝指教。
+email: yeah0126@yeah.net
+
+## License
+
+    Copyright 2016 Carbs.Wang (IndicatorView)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+[1]: https://github.com/Carbs0126/Screenshot/blob/master/numberpickerview.gif
