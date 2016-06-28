@@ -55,20 +55,20 @@ another NumberPicker with more flexible attributes
 ###使用方法
 1.导入至工程
 ```
-    compile 'cn.carbswang.android:NumberPickerView:1.0.1'
+    compile 'cn.carbswang.android:NumberPickerView:1.0.2'
 ```
 或者
 ```
     <dependency>
       <groupId>cn.carbswang.android</groupId>
       <artifactId>NumberPickerView</artifactId>
-      <version>1.0.1</version>
+      <version>1.0.2</version>
       <type>pom</type>
     </dependency>
 ```
 2.通过布局声明NumberPickerView
 ```
-    <cn.carbswang.android.library.NumberPickerView
+    <cn.carbswang.android.numberpickerview.library.NumberPickerView
         android:id="@+id/picker"
         android:layout_width="wrap_content"
         android:layout_height="240dp"
