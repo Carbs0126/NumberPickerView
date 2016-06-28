@@ -50,7 +50,6 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 
         String[] display_2 = getResources().getStringArray(R.array.test_display_2);
         picker.refreshByNewDisplayedValues(display_2);
-
         getWrapState();
     }
 
@@ -110,7 +109,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     public void onValueChange(NumberPickerView picker, int oldVal, int newVal) {
         String[] content = picker.getDisplayedValues();
         if (content != null)
-            Toast.makeText(getApplicationContext(),
+            Toast.makeText(getApplicationContext(),"oldVal : " + oldVal + " newVal : " + newVal + "\n" +
                     getString(R.string.picked_content_is) + content[newVal - picker.getMinValue()], Toast.LENGTH_SHORT)
                     .show();
     }

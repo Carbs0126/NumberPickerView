@@ -408,6 +408,7 @@ public class NumberPickerView extends View{
         updateMaxWHOfDisplayedValues(true);
         updateNotWrapYLimit();
         updateValue();
+        mPrivPickedIndex = pickedIndex + mMinShowIndex;
         correctPositionByDefaultValue(pickedIndex, mWrapSelectorWheel && mWrapSelectorWheelCheck);
         if(needRefresh){
             mHandler.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH), 0);
@@ -433,6 +434,7 @@ public class NumberPickerView extends View{
         }
         updateContent(newDisplayedValues);
         updateMaxWHOfDisplayedValues(true);
+        mPrivPickedIndex = 0 + mMinShowIndex;
         correctPositionByDefaultValue(0, mWrapSelectorWheel && mWrapSelectorWheelCheck);
         postInvalidate();
         mHandlerLayout.sendEmptyMessage(0);
@@ -656,6 +658,7 @@ public class NumberPickerView extends View{
 
     public void setPickedIndexRelativeToMin(int pickedIndexToMin){
         if(0 <= pickedIndexToMin && pickedIndexToMin < getOneRecycleSize()){
+            mPrivPickedIndex = pickedIndexToMin + mMinShowIndex;
             correctPositionByDefaultValue(pickedIndexToMin, mWrapSelectorWheel && mWrapSelectorWheelCheck);
             postInvalidate();
         }
@@ -690,6 +693,7 @@ public class NumberPickerView extends View{
     public void setPickedIndexRelativeToRaw(int pickedIndexToRaw){
         if(mMinShowIndex > -1){
             if(mMinShowIndex <= pickedIndexToRaw && pickedIndexToRaw <= mMaxShowIndex){
+                mPrivPickedIndex = pickedIndexToRaw;
                 correctPositionByDefaultValue(pickedIndexToRaw - mMinShowIndex, mWrapSelectorWheel && mWrapSelectorWheelCheck);
                 postInvalidate();
             }
@@ -739,6 +743,7 @@ public class NumberPickerView extends View{
         mMinShowIndex = minShowIndex;
         mMaxShowIndex = maxShowIndex;
         if(needRefresh){
+            mPrivPickedIndex = 0 + mMinShowIndex;
             correctPositionByDefaultValue(0, mWrapSelectorWheel && mWrapSelectorWheelCheck);
             postInvalidate();
         }
