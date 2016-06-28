@@ -55,14 +55,14 @@ another NumberPicker with more flexible attributes
 ###使用方法
 1.导入至工程
 ```
-    compile 'cn.carbswang.android:NumberPickerView:1.0.0'
+    compile 'cn.carbswang.android:NumberPickerView:1.0.1'
 ```
 或者
 ```
     <dependency>
       <groupId>cn.carbswang.android</groupId>
       <artifactId>NumberPickerView</artifactId>
-      <version>1.0.0</version>
+      <version>1.0.1</version>
       <type>pom</type>
     </dependency>
 ```
