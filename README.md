@@ -11,6 +11,11 @@ another NumberPicker with more flexible attributes
 ![Example Image][2]<br>
 静态截图以及渐变效果
 
+![Example Image][3]<br>
+NumberPickerView的实际应用，一款可以选择公历/农历日期的View，且公农历自由切换。<br>
+截屏有些问题，使得看上去有点卡顿且divider颜色不一致，实际效果很流畅。具体项目地址可见：<br>
+https://github.com/Carbs0126/GregorianLunarCalendar
+
 ###说明
 `NumberPickerView`是一款与android原生`NumberPicker`具有类似界面以及类似功能的`View`。
 主要功能同样是从多个候选项中通过上下滚动的方式选择需要的选项，但是与`NumberPicker`相比较，有几个主要不同点，下面是两者的不同之处。
@@ -207,3 +212,4 @@ email: yeah0126@yeah.net
 
 [1]: https://github.com/Carbs0126/Screenshot/blob/master/numberpickerview.gif
 [2]: https://github.com/Carbs0126/Screenshot/blob/master/numberpickerviewall.jpg
+[3]: https://github.com/Carbs0126/Screenshot/blob/master/gregorian.gif
