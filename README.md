@@ -130,6 +130,46 @@ another NumberPicker with more flexible attributes
         });
     }
 ```    
+
+5.各项自定义属性的说明
+```
+    <declare-styleable name="NumberPickerView">
+        <attr name="npv_ShowCount" format="reference|integer" />//显示的条目个数，默认3个
+        <attr name="npv_ShowDivider" format="reference|boolean" />//是否显示两条divider，默认显示
+        <attr name="npv_DividerColor" format="reference|color" />//两条divider的颜色
+        <attr name="npv_DividerMarginLeft" format="reference|dimension" />//divider距左侧的距离
+        <attr name="npv_DividerMarginRight" format="reference|dimension" />//divider距右侧的距离
+        <attr name="npv_DividerHeight" format="reference|dimension" />//divider的高度
+        <attr name="npv_TextColorNormal" format="reference|color" />//未选中文字的颜色
+        <attr name="npv_TextColorSelected" format="reference|color" />//选中文字的颜色
+        <attr name="npv_TextColorHint" format="reference|color" />//中间偏右侧说明文字的颜色
+        <attr name="npv_TextSizeNormal" format="reference|dimension" />//未选中文字的大小
+        <attr name="npv_TextSizeSelected" format="reference|dimension" />//选中文字的大小
+        <attr name="npv_TextSizeHint" format="reference|dimension" />//说明文字的大小
+        <attr name="npv_TextArray" format="reference" />//文字内容，stringarray类型
+        <attr name="npv_MinValue" format="reference|integer" />//最小值，同setMinValue()
+        <attr name="npv_MaxValue" format="reference|integer" />//最大值，同setMaxValue()
+        <attr name="npv_WrapSelectorWheel" format="reference|boolean" />//设置是否wrap，同setWrapSelectorWheel
+        <attr name="npv_HintText" format="reference|string" />//设置说明文字
+        <attr name="npv_EmptyItemHint" format="reference|string" />//空行的显示文字，默认不显示任何文字。只在WrapSelectorWheel==false是起作用
+        <attr name="npv_MarginStartOfHint" format="reference|dimension" />//说明文字距离左侧的距离，"左侧"是指文字array最宽item的右侧
+        <attr name="npv_MarginEndOfHint" format="reference|dimension" />//说明文字距离右侧的距离
+        <attr name="npv_ItemPaddingHorizental" format="reference|dimension" />//item的水平padding，用于wrap_content模式
+        <attr name="npv_ItemPaddingVertical" format="reference|dimension" />//item的竖直padding，用于wrap_content模式
+
+//以下属性用于在wrap_content模式下，改变内容array并且又不想让控件"跳动"，那么就可以设置所有改变的内容的最大宽度
+        <!--just used to measure maxWidth for wrap_content without hint,
+            the string array will never be displayed.
+            you can set this attr if you want to keep the wraped numberpickerview
+            width unchanged when alter the content list-->
+        <attr name="npv_AlternativeTextArrayWithMeasureHint" format="reference" />//可能达到的最大宽度，包括说明文字在内，最大宽度只可能比此String的宽度更大
+        <attr name="npv_AlternativeTextArrayWithoutMeasureHint" format="reference" />//可能达到的最大宽度，不包括说明文字在内，最大宽度只可能比此String的宽度+说明文字+说明文字marginstart +说明文字marginend 更大
+        <!--the max length of hint content-->
+        <attr name="npv_AlternativeHint" format="reference|string" />//说明文字的最大宽度
+    </declare-styleable>
+
+```
+    
     
 ###主要原理
 
