@@ -1,8 +1,8 @@
 # NumberPickerView
-another NumberPicker with more flexible attributes
+another NumberPicker with more flexible attributes on Android platform 
 
 ##前言
-在平时开发中会用到NumberPicker组件，但是默认风格的`NumberPicker`具有一些不灵活的属性，且定制起来比较麻烦，且缺少一些过渡动效，因此在应用开发时，一般采用自定义的控件来完成选择功能。
+在Android项目的开发中会用到NumberPicker组件，但是默认风格的`NumberPicker`具有一些不灵活的属性，且定制起来比较麻烦，且缺少一些过渡动效，因此在应用开发时，一般采用自定义的控件来完成选择功能。
 ###控件截图
 
 ![Example Image][1]<br>
