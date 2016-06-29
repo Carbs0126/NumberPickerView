@@ -189,7 +189,9 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 
 ###将NumberPicker改为NumberPickerView
 
-要替代项目中使用的NumberPicker，只需要将涉及NumberPicker的代码（如回调中传入了NumberPicker、使用了NumberPicker的内部接口）改为NumberPickerView即可。
+要替代项目中使用的NumberPicker，只需要将涉及NumberPicker的代码（如回调中传入了NumberPicker、使用了NumberPicker的内部接口）改为NumberPickerView即可。<br>
+
+万水千山总是情，来个Star行不行？<br>
 
 欢迎大家不吝指教。
 email: yeah0126@yeah.net
