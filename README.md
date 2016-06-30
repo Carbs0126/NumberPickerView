@@ -5,8 +5,11 @@ another NumberPicker with more flexible attributes on Android platform
 在Android项目的开发中会用到NumberPicker组件，但是默认风格的`NumberPicker`具有一些不灵活的属性，且定制起来比较麻烦，且缺少一些过渡动效，因此在应用开发时，一般采用自定义的控件来完成选择功能。
 ###控件截图
 
-![Example Image][1]<br>
-效果图
+![Example Image][4]<br>
+效果图1
+
+![Example Image][5]<br>
+效果图2
 
 ![Example Image][2]<br>
 静态截图以及渐变效果
@@ -215,3 +218,5 @@ email: yeah0126@yeah.net
 [1]: https://github.com/Carbs0126/Screenshot/blob/master/numberpickerview.gif
 [2]: https://github.com/Carbs0126/Screenshot/blob/master/numberpickerviewall.jpg
 [3]: https://github.com/Carbs0126/Screenshot/blob/master/gregorian.gif
+[4]: https://github.com/Carbs0126/Screenshot/blob/master/numberpickerview_refine1.gif
+[5]: https://github.com/Carbs0126/Screenshot/blob/master/numberpickerview_refine2.gif
