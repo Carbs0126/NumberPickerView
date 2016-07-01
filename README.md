@@ -217,6 +217,6 @@ email: yeah0126@yeah.net
 
 [1]: https://github.com/Carbs0126/Screenshot/blob/master/numberpickerview.gif
 [2]: https://github.com/Carbs0126/Screenshot/blob/master/numberpickerviewall.jpg
-[3]: https://github.com/Carbs0126/Screenshot/blob/master/gregorian.gif
+[3]: https://github.com/Carbs0126/Screenshot/blob/master/gregorian_refine.gif
 [4]: https://github.com/Carbs0126/Screenshot/blob/master/numberpickerview_refine1.gif
 [5]: https://github.com/Carbs0126/Screenshot/blob/master/numberpickerview_refine2.gif
