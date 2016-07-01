@@ -201,7 +201,7 @@ email: yeah0126@yeah.net
 
 ## License
 
-    Copyright 2016 Carbs.Wang (IndicatorView)
+    Copyright 2016 Carbs.Wang (NumberPickerView)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
