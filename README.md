@@ -1,10 +1,12 @@
 # NumberPickerView
-another NumberPicker with more flexible attributes on Android platform 
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-NumberPickerView-green.svg?style=true)](https://android-arsenal.com/details/1/3817)
+#####Another NumberPicker with more flexible attributes on Android platform 
 
 ##前言
 在Android项目的开发中会用到NumberPicker组件，但是默认风格的`NumberPicker`具有一些不灵活的属性，且定制起来比较麻烦，且缺少一些过渡动效，因此在应用开发时，一般采用自定义的控件来完成选择功能。
-###控件截图
 
+###控件截图
+====
 ![Example Image][4]<br>
 效果图1
 
@@ -20,6 +22,7 @@ NumberPickerView的实际应用，一款可以选择公历/农历日期的View�
 https://github.com/Carbs0126/GregorianLunarCalendar
 
 ###说明
+====
 `NumberPickerView`是一款与android原生`NumberPicker`具有类似界面以及类似功能的`View`。
 主要功能同样是从多个候选项中通过上下滚动的方式选择需要的选项，但是与`NumberPicker`相比较，有几个主要不同点，下面是两者的不同之处。
 
@@ -61,6 +64,7 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ```
 
 ###使用方法
+====
 1.导入至工程
 ```
     compile 'cn.carbswang.android:NumberPickerView:1.0.2'
@@ -180,7 +184,7 @@ https://github.com/Carbs0126/GregorianLunarCalendar
     
     
 ###主要原理
-
+====
 ####1.滚动效果的产生：
 `Scroller` + `VelocityTracker` + `onDraw(Canvas canvas)`
 
@@ -190,8 +194,9 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ####3.渐变的UI效果
 渐变UI效果同样是通过计算当前滑动的坐标以及某个item与中间显示位置的差值比例，来确定此item中的字体大小以及颜色。
 
-###将NumberPicker改为NumberPickerView
 
+###将NumberPicker改为NumberPickerView
+====
 要替代项目中使用的NumberPicker，只需要将涉及NumberPicker的代码（如回调中传入了NumberPicker、使用了NumberPicker的内部接口）改为NumberPickerView即可。<br>
 
 万水千山总是情，来个Star行不行？<br>
