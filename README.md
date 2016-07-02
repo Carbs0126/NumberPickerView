@@ -2,6 +2,8 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-NumberPickerView-green.svg?style=true)](https://android-arsenal.com/details/1/3817)
 #####Another NumberPicker with more flexible attributes on Android platform 
 
+[English] [6]
+
 ##前言
 在Android项目的开发中会用到NumberPicker组件，但是默认风格的`NumberPicker`具有一些不灵活的属性，且定制起来比较麻烦，且缺少一些过渡动效，因此在应用开发时，一般采用自定义的控件来完成选择功能。
 
@@ -225,3 +227,4 @@ email: yeah0126@yeah.net
 [3]: https://github.com/Carbs0126/Screenshot/blob/master/gregorian_refine.gif
 [4]: https://github.com/Carbs0126/Screenshot/blob/master/numberpickerview_refine1.gif
 [5]: https://github.com/Carbs0126/Screenshot/blob/master/numberpickerview_refine2.gif
+[6]: https://github.com/Carbs0126/NumberPickerView/blob/master/README_English.md
