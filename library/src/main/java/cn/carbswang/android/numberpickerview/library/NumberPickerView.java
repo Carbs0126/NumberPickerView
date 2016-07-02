@@ -19,6 +19,7 @@ import android.view.ViewConfiguration;
 /**
  * Created by Carbs.Wang.
  * email : yeah0126@yeah.net
+ * github : https://github.com/Carbs0126/NumberPickerView
  */
 public class NumberPickerView extends View{
 
@@ -126,7 +127,7 @@ public class NumberPickerView extends View{
     private boolean mPendingWrapToLinear = false;
 
     private ScrollerCompat mScroller;
-    private VelocityTracker mVelocityTracker = null;
+    private VelocityTracker mVelocityTracker;
 
     private Paint mPaintDivider = new Paint();
     private Paint mPaintText = new Paint();
