@@ -180,6 +180,7 @@ and you'd better not use this method in `onCreate(Bundle savedInstanceState)`, i
 
 ```
 
+<br>
 
 ### Mechanisms
 ====
@@ -190,13 +191,11 @@ and you'd better not use this method in `onCreate(Bundle savedInstanceState)`, i
 `Handler` refresh current position
 
 ####3.how to generate Gradient effection
-by calculating the current coordinate, get the items which should be shown and the positions of each shown items, comparing the positions and center coordinate of NumberPickerView, get the current color and size of item's text
-
+by calculating the current coordinate, get the items which should be shown and the positions of each shown items, comparing the positions and center coordinate of NumberPickerView, get the current color and size of item's text<br>
+<br>
 ### how to CHANGE NumberPicker to NumberPickerView
 ====
 just modify `NumberPicker` text into `NumberPickerView` in java code and xml, keep the methods and interfaces called by NumberPicker the same.<br>
-
-万水千山总是情，来个Star行不行？<br>
 
 enjoy
 email: yeah0126@yeah.net
