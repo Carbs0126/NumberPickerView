@@ -201,6 +201,9 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ====
 要替代项目中使用的NumberPicker，只需要将涉及NumberPicker的代码（如回调中传入了NumberPicker、使用了NumberPicker的内部接口）改为NumberPickerView即可。<br>
 
+###另
+UI设计借鉴了魅族手机多个应用的设计，在此表示感谢！
+
 万水千山总是情，来个Star行不行？<br>
 
 欢迎大家不吝指教。
