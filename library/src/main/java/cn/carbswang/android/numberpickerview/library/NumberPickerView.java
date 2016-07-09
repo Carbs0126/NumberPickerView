@@ -752,7 +752,9 @@ public class NumberPickerView extends View{
 
     /**
      * set the friction of scroller, it will effect the scroller's acceleration when fling
-     * @param friction default is ViewConfiguration.get(getContext()).getScrollFriction()
+     * @param friction default is ViewConfiguration.get(mContext).getScrollFriction()
+     *                 if setFriction(2 * ViewConfiguration.get(mContext).getScrollFriction()),
+     *                 the friction will be twice as much as before
      */
     public void setFriction(float friction){
         if(friction <= 0)
@@ -899,6 +901,7 @@ public class NumberPickerView extends View{
                 downY = currY;
                 downYGlobal = mCurrDrawGlobalY;
                 onScrollStateChange(OnScrollListener.SCROLL_STATE_IDLE);
+                getParent().requestDisallowInterceptTouchEvent(true);
                 break;
             case MotionEvent.ACTION_MOVE:
                 float spanY = downY - currY;

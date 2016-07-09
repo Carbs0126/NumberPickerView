@@ -31,7 +31,6 @@ public class ActivityTimePicker extends AppCompatActivity implements View.OnClic
 
         mButtonInfo = (Button)this.findViewById(R.id.button_get_info);
         mButtonInfo.setOnClickListener(this);
-
         initTime();
     }
 

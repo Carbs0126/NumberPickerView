@@ -13,6 +13,11 @@
     <string name="hour_hint">时</string>
     <string name="minute_hint">分</string>
     <string name="get_data">获取数据</string>
+    <string name="in_scroll_view">In ScrollView</string>
+    <string name="place_holder_above_2">Placeholder Button1</string>
+    <string name="place_holder_below_1">Placeholder Button2</string>
+    <string name="place_holder_below_2">Placeholder Button3</string>
+    <string name="place_holder_below_3">Placeholder Button4</string>
 
     <string-array name="test_display_1">
         <item>《咏鹅》</item>
