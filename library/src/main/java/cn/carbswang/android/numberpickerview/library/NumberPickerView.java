@@ -91,7 +91,7 @@ public class NumberPickerView extends View{
     private int mMarginStartOfHint = 0;
     private int mMarginEndOfHint = 0;
     private int mItemPaddingVertical = 0;
-    private int mItemPaddingHorizental = 0;
+    private int mItemPaddingHorizontal = 0;
     private int mDividerColor = DEFAULT_DIVIDER_COLOR;
     private int mDividerHeight = DEFAULT_DIVIDER_HEIGHT;
     private int mDividerMarginL = DEFAULT_DIVIDER_MARGIN_HORIZONTAL;
@@ -233,8 +233,8 @@ public class NumberPickerView extends View{
                 mMarginEndOfHint = a.getDimensionPixelSize(attr, dp2px(context, DEFAULT_MARGIN_END_OF_HINT_DP));
             }else if(attr == R.styleable.NumberPickerView_npv_ItemPaddingVertical){
                 mItemPaddingVertical = a.getDimensionPixelSize(attr, dp2px(context, DEFAULT_ITEM_PADDING_DP_V));
-            }else if(attr == R.styleable.NumberPickerView_npv_ItemPaddingHorizental){
-                mItemPaddingHorizental = a.getDimensionPixelSize(attr, dp2px(context, DEFAULT_ITEM_PADDING_DP_H));
+            }else if(attr == R.styleable.NumberPickerView_npv_ItemPaddingHorizontal){
+                mItemPaddingHorizontal = a.getDimensionPixelSize(attr, dp2px(context, DEFAULT_ITEM_PADDING_DP_H));
             }else if(attr == R.styleable.NumberPickerView_npv_AlternativeTextArrayWithMeasureHint){
                 mAlterTextArrayWithMeasureHint = a.getTextArray(attr);
             }else if(attr == R.styleable.NumberPickerView_npv_AlternativeTextArrayWithoutMeasureHint){
@@ -1036,7 +1036,7 @@ public class NumberPickerView extends View{
 
             int maxWidth = Math.max(mMaxWidthOfAlterArrayWithMeasureHint,
                     Math.max(mMaxWidthOfDisplayedValues, mMaxWidthOfAlterArrayWithoutMeasureHint)
-                    + 2 * (gapOfHint + Math.max(mWidthOfHintText, mWidthOfAlterHint) + marginOfHint + 2 * mItemPaddingHorizental));
+                    + 2 * (gapOfHint + Math.max(mWidthOfHintText, mWidthOfAlterHint) + marginOfHint + 2 * mItemPaddingHorizontal));
             result = this.getPaddingLeft() + this.getPaddingRight() + maxWidth;//MeasureSpec.UNSPECIFIED
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
