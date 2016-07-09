@@ -183,6 +183,7 @@ and you'd better not use this method in `onCreate(Bundle savedInstanceState)`, i
 <br>
 
 ### Version
+====
 ####1.0.3<br>
 1. fix bug : cannot scroll in ScrollView;
 
