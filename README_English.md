@@ -185,7 +185,7 @@ and you'd better not use this method in `onCreate(Bundle savedInstanceState)`, i
 ### Version
 ====
 ####1.0.3<br>
-1. fix bug : cannot scroll in ScrollView;
+1. fix bug : cannot scroll in `ScrollView`. Thanks Elektroktay's and anjiao's issues
 
 ### Mechanisms
 ====
