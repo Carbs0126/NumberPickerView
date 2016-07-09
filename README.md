@@ -184,6 +184,10 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 
 ```
     
+###版本更新
+====
+####1.0.3
+1. 修复不能够在`ScrollView`中滑动的bug，感谢anjiao以及Elektroktay的issue
     
 ###主要原理
 ====
