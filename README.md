@@ -39,7 +39,7 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 
 ####自定义控件特性-NumberPickerView
 1. 显示窗口可以显示多个备选选项；
-2. fling时滑动速度较快，且可以设置摩擦力；
+2. fling时滑动速度较快，且可以设置摩擦力，如下代码使得摩擦力为默认状态的2倍<br>`mNumberPickerView.setFriction(2 * ViewConfiguration.get(mContext).getScrollFriction());`
 3. 在选中与非选中的状态滑动时，具有渐变的动画效果，包括文字放大缩小以及颜色的渐变；
 4. 在批量改变选项中的内容时，可以选择是否采用友好的滑动效果；
 5. 可以动态的设置是否wrap，即，是否循环滚动；
