@@ -69,7 +69,7 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ====
 1.导入至工程
 ```
-    compile 'cn.carbswang.android:NumberPickerView:1.0.2'
+    compile 'cn.carbswang.android:NumberPickerView:1.0.3'
 ```
 或者
 ```
