@@ -64,7 +64,7 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ====
 1.import to project
 ```
-    compile 'cn.carbswang.android:NumberPickerView:1.0.2'
+    compile 'cn.carbswang.android:NumberPickerView:1.0.3'
 ```
 or
 ```
@@ -181,6 +181,10 @@ and you'd better not use this method in `onCreate(Bundle savedInstanceState)`, i
 ```
 
 <br>
+
+### Version
+####1.0.3<br>
+1. fix bug : cannot scroll in ScrollView;
 
 ### Mechanisms
 ====
