@@ -34,7 +34,7 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 
 #### NumberPickerView
 1. the NumberPickerView's viewport can show more than three items;
-2. can set the value of friction in xml or java code, you can pick a new value smoothly by fling;
+2. can set the value of friction in java code, you can pick a new value smoothly by fling, in java code, you can use the code below to make friction be twice as former<br> `mNumberPickerView.setFriction(2 * ViewConfiguration.get(mContext).getScrollFriction());`
 3. items' texts has animation between selected mode and normal mode, including Gradient textColor and Gradient textSize;
 4. can choose if use animation when changing displayedValues;
 5. can setWrapSelectorWheel() dynamically in java code or in xml;
