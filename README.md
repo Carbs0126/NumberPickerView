@@ -122,7 +122,7 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ```
 或者直接使用NumberPickerView提供的方法：<br>
     `refreshByNewDisplayedValues(String[] display)`<br>
-使用此方法时需要注意保证数据改变前后的minValue值不变。
+使用此方法时需要注意保证数据改变前后的minValue值不变，以及设置的display不能够为null，且长度不能够为0。
 
 4.另外，NumberPickerView提供了平滑滚动的方法：<br>
     `public void smoothScrollToValue(int fromValue, int toValue, boolean needRespond)`<br>
