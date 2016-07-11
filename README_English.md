@@ -64,14 +64,14 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ====
 1.import to project
 ```
-    compile 'cn.carbswang.android:NumberPickerView:1.0.3'
+    compile 'cn.carbswang.android:NumberPickerView:1.0.5'
 ```
 or
 ```
     <dependency>
       <groupId>cn.carbswang.android</groupId>
       <artifactId>NumberPickerView</artifactId>
-      <version>1.0.2</version>
+      <version>1.0.5</version>
       <type>pom</type>
     </dependency>
 ```
@@ -184,8 +184,15 @@ and you'd better not use this method in `onCreate(Bundle savedInstanceState)`, i
 
 ### Version
 ====
-####1.0.3<br>
-1. fix bug : cannot scroll in `ScrollView`. Thanks Elektroktay's and anjiao's issues
+####1.0.3
+1.fix bug : cannot scroll in `ScrollView`. Thanks Elektroktay's and anjiao's issues<br>
+<br>
+####1.0.4
+1.modify some attrs' name<br>
+<br>
+####1.0.5
+1.in method `onAttachToWindow()`, add code to judge if `mHandlerThread`has been `quit()`, this is to avoid of 'can not correct position when show the same Dialog(or PopupWindow) twice '<br>
+<br>
 
 ### Mechanisms
 ====
