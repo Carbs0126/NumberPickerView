@@ -117,7 +117,7 @@ or
 ```
 OR use NumberPickerView's method: <br>
     `refreshByNewDisplayedValues(String[] display)`<br>
-but make sure the minValue will NOT change before and after using this method
+but make sure the minValue will NOT change before and after using this method, and `display` should not be null, and its length should be greater than 0.
 
 4.NumberPickerView also have methods to scroll smoothly <br>
     `public void smoothScrollToValue(int fromValue, int toValue, boolean needRespond)`<br>
