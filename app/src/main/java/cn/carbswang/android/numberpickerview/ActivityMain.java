@@ -14,10 +14,11 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
  * Created by Carbs.Wang.
  */
 public class ActivityMain extends AppCompatActivity implements View.OnClickListener,
-        NumberPickerView.OnScrollListener, NumberPickerView.OnValueChangeListener {
+                    NumberPickerView.OnScrollListener, NumberPickerView.OnValueChangeListener {
 
     private static final String TAG = "picker";
 
+    private DialogNPV mDialogNPV;
     private NumberPickerView picker;
     private Button button1;
     private Button button2;
@@ -25,6 +26,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     private Button button4;
     private Button button5;
     private Button button6;
+    private Button button7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         button4 = (Button) this.findViewById(R.id.button4);
         button5 = (Button) this.findViewById(R.id.button5);
         button6 = (Button) this.findViewById(R.id.button6);
+        button7 = (Button) this.findViewById(R.id.button7);
 
         picker.setOnScrollListener(this);
         picker.setOnValueChangedListener(this);
@@ -47,6 +50,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         button4.setOnClickListener(this);
         button5.setOnClickListener(this);
         button6.setOnClickListener(this);
+        button7.setOnClickListener(this);
 
         String[] display_2 = getResources().getStringArray(R.array.test_display_2);
         picker.refreshByNewDisplayedValues(display_2);
@@ -89,6 +93,22 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
             case R.id.button6:
                 startActivity(new Intent(ActivityMain.this, ActivityTimePicker.class));
                 break;
+            case R.id.button7:
+                showNPVDialog();
+                break;
+        }
+    }
+
+    private void showNPVDialog(){
+        if(mDialogNPV == null){
+            mDialogNPV = new DialogNPV(this);
+        }
+        if(mDialogNPV.isShowing()){
+            mDialogNPV.dismiss();
+        }else {
+            mDialogNPV.setCancelable(true);
+            mDialogNPV.setCanceledOnTouchOutside(true);
+            mDialogNPV.show();
         }
     }
 

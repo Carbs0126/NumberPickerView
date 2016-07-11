@@ -278,9 +278,9 @@ public class NumberPickerView extends View{
     }
 
     private void initHandler(){
-
         mHandlerThread = new HandlerThread("HandlerThread-For-Refreshing");
         mHandlerThread.start();
+
         mHandler = new Handler(mHandlerThread.getLooper()){
             @Override
             public void handleMessage(Message msg) {
@@ -379,6 +379,14 @@ public class NumberPickerView extends View{
         updateNotWrapYLimit();
         updateDividerAttr();
         mHasInit = true;
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        if(mHandlerThread == null || !mHandlerThread.isAlive()) {
+            initHandler();
+        }
     }
 
     @Override
