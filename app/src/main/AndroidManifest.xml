@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="cn.carbswang.android.numberpickerview"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cn.carbswang.android.numberpickerview">
 
     <application
         android:allowBackup="true"
@@ -10,12 +10,14 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ActivityMain">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityTimePicker" />
+        <activity
+            android:name=".ActivityTimePicker"
+            android:label="@string/activity_time_picker" />
     </application>
 
 </manifest>
