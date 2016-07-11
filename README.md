@@ -69,14 +69,14 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ====
 1.导入至工程
 ```
-    compile 'cn.carbswang.android:NumberPickerView:1.0.3'
+    compile 'cn.carbswang.android:NumberPickerView:1.0.5'
 ```
 或者
 ```
     <dependency>
       <groupId>cn.carbswang.android</groupId>
       <artifactId>NumberPickerView</artifactId>
-      <version>1.0.2</version>
+      <version>1.0.5</version>
       <type>pom</type>
     </dependency>
 ```
@@ -187,8 +187,16 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ###版本更新
 ====
 ####1.0.3
-1. 修复不能够在`ScrollView`中滑动的bug，感谢anjiao以及Elektroktay的issue
-    
+1.修复不能够在`ScrollView`中滑动的bug，感谢anjiao以及Elektroktay的issue<br>
+<br>
+####1.0.4
+1.更改部分属性名称，更改部分注释<br>
+<br>
+####1.0.5
+1.在`onAttachToWindow()`函数中添加判断`mHandlerThread`有没有已经被`quit`掉的函数，避免在第二次进入dialog/popupWindow时无法刷新位置的问题<br>
+<br>
+
+
 ###主要原理
 ====
 ####1.滚动效果的产生：
