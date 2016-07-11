@@ -428,7 +428,7 @@ public class NumberPickerView extends View{
         }
 
         if(mMaxValue - mMinValue + 1 > newDisplayedValues.length){
-            throw new IllegalArgumentException("mMaxValue - mMinValue + 1 should not be larger than mDisplayedValues.length, now "
+            throw new IllegalArgumentException("mMaxValue - mMinValue + 1 should not be greater than mDisplayedValues.length, now "
                     + "((mMaxValue - mMinValue + 1) is " + (mMaxValue - mMinValue + 1)
                     + " newDisplayedValues.length is " + newDisplayedValues.length
                     + ", you need to set MaxValue and MinValue before setDisplayedValues(String[])");
@@ -492,7 +492,7 @@ public class NumberPickerView extends View{
 
     /**
      *
-     * @param fromValue need to set the fromValue, can larger than mMaxValue or less than mMinValue
+     * @param fromValue need to set the fromValue, can be greater than mMaxValue or less than mMinValue
      * @param toValue the value you want picker to scroll to
      * @param needRespond need Respond to the ValueChange callback When Scrolling, default is false
      */
@@ -612,7 +612,7 @@ public class NumberPickerView extends View{
             throw new NullPointerException("mDisplayedValues should not be null");
         }
         if(maxValue - mMinValue + 1 > mDisplayedValues.length){
-            throw new IllegalArgumentException("(maxValue - mMinValue + 1) should not be larger than mDisplayedValues.length now " +
+            throw new IllegalArgumentException("(maxValue - mMinValue + 1) should not be greater than mDisplayedValues.length now " +
                     " (maxValue - mMinValue + 1) is " + (maxValue - mMinValue + 1) + " and mDisplayedValues.length is " + mDisplayedValues.length);
         }
         mMaxValue = maxValue;
@@ -627,7 +627,7 @@ public class NumberPickerView extends View{
             throw new IllegalArgumentException("should not set a value less than mMinValue, value is " + value);
         }
         if(value > mMaxValue){
-            throw new IllegalArgumentException("should not set a value larger than mMaxValue, value is " + value);
+            throw new IllegalArgumentException("should not set a value greater than mMaxValue, value is " + value);
         }
         setPickedIndexRelativeToRaw(value - mMinValue);
     }
@@ -730,14 +730,14 @@ public class NumberPickerView extends View{
             if(minShowIndex < 0){
                 throw new IllegalArgumentException("minShowIndex should not be less than 0, now minShowIndex is " + minShowIndex);
             } else if(minShowIndex > mDisplayedValues.length - 1){
-                throw new IllegalArgumentException("minShowIndex should not be larger than (mDisplayedValues.length - 1), now " +
+                throw new IllegalArgumentException("minShowIndex should not be greater than (mDisplayedValues.length - 1), now " +
                         "(mDisplayedValues.length - 1) is " + (mDisplayedValues.length - 1) + " minShowIndex is " + minShowIndex);
             }
 
             if(maxShowIndex < 0){
                 throw new IllegalArgumentException("maxShowIndex should not be less than 0, now maxShowIndex is " + maxShowIndex);
             } else if(maxShowIndex > mDisplayedValues.length - 1){
-                throw new IllegalArgumentException("maxShowIndex should not be larger than (mDisplayedValues.length - 1), now " +
+                throw new IllegalArgumentException("maxShowIndex should not be greater than (mDisplayedValues.length - 1), now " +
                         "(mDisplayedValues.length - 1) is " + (mDisplayedValues.length - 1) + " maxShowIndex is " + maxShowIndex);
             }
         }
