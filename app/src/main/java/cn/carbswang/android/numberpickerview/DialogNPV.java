@@ -22,6 +22,7 @@ public class DialogNPV extends Dialog implements View.OnClickListener,
     private Context mContext;
     private Button mButtonGetInfo;
     private NumberPickerView mNumberPickerView;
+    private String[] mDisplayValues;
 
     public DialogNPV(Context context) {
         super(context, R.style.dialog);
@@ -36,11 +37,16 @@ public class DialogNPV extends Dialog implements View.OnClickListener,
         mNumberPickerView = (NumberPickerView) this.findViewById(R.id.picker);
         mNumberPickerView.setOnScrollListener(this);
         mNumberPickerView.setOnValueChangedListener(this);
-        String[] display_2 = mContext.getResources().getStringArray(R.array.test_display_2);
-        mNumberPickerView.refreshByNewDisplayedValues(display_2);
+        mDisplayValues = mContext.getResources().getStringArray(R.array.test_display_2);
+//        mNumberPickerView.refreshByNewDisplayedValues(mDisplayValues);
 
         mButtonGetInfo = (Button) this.findViewById(R.id.button_get_info);
         mButtonGetInfo.setOnClickListener(this);
+    }
+
+    // this method should be called after onCreate()
+    public void initNPV(){
+        mNumberPickerView.refreshByNewDisplayedValues(mDisplayValues);
     }
 
     @Override

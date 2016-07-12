@@ -20,6 +20,7 @@
         <attr name="npv_MinValue" format="reference|integer" />
         <attr name="npv_MaxValue" format="reference|integer" />
         <attr name="npv_WrapSelectorWheel" format="reference|boolean" />
+        <attr name="npv_RespondChangeOnDetached" format="reference|boolean" />
         <attr name="npv_HintText" format="reference|string" />
         <attr name="npv_EmptyItemHint" format="reference|string" />
         <attr name="npv_MarginStartOfHint" format="reference|dimension" />

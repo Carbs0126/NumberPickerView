@@ -109,6 +109,12 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
             mDialogNPV.setCancelable(true);
             mDialogNPV.setCanceledOnTouchOutside(true);
             mDialogNPV.show();
+            // recommend initializing data (or setting certain data) of NumberPickView
+            // every time setting up NumberPickerView,
+            // and setting attr app:npv_RespondChangeOnDetached="false" to avoid NumberPickView
+            // of responding onValueChanged callback if NumberPickerView detach from window
+            // when it is scrolling
+            mDialogNPV.initNPV();
         }
     }
 

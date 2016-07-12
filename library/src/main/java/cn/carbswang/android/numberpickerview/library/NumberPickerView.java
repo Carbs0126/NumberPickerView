@@ -108,7 +108,7 @@ public class NumberPickerView extends View{
     private int mMaxWidthOfAlterArrayWithMeasureHint = 0;
     private int mMaxWidthOfAlterArrayWithoutMeasureHint = 0;
     private int mPrivPickedIndex = 0;
-    private int mMiniVerlocityFling = 150;
+    private int mMiniVelocityFling = 150;
     private int mScaledTouchSlop = 8;
     private String mHintText;
     private String mEmptyItemHint;
@@ -125,6 +125,15 @@ public class NumberPickerView extends View{
     private boolean mWrapSelectorWheelCheck = true;//mDisplayedValues.length<=showcount时，check=false
     // if you want you set to linear mode from wrap mode when scrolling, then this value will be true.
     private boolean mPendingWrapToLinear = false;
+
+    // if this view is used in same dialog or PopupWindow more than once, and there are several
+    // NumberPickerViews linked, such as Gregorian Calendar with MonthPicker and DayPicker linked,
+    // set mRespondChangeWhenDetach true to respond onValueChanged callbacks if this view is scrolling
+    // when detach from window, but this solution is unlovely and may cause NullPointerException
+    // (even i haven't found this NullPointerException),
+    // so I highly recommend that every time setting up a reusable dialog with a NumberPickerView in it,
+    // please initialize NumberPickerView's data, and in this way, you can set mRespondChangeWhenDetach false.
+    private boolean mRespondChangeOnDetach = true;
 
     private ScrollerCompat mScroller;
     private VelocityTracker mVelocityTracker;
@@ -239,6 +248,8 @@ public class NumberPickerView extends View{
                 mAlterTextArrayWithMeasureHint = a.getTextArray(attr);
             }else if(attr == R.styleable.NumberPickerView_npv_AlternativeTextArrayWithoutMeasureHint){
                 mAlterTextArrayWithoutMeasureHint = a.getTextArray(attr);
+            }else if(attr == R.styleable.NumberPickerView_npv_RespondChangeOnDetached){
+                mRespondChangeOnDetach = a.getBoolean(attr, true);
             }
         }
         a.recycle();
@@ -246,7 +257,7 @@ public class NumberPickerView extends View{
 
     private void init(Context context){
         mScroller = ScrollerCompat.create(context);
-        mMiniVerlocityFling = ViewConfiguration.get(getContext()).getScaledMinimumFlingVelocity();
+        mMiniVelocityFling = ViewConfiguration.get(getContext()).getScaledMinimumFlingVelocity();
         mScaledTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
         if(mTextSizeNormal == 0) mTextSizeNormal = sp2px(context, DEFAULT_TEXT_SIZE_NORMAL_SP);
         if(mTextSizeSelected == 0) mTextSizeSelected = sp2px(context, DEFAULT_TEXT_SIZE_SELECTED_SP);
@@ -410,7 +421,19 @@ public class NumberPickerView extends View{
             }
             onScrollStateChange(OnScrollListener.SCROLL_STATE_IDLE);
         }
-        mPrivPickedIndex = getWillPickIndexByGlobalY(mCurrDrawGlobalY);
+        // see the comments on mRespondChangeOnDetach, if mRespondChangeOnDetach is false,
+        // please initialize NumberPickerView's data every time setting up NumberPickerView,
+        // set the demo of GregorianLunarCalendar
+        int currPickedIndex = getWillPickIndexByGlobalY(mCurrDrawGlobalY);
+        if(currPickedIndex != mPrivPickedIndex && mRespondChangeOnDetach){
+            if(mOnValueChangeListener != null) {
+                mOnValueChangeListener.onValueChange(NumberPickerView.this, mPrivPickedIndex + mMinValue, currPickedIndex + mMinValue);
+            }
+            if(mOnValueChangeListenerRaw != null){
+                mOnValueChangeListenerRaw.onValueChangeRelativeToRaw(NumberPickerView.this, mPrivPickedIndex, currPickedIndex, mDisplayedValues);
+            }
+        }
+        mPrivPickedIndex = currPickedIndex;
     }
 
     public int getOneRecycleSize(){
@@ -924,7 +947,6 @@ public class NumberPickerView extends View{
                 mFlagMayPress = true;
                 mHandler.removeMessages(HANDLER_WHAT_REFRESH);
                 stopScrolling();
-//                mScroller.forceFinished();
                 downY = currY;
                 downYGlobal = mCurrDrawGlobalY;
                 onScrollStateChange(OnScrollListener.SCROLL_STATE_IDLE);
@@ -950,7 +972,7 @@ public class NumberPickerView extends View{
                     final VelocityTracker velocityTracker = mVelocityTracker;
                     velocityTracker.computeCurrentVelocity(1000);
                     int velocityY = (int) (velocityTracker.getYVelocity() * mFriction);
-                    if (Math.abs(velocityY) > mMiniVerlocityFling) {
+                    if (Math.abs(velocityY) > mMiniVelocityFling) {
                         mScroller.fling(0, mCurrDrawGlobalY, 0, -velocityY,
                                 Integer.MIN_VALUE, Integer.MAX_VALUE, limitY(Integer.MIN_VALUE), limitY(Integer.MAX_VALUE));
                         invalidate();
@@ -1066,7 +1088,7 @@ public class NumberPickerView extends View{
 
             int maxWidth = Math.max(mMaxWidthOfAlterArrayWithMeasureHint,
                     Math.max(mMaxWidthOfDisplayedValues, mMaxWidthOfAlterArrayWithoutMeasureHint)
-                    + 2 * (gapOfHint + Math.max(mWidthOfHintText, mWidthOfAlterHint) + marginOfHint + 2 * mItemPaddingHorizontal));
+                            + 2 * (gapOfHint + Math.max(mWidthOfHintText, mWidthOfAlterHint) + marginOfHint + 2 * mItemPaddingHorizontal));
             result = this.getPaddingLeft() + this.getPaddingRight() + maxWidth;//MeasureSpec.UNSPECIFIED
             if (specMode == MeasureSpec.AT_MOST) {
                 result = Math.min(result, specSize);
