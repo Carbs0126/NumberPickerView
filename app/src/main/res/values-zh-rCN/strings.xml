@@ -14,6 +14,7 @@
     <string name="minute_hint">分</string>
     <string name="get_data">获取数据</string>
     <string name="in_scroll_view">In ScrollView</string>
+    <string name="show_in_dialog">Dialog中显示</string>
     <string name="place_holder_above_2">Placeholder Button1</string>
     <string name="place_holder_below_1">Placeholder Button2</string>
     <string name="place_holder_below_2">Placeholder Button3</string>
@@ -30,7 +31,7 @@
     <string-array name="test_display_2">
         <item>《水调歌头》</item>
         <item>明月几时有</item>
-        <item>把酒问清天</item>
+        <item>把酒问青天</item>
         <item>不知天上宫阙</item>
         <item>今夕是何年</item>
         <item>我欲乘风归去</item>

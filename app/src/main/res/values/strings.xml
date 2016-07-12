@@ -14,6 +14,7 @@
     <string name="minute_hint">M</string>
     <string name="get_data">get data</string>
     <string name="in_scroll_view">In ScrollView</string>
+    <string name="show_in_dialog">Show in Dialog</string>
     <string name="place_holder_above_2">Placeholder Button1</string>
     <string name="place_holder_below_1">Placeholder Button2</string>
     <string name="place_holder_below_2">Placeholder Button3</string>

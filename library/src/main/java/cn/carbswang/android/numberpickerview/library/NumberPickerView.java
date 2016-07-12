@@ -393,6 +393,24 @@ public class NumberPickerView extends View{
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mHandlerThread.quit();
+        //These codes are for dialog or popupwindow which will be used for more than once.
+        //Not an elegant solution, if you have any good idea, please let me know, thank you.
+        if(mItemHeight == 0) return;
+        if(!mScroller.isFinished()){
+            mScroller.abortAnimation();
+            mCurrDrawGlobalY = mScroller.getCurrY();
+            calculateFirstItemParameterByGlobalY();
+            if(mCurrDrawFirstItemY != 0){
+                if(mCurrDrawFirstItemY < (-mItemHeight/2)){
+                    mCurrDrawGlobalY = mCurrDrawGlobalY + mItemHeight + mCurrDrawFirstItemY;
+                }else{
+                    mCurrDrawGlobalY = mCurrDrawGlobalY + mCurrDrawFirstItemY;
+                }
+                calculateFirstItemParameterByGlobalY();
+            }
+            onScrollStateChange(OnScrollListener.SCROLL_STATE_IDLE);
+        }
+        mPrivPickedIndex = getWillPickIndexByGlobalY(mCurrDrawGlobalY);
     }
 
     public int getOneRecycleSize(){
@@ -906,6 +924,7 @@ public class NumberPickerView extends View{
                 mFlagMayPress = true;
                 mHandler.removeMessages(HANDLER_WHAT_REFRESH);
                 stopScrolling();
+//                mScroller.forceFinished();
                 downY = currY;
                 downYGlobal = mCurrDrawGlobalY;
                 onScrollStateChange(OnScrollListener.SCROLL_STATE_IDLE);
@@ -919,8 +938,7 @@ public class NumberPickerView extends View{
                 }else{
                     mFlagMayPress = false;
                     mCurrDrawGlobalY = limitY((int)(downYGlobal + spanY));
-                    mCurrDrawFirstItemIndex = (int)Math.floor((float)mCurrDrawGlobalY / mItemHeight);
-                    mCurrDrawFirstItemY = -(mCurrDrawGlobalY - mCurrDrawFirstItemIndex * mItemHeight);
+                    calculateFirstItemParameterByGlobalY();
                     invalidate();
                 }
                 onScrollStateChange(OnScrollListener.SCROLL_STATE_TOUCH_SCROLL);
@@ -1005,10 +1023,14 @@ public class NumberPickerView extends View{
         if(mItemHeight == 0) return;
         if (mScroller.computeScrollOffset()) {
             mCurrDrawGlobalY = mScroller.getCurrY();
-            mCurrDrawFirstItemIndex = (int)Math.floor((float)mCurrDrawGlobalY / mItemHeight);
-            mCurrDrawFirstItemY = -(mCurrDrawGlobalY - mCurrDrawFirstItemIndex * mItemHeight);
+            calculateFirstItemParameterByGlobalY();
             postInvalidate();
         }
+    }
+
+    private void calculateFirstItemParameterByGlobalY(){
+        mCurrDrawFirstItemIndex = (int)Math.floor((float)mCurrDrawGlobalY / mItemHeight);
+        mCurrDrawFirstItemY = -(mCurrDrawGlobalY - mCurrDrawFirstItemIndex * mItemHeight);
     }
 
     private void releaseVelocityTracker() {

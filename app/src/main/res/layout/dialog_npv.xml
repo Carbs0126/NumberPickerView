@@ -20,13 +20,12 @@
         app:npv_TextSizeSelected="20sp"
         app:npv_WrapSelectorWheel="true" />
 
-
     <Button
         android:id="@+id/button_get_info"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_below="@id/picker"
         android:layout_marginTop="20dp"
-        android:text="test in dialog"
+        android:text="@string/get_data"
         android:textAllCaps="false" />
 </RelativeLayout>

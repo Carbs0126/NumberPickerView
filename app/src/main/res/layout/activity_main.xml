@@ -118,7 +118,7 @@
                 android:layout_height="56dp"
                 android:layout_below="@id/button6"
                 android:layout_marginTop="2dp"
-                android:text="test in dialog"
+                android:text="@string/show_in_dialog"
                 android:textAllCaps="false" />
         </RelativeLayout>
     </ScrollView>
