@@ -69,7 +69,7 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ====
 1.导入至工程
 ```
-    compile 'cn.carbswang.android:NumberPickerView:1.0.5'
+    compile 'cn.carbswang.android:NumberPickerView:1.0.7'
 ```
 或者
 ```
@@ -164,6 +164,8 @@ https://github.com/Carbs0126/GregorianLunarCalendar
         <attr name="npv_MinValue" format="reference|integer" />//最小值，同setMinValue()
         <attr name="npv_MaxValue" format="reference|integer" />//最大值，同setMaxValue()
         <attr name="npv_WrapSelectorWheel" format="reference|boolean" />//设置是否wrap，同setWrapSelectorWheel
+        <attr name="npv_RespondChangeOnDetached" format="reference|boolean" />//在detach时如果NumberPickerView正好滑动，设置
+        //是否响应onValueChange回调，用在一个Dialog/PopupWindow被显示多次，且多次显示时记录上次滑动状态的情况。建议Dialog/PopupWindow在显示时每次都指定初始值，且将此属性置为false
         <attr name="npv_HintText" format="reference|string" />//设置说明文字
         <attr name="npv_EmptyItemHint" format="reference|string" />//空行的显示文字，默认不显示任何文字。只在WrapSelectorWheel==false是起作用
         <attr name="npv_MarginStartOfHint" format="reference|dimension" />//说明文字距离左侧的距离，"左侧"是指文字array最宽item的右侧
@@ -194,6 +196,10 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 <br>
 ####1.0.5
 1.在`onAttachToWindow()`函数中添加判断`mHandlerThread`有没有已经被`quit`掉的函数，避免在第二次进入dialog/popupWindow时无法刷新位置的问题<br>
+####1.0.6
+1.在`onDetachToWindow()`函数中添加响应判断，主要针对多次调用的Dialog/PopupWindow<br>
+####1.0.7
+1.完善在`onDetachToWindow()`函数中添加的响应判断，主要针对多次调用`Dialog/PopupWindow`，如果此时`Dialog/PopupWindow`在隐藏时，`NumberPickerView`仍然在滑动，那么需要停止滑动+可选响应`OnValueChange`回调+更改上次选中索引。添加属性`npv_RespondChangeOnDetached`作为判断是否响应onValueChange回调，主要用在多个NumberPickerView联动的场景。同时建议每次在显示`Dialog/PopupWindow`时，重新为每个NumberPickerView设定确定的值，且将`npv_RespondChangeOnDetached`属性置为false，具体可见`GregorianLunarCalendar`项目中的dialog相关用法。此次更改方式较为笨拙，如果有好的方法，还请告知，非常感谢。<br>
 <br>
 
 
