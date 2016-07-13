@@ -85,7 +85,8 @@ or
         android:layout_marginTop="20dp"
         android:background="#11333333"
         android:contentDescription="test_number_picker_view"
-        app:npv_ItemPaddingHorizental="5dp"
+        app:npv_RespondChangeOnDetached="false"
+        app:npv_ItemPaddingHorizontal="5dp"
         app:npv_ItemPaddingVertical="5dp"
         app:npv_ShowCount="5"
         app:npv_TextSizeNormal="16sp"
@@ -163,11 +164,21 @@ and you'd better not use this method in `onCreate(Bundle savedInstanceState)`, i
         <attr name="npv_EmptyItemHint" format="reference|string" />//empty item's text,only shown when WrapSelectorWheel==false or displayedValues length not large than showCount
         <attr name="npv_MarginStartOfHint" format="reference|dimension" />//distance between hint and the right side of the max wide text in displayedValues
         <attr name="npv_MarginEndOfHint" format="reference|dimension" />//distance between hint and the right side of the view
-        <attr name="npv_ItemPaddingHorizental" format="reference|dimension" />//item's horizental padding, used for wrap_content mode
+        <attr name="npv_ItemPaddingHorizontal" format="reference|dimension" />//item's horizontal padding, used for wrap_content mode
         <attr name="npv_ItemPaddingVertical" format="reference|dimension" />//item's vertical padding, used for wrap_content mode
+        <attr name="npv_RespondChangeOnDetached" format="reference|boolean" />//for reusable `Dialog/PopupWindow`. 
+        //If `Dialog/PopupWindow` is hiding meanwhile `NumberPickerView` is still scrolling, then we need it to stop scrolling 
+        //and respond (or not) `OnValueChange` callbacks and change the previous picked value. 
+        //Add a new attr `npv_RespondChangeOnDetached` as a flag to set if respondding `onValueChange` callbacks, 
+        //mainly for multi linked NumberPickerViews to correct other NumberPickerView's position or value.
+        //But I highly recommend every time showing a `Dialog/PopupWindow` please set certain data for NumberPickerView, 
+        //and set `npv_RespondChangeOnDetached` false to avoid respondding `onValueChange` callbacks. 
+        //See dialog in my `GregorianLunarCalendar` project. 
 
 
-//these attibutes are used under wrap_content mode, and if you want to change displayedValues with out making NumberPickerView changing its original position(four points of this view), then you should added these attrs to set a max width
+    //these attibutes below are used under wrap_content mode, 
+    //and if you want to change displayedValues with out making NumberPickerView changing its original position(four points of this view), 
+    //then you should added these attrs to set a max width
         <!--just used to measure maxWidth for wrap_content without hint,
             the string array will never be displayed.
             you can set this attr if you want to keep the wraped numberpickerview
@@ -192,6 +203,13 @@ and you'd better not use this method in `onCreate(Bundle savedInstanceState)`, i
 <br>
 ####1.0.5
 1.in method `onAttachToWindow()`, add code to judge if `mHandlerThread`has been `quit()`, this is to avoid of 'can not correct position when show the same Dialog(or PopupWindow) twice '<br>
+<br>
+####1.0.6
+1.add code in `onDetachToWindow()` to respond callbacks, for reusable `Dialog/PopupWindow`.<br>
+<br>
+####1.0.7
+1.refine code in `onDetachToWindow()` to respond callbacks or not, for reusable `Dialog/PopupWindow`. If `Dialog/PopupWindow` is hiding meanwhile `NumberPickerView` is still scrolling, then we need it to stop scrolling and respond (or not) `OnValueChange` callbacks and change the previous picked value. Add a new attr `npv_RespondChangeOnDetached` as a flag to set if respondding `onValueChange` callbacks, mainly for multi linked NumberPickerViews to correct other NumberPickerView's position or value.
+But I highly recommend every time showing a `Dialog/PopupWindow` please set certain data for NumberPickerView, and set `npv_RespondChangeOnDetached` false to avoid respondding `onValueChange` callbacks. See dialog in my `GregorianLunarCalendar` project. These codes are not elegant, If you have any idea, please let me know, thank you.<br>
 <br>
 
 ### Mechanisms
