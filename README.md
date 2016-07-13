@@ -76,7 +76,7 @@ https://github.com/Carbs0126/GregorianLunarCalendar
     <dependency>
       <groupId>cn.carbswang.android</groupId>
       <artifactId>NumberPickerView</artifactId>
-      <version>1.0.5</version>
+      <version>1.0.7</version>
       <type>pom</type>
     </dependency>
 ```
@@ -90,9 +90,10 @@ https://github.com/Carbs0126/GregorianLunarCalendar
         android:layout_marginTop="20dp"
         android:background="#11333333"
         android:contentDescription="test_number_picker_view"
-        app:npv_ItemPaddingHorizental="5dp"
+        app:npv_ItemPaddingHorizontal="5dp"
         app:npv_ItemPaddingVertical="5dp"
         app:npv_ShowCount="5"
+        app:npv_RespondChangeOnDetached="false"
         app:npv_TextSizeNormal="16sp"
         app:npv_TextSizeSelected="20sp"
         app:npv_WrapSelectorWheel="true"/>
@@ -164,16 +165,17 @@ https://github.com/Carbs0126/GregorianLunarCalendar
         <attr name="npv_MinValue" format="reference|integer" />//最小值，同setMinValue()
         <attr name="npv_MaxValue" format="reference|integer" />//最大值，同setMaxValue()
         <attr name="npv_WrapSelectorWheel" format="reference|boolean" />//设置是否wrap，同setWrapSelectorWheel
-        <attr name="npv_RespondChangeOnDetached" format="reference|boolean" />//在detach时如果NumberPickerView正好滑动，设置
-        //是否响应onValueChange回调，用在一个Dialog/PopupWindow被显示多次，且多次显示时记录上次滑动状态的情况。建议Dialog/PopupWindow在显示时每次都指定初始值，且将此属性置为false
         <attr name="npv_HintText" format="reference|string" />//设置说明文字
         <attr name="npv_EmptyItemHint" format="reference|string" />//空行的显示文字，默认不显示任何文字。只在WrapSelectorWheel==false是起作用
         <attr name="npv_MarginStartOfHint" format="reference|dimension" />//说明文字距离左侧的距离，"左侧"是指文字array最宽item的右侧
         <attr name="npv_MarginEndOfHint" format="reference|dimension" />//说明文字距离右侧的距离
-        <attr name="npv_ItemPaddingHorizental" format="reference|dimension" />//item的水平padding，用于wrap_content模式
+        <attr name="npv_ItemPaddingHorizontal" format="reference|dimension" />//item的水平padding，用于wrap_content模式
         <attr name="npv_ItemPaddingVertical" format="reference|dimension" />//item的竖直padding，用于wrap_content模式
+        <attr name="npv_RespondChangeOnDetached" format="reference|boolean" />//在detach时如果NumberPickerView正好滑动，设置
+        //是否响应onValueChange回调，用在一个Dialog/PopupWindow被显示多次，
+        //且多次显示时记录上次滑动状态的情况。建议Dialog/PopupWindow在显示时每次都指定初始值，且将此属性置为false
 
-//以下属性用于在wrap_content模式下，改变内容array并且又不想让控件"跳动"，那么就可以设置所有改变的内容的最大宽度
+        //以下属性用于在wrap_content模式下，改变内容array并且又不想让控件"跳动"，那么就可以设置所有改变的内容的最大宽度
         <!--just used to measure maxWidth for wrap_content without hint,
             the string array will never be displayed.
             you can set this attr if you want to keep the wraped numberpickerview
