@@ -107,7 +107,7 @@ public class NumberPickerView extends View{
     private int mMaxHeightOfDisplayedValues = 0;
     private int mMaxWidthOfAlterArrayWithMeasureHint = 0;
     private int mMaxWidthOfAlterArrayWithoutMeasureHint = 0;
-    private int mPrivPickedIndex = 0;
+    private int mPrevPickedIndex = 0;
     private int mMiniVelocityFling = 150;
     private int mScaledTouchSlop = 8;
     private String mHintText;
@@ -327,7 +327,7 @@ public class NumberPickerView extends View{
                                 //get the index which will be selected
                                 willPickIndex = getWillPickIndexByGlobalY(mCurrDrawGlobalY);
                             }
-                            mHandler.sendMessageDelayed(getMsg(HANDLER_WHAT_LISTENER_VALUE_CHANGED, mPrivPickedIndex, willPickIndex, msg.obj), duration * 2);
+                            mHandler.sendMessageDelayed(getMsg(HANDLER_WHAT_LISTENER_VALUE_CHANGED, mPrevPickedIndex, willPickIndex, msg.obj), duration * 2);
                         }
                         break;
                     case HANDLER_WHAT_LISTENER_VALUE_CHANGED:
@@ -342,7 +342,7 @@ public class NumberPickerView extends View{
                                 }
                             }
                         }
-                        mPrivPickedIndex = msg.arg2;
+                        mPrevPickedIndex = msg.arg2;
                         if(mPendingWrapToLinear){
                             mPendingWrapToLinear = false;
                             internalSetWrapToLinear();
@@ -425,15 +425,15 @@ public class NumberPickerView extends View{
         // please initialize NumberPickerView's data every time setting up NumberPickerView,
         // set the demo of GregorianLunarCalendar
         int currPickedIndex = getWillPickIndexByGlobalY(mCurrDrawGlobalY);
-        if(currPickedIndex != mPrivPickedIndex && mRespondChangeOnDetach){
+        if(currPickedIndex != mPrevPickedIndex && mRespondChangeOnDetach){
             if(mOnValueChangeListener != null) {
-                mOnValueChangeListener.onValueChange(NumberPickerView.this, mPrivPickedIndex + mMinValue, currPickedIndex + mMinValue);
+                mOnValueChangeListener.onValueChange(NumberPickerView.this, mPrevPickedIndex + mMinValue, currPickedIndex + mMinValue);
             }
             if(mOnValueChangeListenerRaw != null){
-                mOnValueChangeListenerRaw.onValueChangeRelativeToRaw(NumberPickerView.this, mPrivPickedIndex, currPickedIndex, mDisplayedValues);
+                mOnValueChangeListenerRaw.onValueChangeRelativeToRaw(NumberPickerView.this, mPrevPickedIndex, currPickedIndex, mDisplayedValues);
             }
         }
-        mPrivPickedIndex = currPickedIndex;
+        mPrevPickedIndex = currPickedIndex;
     }
 
     public int getOneRecycleSize(){
@@ -458,7 +458,7 @@ public class NumberPickerView extends View{
         updateMaxWHOfDisplayedValues(true);
         updateNotWrapYLimit();
         updateValue();
-        mPrivPickedIndex = pickedIndex + mMinShowIndex;
+        mPrevPickedIndex = pickedIndex + mMinShowIndex;
         correctPositionByDefaultValue(pickedIndex, mWrapSelectorWheel && mWrapSelectorWheelCheck);
         if(needRefresh){
             mHandler.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH), 0);
@@ -484,7 +484,7 @@ public class NumberPickerView extends View{
         }
         updateContent(newDisplayedValues);
         updateMaxWHOfDisplayedValues(true);
-        mPrivPickedIndex = 0 + mMinShowIndex;
+        mPrevPickedIndex = 0 + mMinShowIndex;
         correctPositionByDefaultValue(0, mWrapSelectorWheel && mWrapSelectorWheelCheck);
         postInvalidate();
         mHandlerLayout.sendEmptyMessage(0);
@@ -708,7 +708,7 @@ public class NumberPickerView extends View{
 
     public void setPickedIndexRelativeToMin(int pickedIndexToMin){
         if(0 <= pickedIndexToMin && pickedIndexToMin < getOneRecycleSize()){
-            mPrivPickedIndex = pickedIndexToMin + mMinShowIndex;
+            mPrevPickedIndex = pickedIndexToMin + mMinShowIndex;
             correctPositionByDefaultValue(pickedIndexToMin, mWrapSelectorWheel && mWrapSelectorWheelCheck);
             postInvalidate();
         }
@@ -743,7 +743,7 @@ public class NumberPickerView extends View{
     public void setPickedIndexRelativeToRaw(int pickedIndexToRaw){
         if(mMinShowIndex > -1){
             if(mMinShowIndex <= pickedIndexToRaw && pickedIndexToRaw <= mMaxShowIndex){
-                mPrivPickedIndex = pickedIndexToRaw;
+                mPrevPickedIndex = pickedIndexToRaw;
                 correctPositionByDefaultValue(pickedIndexToRaw - mMinShowIndex, mWrapSelectorWheel && mWrapSelectorWheelCheck);
                 postInvalidate();
             }
@@ -793,7 +793,7 @@ public class NumberPickerView extends View{
         mMinShowIndex = minShowIndex;
         mMaxShowIndex = maxShowIndex;
         if(needRefresh){
-            mPrivPickedIndex = 0 + mMinShowIndex;
+            mPrevPickedIndex = 0 + mMinShowIndex;
             correctPositionByDefaultValue(0, mWrapSelectorWheel && mWrapSelectorWheelCheck);
             postInvalidate();
         }
