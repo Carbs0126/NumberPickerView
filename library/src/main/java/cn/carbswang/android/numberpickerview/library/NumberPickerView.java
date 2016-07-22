@@ -80,6 +80,11 @@ public class NumberPickerView extends View{
     private static final int DEFAULT_MIN_SCROLL_BY_INDEX_DURATION = DEFAULT_INTERVAL_REVISE_DURATION * 1;
     private static final int DEFAULT_MAX_SCROLL_BY_INDEX_DURATION = DEFAULT_INTERVAL_REVISE_DURATION * 2;
 
+    private static final boolean DEFAULT_SHOW_DIVIDER = true;
+    private static final boolean DEFAULT_WRAP_SELECTOR_WHEEL = true;
+    private static final boolean DEFAULT_CURRENT_ITEM_INDEX_EFFECT = false;
+    private static final boolean DEFAULT_RESPOND_CHANGE_ON_DETACH = false;
+
     private int mTextColorNormal = DEFAULT_TEXT_COLOR_NORMAL;
     private int mTextColorSelected = DEFAULT_TEXT_COLOR_SELECTED;
     private int mTextColorHint = DEFAULT_TEXT_COLOR_SELECTED;
@@ -101,8 +106,10 @@ public class NumberPickerView extends View{
     private int mDividerIndex1 = 0;
     private int mMinShowIndex = -1;
     private int mMaxShowIndex = -1;
-    private int mMinValue = 0;//compat for android.widget.NumberPicker
-    private int mMaxValue = 0;//compat for android.widget.NumberPicker
+    //compat for android.widget.NumberPicker
+    private int mMinValue = 0;
+    //compat for android.widget.NumberPicker
+    private int mMaxValue = 0;
     private int mMaxWidthOfDisplayedValues = 0;
     private int mMaxHeightOfDisplayedValues = 0;
     private int mMaxWidthOfAlterArrayWithMeasureHint = 0;
@@ -113,16 +120,21 @@ public class NumberPickerView extends View{
     private String mHintText;
     private String mEmptyItemHint;
     private String mAlterHint;
-    private float mFriction = 1f;//friction used by scroller when fling
+    //friction used by scroller when fling
+    private float mFriction = 1f;
     private float mTextSizeNormalCenterYOffset = 0f;
     private float mTextSizeSelectedCenterYOffset = 0f;
     private float mTextSizeHintCenterYOffset = 0f;
-    private boolean mShowDivider = true;//true to show the two dividers
-    private boolean mWrapSelectorWheel = true;//true to wrap the displayed values
-    private boolean mCurrentItemIndexEffect = false;
-    private boolean mHasInit = false;//true if it has initialized
+    //true to show the two dividers
+    private boolean mShowDivider = DEFAULT_SHOW_DIVIDER;
+    //true to wrap the displayed values
+    private boolean mWrapSelectorWheel = DEFAULT_WRAP_SELECTOR_WHEEL;
+    //true to set to the current position, false set position to 0
+    private boolean mCurrentItemIndexEffect = DEFAULT_CURRENT_ITEM_INDEX_EFFECT;
+    //true if NumberPickerView has initialized
+    private boolean mHasInit = false;
     // if displayed values' number is less than show count, then this value will be false.
-    private boolean mWrapSelectorWheelCheck = true;//mDisplayedValues.length<=showcount时，check=false
+    private boolean mWrapSelectorWheelCheck = true;
     // if you want you set to linear mode from wrap mode when scrolling, then this value will be true.
     private boolean mPendingWrapToLinear = false;
 
@@ -133,7 +145,7 @@ public class NumberPickerView extends View{
     // (even i haven't found this NullPointerException),
     // so I highly recommend that every time setting up a reusable dialog with a NumberPickerView in it,
     // please initialize NumberPickerView's data, and in this way, you can set mRespondChangeWhenDetach false.
-    private boolean mRespondChangeOnDetach = true;
+    private boolean mRespondChangeOnDetach = DEFAULT_RESPOND_CHANGE_ON_DETACH;
 
     private ScrollerCompat mScroller;
     private VelocityTracker mVelocityTracker;
@@ -227,9 +239,9 @@ public class NumberPickerView extends View{
             }else if(attr == R.styleable.NumberPickerView_npv_MaxValue){
                 mMaxShowIndex = a.getInteger(attr, 0);
             }else if(attr == R.styleable.NumberPickerView_npv_WrapSelectorWheel){
-                mWrapSelectorWheel = a.getBoolean(attr, true);
+                mWrapSelectorWheel = a.getBoolean(attr, DEFAULT_WRAP_SELECTOR_WHEEL);
             }else if(attr == R.styleable.NumberPickerView_npv_ShowDivider){
-                mShowDivider = a.getBoolean(attr, true);
+                mShowDivider = a.getBoolean(attr, DEFAULT_SHOW_DIVIDER);
             }else if(attr == R.styleable.NumberPickerView_npv_HintText){
                 mHintText = a.getString(attr);
             }else if(attr == R.styleable.NumberPickerView_npv_AlternativeHint){
@@ -249,7 +261,7 @@ public class NumberPickerView extends View{
             }else if(attr == R.styleable.NumberPickerView_npv_AlternativeTextArrayWithoutMeasureHint){
                 mAlterTextArrayWithoutMeasureHint = a.getTextArray(attr);
             }else if(attr == R.styleable.NumberPickerView_npv_RespondChangeOnDetached){
-                mRespondChangeOnDetach = a.getBoolean(attr, true);
+                mRespondChangeOnDetach = a.getBoolean(attr, DEFAULT_RESPOND_CHANGE_ON_DETACH);
             }
         }
         a.recycle();
@@ -404,7 +416,7 @@ public class NumberPickerView extends View{
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         mHandlerThread.quit();
-        //These codes are for dialog or popupwindow which will be used for more than once.
+        //These codes are for dialog or PopupWindow which will be used for more than once.
         //Not an elegant solution, if you have any good idea, please let me know, thank you.
         if(mItemHeight == 0) return;
         if(!mScroller.isFinished()){
@@ -426,11 +438,15 @@ public class NumberPickerView extends View{
         // set the demo of GregorianLunarCalendar
         int currPickedIndex = getWillPickIndexByGlobalY(mCurrDrawGlobalY);
         if(currPickedIndex != mPrevPickedIndex && mRespondChangeOnDetach){
-            if(mOnValueChangeListener != null) {
-                mOnValueChangeListener.onValueChange(NumberPickerView.this, mPrevPickedIndex + mMinValue, currPickedIndex + mMinValue);
-            }
-            if(mOnValueChangeListenerRaw != null){
-                mOnValueChangeListenerRaw.onValueChangeRelativeToRaw(NumberPickerView.this, mPrevPickedIndex, currPickedIndex, mDisplayedValues);
+            try {
+                if (mOnValueChangeListener != null) {
+                    mOnValueChangeListener.onValueChange(NumberPickerView.this, mPrevPickedIndex + mMinValue, currPickedIndex + mMinValue);
+                }
+                if (mOnValueChangeListenerRaw != null) {
+                    mOnValueChangeListenerRaw.onValueChangeRelativeToRaw(NumberPickerView.this, mPrevPickedIndex, currPickedIndex, mDisplayedValues);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
         }
         mPrevPickedIndex = currPickedIndex;
@@ -567,7 +583,7 @@ public class NumberPickerView extends View{
 
     /**
      * simplify the "setDisplayedValue() + setMinValue() + setMaxValue()" process,
-     * default minValue is 0, and make sure you donot change the minValue.
+     * default minValue is 0, and make sure you do NOT change the minValue.
      * @param display new values to be displayed
      */
     public void refreshByNewDisplayedValues(String[] display) {
@@ -609,7 +625,7 @@ public class NumberPickerView extends View{
         int duration;
         int dy;
         if(mCurrDrawFirstItemY < (-mItemHeight/2)){
-            //scroll upwords for a distance of less than mItemHeight
+            //scroll upwards for a distance of less than mItemHeight
             dy =  mItemHeight + mCurrDrawFirstItemY;
             duration = (int)((float)DEFAULT_INTERVAL_REVISE_DURATION * (mItemHeight + mCurrDrawFirstItemY) / mItemHeight);
             if(deltaIndex < 0){
@@ -618,7 +634,7 @@ public class NumberPickerView extends View{
                 duration = duration + deltaIndex * DEFAULT_INTERVAL_REVISE_DURATION;
             }
         }else{
-            //scroll downwords for a distance of less than mItemHeight
+            //scroll downwards for a distance of less than mItemHeight
             dy = mCurrDrawFirstItemY;
             duration = (int)((float)DEFAULT_INTERVAL_REVISE_DURATION * (-mCurrDrawFirstItemY) / mItemHeight);
             if(deltaIndex < 0){
@@ -1033,11 +1049,11 @@ public class NumberPickerView extends View{
         }
     }
 
-    //first shown item's content index, correspondding to the Index of mDisplayedValued
+    //first shown item's content index, corresponding to the Index of mDisplayedValued
     private int mCurrDrawFirstItemIndex = 0;
     //the first shown item's Y
     private int mCurrDrawFirstItemY = 0;
-    //global Y conrespondding to scroller
+    //global Y corresponding to scroller
     private int mCurrDrawGlobalY = 0;
 
     @Override
@@ -1280,6 +1296,7 @@ public class NumberPickerView extends View{
     private void stopScrolling(){
         if(mScroller != null){
             if(!mScroller.isFinished()){
+                mScroller.startScroll(0, mScroller.getCurrY(), 0, 0, 1);
                 mScroller.abortAnimation();
                 postInvalidate();
             }
