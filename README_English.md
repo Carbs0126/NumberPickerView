@@ -208,8 +208,8 @@ and you'd better not use this method in `onCreate(Bundle savedInstanceState)`, i
 1.add code in `onDetachToWindow()` to respond callbacks, for reusable `Dialog/PopupWindow`.<br>
 <br>
 ####1.0.7
-1.refine code in `onDetachToWindow()` to respond callbacks or not, for reusable `Dialog/PopupWindow`. If `Dialog/PopupWindow` is hiding meanwhile `NumberPickerView` is still scrolling, then we need it to stop scrolling and respond (or not) `OnValueChange` callbacks and change the previous picked value. Add a new attr `npv_RespondChangeOnDetached` as a flag to set if respondding `onValueChange` callbacks, mainly for multi linked NumberPickerViews to correct other NumberPickerView's position or value.
-But I highly recommend every time showing a `Dialog/PopupWindow` please set certain data for NumberPickerView, and set `npv_RespondChangeOnDetached` false to avoid respondding `onValueChange` callbacks. See dialog in my `GregorianLunarCalendar` project. These codes are not elegant, If you have any idea, please let me know, thank you.<br>
+1.refine code in `onDetachToWindow()` to respond callbacks or not, for reusable `Dialog/PopupWindow`. <br>If `Dialog/PopupWindow` is hiding meanwhile `NumberPickerView` is still scrolling, then we need it to stop scrolling and respond (or not) `OnValueChange` callbacks and change the previous picked value. <br>Add a new attr `npv_RespondChangeOnDetached` as a flag to set if respondding `onValueChange` callbacks, mainly for multi linked NumberPickerViews to correct other NumberPickerView's position or value.<br>
+But I highly recommend every time showing a `Dialog/PopupWindow` please set certain data for NumberPickerView, and set `npv_RespondChangeOnDetached` false to avoid respondding `onValueChange` callbacks. See dialog in my `GregorianLunarCalendar` project. <br>These codes are not elegant, If you have any idea, please let me know, thank you.<br>
 <br>
 ####1.0.8
 1.modify method `stopScrolling`, add scroll to current Y method before `abortAnimation()` is invoked <br>
