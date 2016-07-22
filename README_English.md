@@ -64,14 +64,14 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ====
 1.import to project
 ```
-    compile 'cn.carbswang.android:NumberPickerView:1.0.5'
+    compile 'cn.carbswang.android:NumberPickerView:1.0.8'
 ```
 or
 ```
     <dependency>
       <groupId>cn.carbswang.android</groupId>
       <artifactId>NumberPickerView</artifactId>
-      <version>1.0.5</version>
+      <version>1.0.8</version>
       <type>pom</type>
     </dependency>
 ```
@@ -211,6 +211,9 @@ and you'd better not use this method in `onCreate(Bundle savedInstanceState)`, i
 1.refine code in `onDetachToWindow()` to respond callbacks or not, for reusable `Dialog/PopupWindow`. If `Dialog/PopupWindow` is hiding meanwhile `NumberPickerView` is still scrolling, then we need it to stop scrolling and respond (or not) `OnValueChange` callbacks and change the previous picked value. Add a new attr `npv_RespondChangeOnDetached` as a flag to set if respondding `onValueChange` callbacks, mainly for multi linked NumberPickerViews to correct other NumberPickerView's position or value.
 But I highly recommend every time showing a `Dialog/PopupWindow` please set certain data for NumberPickerView, and set `npv_RespondChangeOnDetached` false to avoid respondding `onValueChange` callbacks. See dialog in my `GregorianLunarCalendar` project. These codes are not elegant, If you have any idea, please let me know, thank you.<br>
 <br>
+####1.0.8
+1.modify method `stopScrolling`, add scroll to current Y method before `abortAnimation()` is invoked <br>
+2.modify `npv_RespondChangeOnDetached`'s default value to false<br>
 
 ### Mechanisms
 ====
