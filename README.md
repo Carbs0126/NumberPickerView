@@ -69,14 +69,14 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ====
 1.导入至工程
 ```
-    compile 'cn.carbswang.android:NumberPickerView:1.0.7'
+    compile 'cn.carbswang.android:NumberPickerView:1.0.8'
 ```
 或者
 ```
     <dependency>
       <groupId>cn.carbswang.android</groupId>
       <artifactId>NumberPickerView</artifactId>
-      <version>1.0.7</version>
+      <version>1.0.8</version>
       <type>pom</type>
     </dependency>
 ```
@@ -203,7 +203,9 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ####1.0.7
 1.完善在`onDetachToWindow()`函数中添加的响应判断，主要针对多次调用`Dialog/PopupWindow`，如果此时`Dialog/PopupWindow`在隐藏时，`NumberPickerView`仍然在滑动，那么需要停止滑动+可选响应`OnValueChange`回调+更改上次选中索引。添加属性`npv_RespondChangeOnDetached`作为判断是否响应onValueChange回调，主要用在多个NumberPickerView联动的场景。同时建议每次在显示`Dialog/PopupWindow`时，重新为每个NumberPickerView设定确定的值，且将`npv_RespondChangeOnDetached`属性置为false，具体可见`GregorianLunarCalendar`项目中的dialog相关用法。此次更改方式较为笨拙，如果有好的方法，还请告知，非常感谢。<br>
 <br>
-
+####1.0.8
+1.更改`stopScrolling`方法，在`abortAnimation()`之前添加滚动到当前坐标的代码<br>
+2.更改`npv_RespondChangeOnDetached`的默认值为false<br>
 
 ###主要原理
 ====
