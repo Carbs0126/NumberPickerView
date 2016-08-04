@@ -487,6 +487,7 @@ public class NumberPickerView extends View{
     }
 
     public void setDisplayedValues(String[] newDisplayedValues){
+        stopRefreshing();
         stopScrolling();
         if(newDisplayedValues == null){
             throw new IllegalArgumentException("newDisplayedValues should not be null.");
@@ -1046,6 +1047,7 @@ public class NumberPickerView extends View{
             mCurrentItemIndexEffect = true;
         }else {
             mCurrDrawGlobalY = mCurrDrawFirstItemIndex * mItemHeight;
+            calculateFirstItemParameterByGlobalY();
         }
     }
 
@@ -1290,6 +1292,12 @@ public class NumberPickerView extends View{
                 value = minValue;
             }
             return value;
+        }
+    }
+
+    private void stopRefreshing(){
+        if (mHandler != null){
+            mHandler.removeMessages(HANDLER_WHAT_REFRESH);
         }
     }
 
