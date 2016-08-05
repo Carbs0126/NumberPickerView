@@ -49,8 +49,9 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 9. 提供多种属性，优化UI效果
 10. 在滑动过程中不响应`onValueChanged()`
 11. 点击上下单元格，可以自动滑动到对应的点击对象。
-12. 兼容NumberPicker的重要方法和接口：
-```
+12. 可通过属性设置`onValueChanged`等回调接口的执行线程。
+13. 兼容NumberPicker的重要方法和接口：
+```java
     兼容的方法有：
     setOnValueChangedListener()
     setOnScrollListener()
@@ -68,20 +69,20 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ###使用方法
 ====
 1.导入至工程
-```
-    compile 'cn.carbswang.android:NumberPickerView:1.0.8'
+```groovy
+    compile 'cn.carbswang.android:NumberPickerView:1.0.9'
 ```
 或者
-```
+```xml
     <dependency>
       <groupId>cn.carbswang.android</groupId>
       <artifactId>NumberPickerView</artifactId>
-      <version>1.0.8</version>
+      <version>1.0.9</version>
       <type>pom</type>
     </dependency>
 ```
 2.通过布局声明NumberPickerView
-```
+```xml
     <cn.carbswang.android.numberpickerview.library.NumberPickerView
         android:id="@+id/picker"
         android:layout_width="wrap_content"
@@ -101,13 +102,13 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ```
 3.Java代码中使用：
   1)若设置的数据(String[] mDisplayedValues)不会再次改变，可以使用如下方式进行设置：（与NumberPicker的设置方式一致）
-```
+```java
         picker.setMinValue(minValue);
         picker.setMaxValue(maxValue);
         picker.setValue(value);
 ```
   2)若设置的数据(String[] mDisplayedValues)会改变，可以使用如下组合方式进行设置：（与NumberPicker的更改数据方式一致）
-```
+```java
         int minValue = getMinValue();
         int oldMaxValue = getMaxValue();
         int oldSpan = oldMaxValue - minValue + 1;
@@ -132,7 +133,7 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 
 另外，在使用此方法或者间接调用此方法时，需要注意最好不要在`onCreate(Bundle savedInstanceState)`方法中调用，因为scroll动画需要一定时间，如需确要在`onCreate(Bundle savedInstanceState)`中调用，请使用如下方式：
 
-```    
+```xml    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,7 +148,7 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ```    
 
 5.各项自定义属性的说明
-```
+```xml
     <declare-styleable name="NumberPickerView">
         <attr name="npv_ShowCount" format="reference|integer" />//显示的条目个数，默认3个
         <attr name="npv_ShowDivider" format="reference|boolean" />//是否显示两条divider，默认显示
@@ -174,6 +175,8 @@ https://github.com/Carbs0126/GregorianLunarCalendar
         <attr name="npv_RespondChangeOnDetached" format="reference|boolean" />//在detach时如果NumberPickerView正好滑动，设置
         //是否响应onValueChange回调，用在一个Dialog/PopupWindow被显示多次，
         //且多次显示时记录上次滑动状态的情况。建议Dialog/PopupWindow在显示时每次都指定初始值，且将此属性置为false
+        <attr name="npv_RespondChangeInMainThread" format="reference|boolean" />//指定`onValueChanged`响应事件在什么线程中执行。
+        //默认为`true`，即在主线程中执行。如果设置为`false`则在子线程中执行。
 
         //以下属性用于在wrap_content模式下，改变内容array并且又不想让控件"跳动"，那么就可以设置所有改变的内容的最大宽度
         <!--just used to measure maxWidth for wrap_content without hint,
@@ -206,7 +209,12 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ####1.0.8
 1.更改`stopScrolling`方法，在`abortAnimation()`之前添加滚动到当前坐标的代码<br>
 2.更改`npv_RespondChangeOnDetached`的默认值为false<br>
-
+<br>
+####1.0.9
+1.添加属性`app:npv_RespondChangeInMainThread="true"`，指定`onValueChanged`响应事件在什么线程中执行。默认为`true`，即在主线程中执行。如果设置为`false`则在子线程中执行。<br>
+2.更新`TimePickerActivity`示例，以说明属性`app:npv_RespondChangeInMainThread="true"`的用法。<br>
+3.修复bug: 在更新内容时，如果滑动没有停止，那么新的内容显示出来后，滚动的位置不正确的bug。<br>
+<br>
 ###主要原理
 ====
 ####1.滚动效果的产生：
@@ -224,7 +232,7 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 要替代项目中使用的NumberPicker，只需要将涉及NumberPicker的代码（如回调中传入了NumberPicker、使用了NumberPicker的内部接口）改为NumberPickerView即可。<br>
 
 ###另
-UI设计借鉴了meizu的多个应用的设计。感谢google和meizu
+UI设计借鉴了meizu的多个应用的设计。感谢google的android平台以及meizu的设计。
 
 万水千山总是情，来个Star行不行？<br>
 
