@@ -61,6 +61,7 @@
                         app:npv_HintText="@string/hour_hint"
                         app:npv_ItemPaddingHorizontal="5dp"
                         app:npv_ItemPaddingVertical="5dp"
+                        app:npv_RespondChangeInMainThread="false"
                         app:npv_ShowCount="3"
                         app:npv_TextArray="@array/hour_display"
                         app:npv_TextSizeNormal="16sp"
@@ -119,6 +120,7 @@
                 android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/show_info_button"
                     android:layout_width="match_parent"
                     android:layout_height="128dp"
                     android:layout_marginTop="10dp"

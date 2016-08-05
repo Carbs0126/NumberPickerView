@@ -70,6 +70,9 @@ public class NumberPickerView extends View{
     // message's what argument to respond value changed event, used by mHandler
     private static final int HANDLER_WHAT_LISTENER_VALUE_CHANGED = 2;
 
+    // message's what argument to request layout, used by mHandlerInMainThread
+    private static final int HANDLER_WHAT_REQUEST_LAYOUT = 3;
+
     // interval time to scroll the distance of one item's height
     private static final int HANDLER_INTERVAL_REFRESH = 30;//millisecond
 
@@ -84,6 +87,7 @@ public class NumberPickerView extends View{
     private static final boolean DEFAULT_WRAP_SELECTOR_WHEEL = true;
     private static final boolean DEFAULT_CURRENT_ITEM_INDEX_EFFECT = false;
     private static final boolean DEFAULT_RESPOND_CHANGE_ON_DETACH = false;
+    private static final boolean DEFAULT_RESPOND_CHANGE_IN_MAIN_THREAD = true;
 
     private int mTextColorNormal = DEFAULT_TEXT_COLOR_NORMAL;
     private int mTextColorSelected = DEFAULT_TEXT_COLOR_SELECTED;
@@ -147,6 +151,11 @@ public class NumberPickerView extends View{
     // please initialize NumberPickerView's data, and in this way, you can set mRespondChangeWhenDetach false.
     private boolean mRespondChangeOnDetach = DEFAULT_RESPOND_CHANGE_ON_DETACH;
 
+    // this is to set which thread to respond onChange... listeners including
+    // OnValueChangeListener, OnValueChangeListenerRelativeToRaw and OnScrollListener when view is
+    // scrolling or starts to scroll or stops scrolling.
+    private boolean mRespondChangeInMainThread = DEFAULT_RESPOND_CHANGE_IN_MAIN_THREAD;
+
     private ScrollerCompat mScroller;
     private VelocityTracker mVelocityTracker;
 
@@ -159,8 +168,8 @@ public class NumberPickerView extends View{
     private CharSequence[] mAlterTextArrayWithoutMeasureHint;
 
     private HandlerThread mHandlerThread;
-    private Handler mHandler;
-    private Handler mHandlerLayout;
+    private Handler mHandlerInNewThread;
+    private Handler mHandlerInMainThread;
 
     // compatible for NumberPicker
     public interface OnValueChangeListener{
@@ -262,6 +271,8 @@ public class NumberPickerView extends View{
                 mAlterTextArrayWithoutMeasureHint = a.getTextArray(attr);
             }else if(attr == R.styleable.NumberPickerView_npv_RespondChangeOnDetached){
                 mRespondChangeOnDetach = a.getBoolean(attr, DEFAULT_RESPOND_CHANGE_ON_DETACH);
+            }else if(attr == R.styleable.NumberPickerView_npv_RespondChangeInMainThread){
+                mRespondChangeInMainThread = a.getBoolean(attr, DEFAULT_RESPOND_CHANGE_IN_MAIN_THREAD);
             }
         }
         a.recycle();
@@ -304,7 +315,7 @@ public class NumberPickerView extends View{
         mHandlerThread = new HandlerThread("HandlerThread-For-Refreshing");
         mHandlerThread.start();
 
-        mHandler = new Handler(mHandlerThread.getLooper()){
+        mHandlerInNewThread = new Handler(mHandlerThread.getLooper()){
             @Override
             public void handleMessage(Message msg) {
                 switch(msg.what){
@@ -313,7 +324,7 @@ public class NumberPickerView extends View{
                             if(mScrollState == OnScrollListener.SCROLL_STATE_IDLE){
                                 onScrollStateChange(OnScrollListener.SCROLL_STATE_TOUCH_SCROLL);
                             }
-                            mHandler.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH, 0, 0, msg.obj), HANDLER_INTERVAL_REFRESH);
+                            mHandlerInNewThread.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH, 0, 0, msg.obj), HANDLER_INTERVAL_REFRESH);
                         }else{
                             int duration = 0;
                             int willPickIndex;
@@ -339,35 +350,32 @@ public class NumberPickerView extends View{
                                 //get the index which will be selected
                                 willPickIndex = getWillPickIndexByGlobalY(mCurrDrawGlobalY);
                             }
-                            mHandler.sendMessageDelayed(getMsg(HANDLER_WHAT_LISTENER_VALUE_CHANGED, mPrevPickedIndex, willPickIndex, msg.obj), duration * 2);
+                            Message changeMsg = getMsg(HANDLER_WHAT_LISTENER_VALUE_CHANGED, mPrevPickedIndex, willPickIndex, msg.obj);
+                            if(mRespondChangeInMainThread){
+                                mHandlerInMainThread.sendMessageDelayed(changeMsg, duration * 2);
+                            }else{
+                                mHandlerInNewThread.sendMessageDelayed(changeMsg, duration * 2);
+                            }
                         }
                         break;
                     case HANDLER_WHAT_LISTENER_VALUE_CHANGED:
-                        onScrollStateChange(OnScrollListener.SCROLL_STATE_IDLE);
-                        if(msg.arg1 != msg.arg2){
-                            if(msg.obj == null || !(msg.obj instanceof Boolean) || (Boolean) msg.obj) {
-                                if(mOnValueChangeListener != null) {
-                                    mOnValueChangeListener.onValueChange(NumberPickerView.this, msg.arg1 + mMinValue, msg.arg2 + mMinValue);
-                                }
-                                if(mOnValueChangeListenerRaw != null){
-                                    mOnValueChangeListenerRaw.onValueChangeRelativeToRaw(NumberPickerView.this, msg.arg1, msg.arg2, mDisplayedValues);
-                                }
-                            }
-                        }
-                        mPrevPickedIndex = msg.arg2;
-                        if(mPendingWrapToLinear){
-                            mPendingWrapToLinear = false;
-                            internalSetWrapToLinear();
-                        }
+                        respondPickedValueChanged(msg.arg1, msg.arg2, msg.obj);
                         break;
                 }
             }
         };
-        mHandlerLayout = new Handler(){
+        mHandlerInMainThread = new Handler(){
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                requestLayout();
+                switch (msg.what){
+                    case HANDLER_WHAT_REQUEST_LAYOUT:
+                        requestLayout();
+                    break;
+                    case HANDLER_WHAT_LISTENER_VALUE_CHANGED:
+                        respondPickedValueChanged(msg.arg1, msg.arg2, msg.obj);
+                    break;
+                }
             }
         };
     }
@@ -477,7 +485,7 @@ public class NumberPickerView extends View{
         mPrevPickedIndex = pickedIndex + mMinShowIndex;
         correctPositionByDefaultValue(pickedIndex, mWrapSelectorWheel && mWrapSelectorWheelCheck);
         if(needRefresh){
-            mHandler.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH), 0);
+            mHandlerInNewThread.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH), 0);
             postInvalidate();
         }
     }
@@ -504,7 +512,7 @@ public class NumberPickerView extends View{
         mPrevPickedIndex = 0 + mMinShowIndex;
         correctPositionByDefaultValue(0, mWrapSelectorWheel && mWrapSelectorWheelCheck);
         postInvalidate();
-        mHandlerLayout.sendEmptyMessage(0);
+        mHandlerInMainThread.sendEmptyMessage(HANDLER_WHAT_REQUEST_LAYOUT);
     }
 
     /**
@@ -605,6 +613,31 @@ public class NumberPickerView extends View{
         }
     }
 
+    /**
+     * used by handlers to respond onchange callbacks
+     * @param oldVal    prevPicked value
+     * @param newVal    currPicked value
+     * @param respondChange if want to respond onchange callbacks
+     */
+    private void respondPickedValueChanged(int oldVal, int newVal, Object respondChange){
+        onScrollStateChange(OnScrollListener.SCROLL_STATE_IDLE);
+        if(oldVal != newVal){
+            if(respondChange == null || !(respondChange instanceof Boolean) || (Boolean) respondChange) {
+                if(mOnValueChangeListener != null) {
+                    mOnValueChangeListener.onValueChange(NumberPickerView.this, oldVal + mMinValue, newVal + mMinValue);
+                }
+                if(mOnValueChangeListenerRaw != null){
+                    mOnValueChangeListenerRaw.onValueChangeRelativeToRaw(NumberPickerView.this, oldVal, newVal, mDisplayedValues);
+                }
+            }
+        }
+        mPrevPickedIndex = newVal;
+        if(mPendingWrapToLinear){
+            mPendingWrapToLinear = false;
+            internalSetWrapToLinear();
+        }
+    }
+
     private void scrollByIndexSmoothly(int deltaIndex){
         scrollByIndexSmoothly(deltaIndex, true);
     }
@@ -651,9 +684,9 @@ public class NumberPickerView extends View{
             duration = DEFAULT_MAX_SCROLL_BY_INDEX_DURATION;
         mScroller.startScroll(0, mCurrDrawGlobalY, 0, dy, duration);
         if(needRespond){
-            mHandler.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH), duration / 4);
+            mHandlerInNewThread.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH), duration / 4);
         }else{
-            mHandler.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH, 0, 0, new Boolean(needRespond)), duration / 4);
+            mHandlerInNewThread.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH, 0, 0, new Boolean(needRespond)), duration / 4);
         }
         postInvalidate();
     }
@@ -720,7 +753,7 @@ public class NumberPickerView extends View{
         mHintText = hintText;
         mTextSizeHintCenterYOffset = getTextCenterYOffset(mPaintHint.getFontMetrics());
         mWidthOfHintText = getTextWidth(mHintText, mPaintHint);
-        mHandlerLayout.sendEmptyMessage(0);
+        mHandlerInMainThread.sendEmptyMessage(HANDLER_WHAT_REQUEST_LAYOUT);
     }
 
     public void setPickedIndexRelativeToMin(int pickedIndexToMin){
@@ -962,7 +995,7 @@ public class NumberPickerView extends View{
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 mFlagMayPress = true;
-                mHandler.removeMessages(HANDLER_WHAT_REFRESH);
+                mHandlerInNewThread.removeMessages(HANDLER_WHAT_REFRESH);
                 stopScrolling();
                 downY = currY;
                 downYGlobal = mCurrDrawGlobalY;
@@ -995,14 +1028,14 @@ public class NumberPickerView extends View{
                         invalidate();
                         onScrollStateChange(OnScrollListener.SCROLL_STATE_FLING);
                     }
-                    mHandler.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH), 0);
+                    mHandlerInNewThread.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH), 0);
                     releaseVelocityTracker();
                 }
                 break;
             case MotionEvent.ACTION_CANCEL:
                 downYGlobal = mCurrDrawGlobalY;
                 stopScrolling();
-                mHandler.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH), 0);
+                mHandlerInNewThread.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH), 0);
                 break;
         }
         return true ;
@@ -1086,7 +1119,7 @@ public class NumberPickerView extends View{
         updateMaxHeightOfDisplayedValues();
         if(needRequestLayout &&
                 (mSpecModeW == MeasureSpec.AT_MOST || mSpecModeH == MeasureSpec.AT_MOST)){
-            mHandlerLayout.sendEmptyMessage(0);
+            mHandlerInMainThread.sendEmptyMessage(HANDLER_WHAT_REQUEST_LAYOUT);
         }
     }
 
@@ -1296,8 +1329,8 @@ public class NumberPickerView extends View{
     }
 
     private void stopRefreshing(){
-        if (mHandler != null){
-            mHandler.removeMessages(HANDLER_WHAT_REFRESH);
+        if (mHandlerInNewThread != null){
+            mHandlerInNewThread.removeMessages(HANDLER_WHAT_REFRESH);
         }
     }
 

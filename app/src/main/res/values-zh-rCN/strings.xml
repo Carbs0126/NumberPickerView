@@ -15,10 +15,12 @@
     <string name="get_data">获取数据</string>
     <string name="in_scroll_view">In ScrollView</string>
     <string name="show_in_dialog">Dialog中显示</string>
-    <string name="place_holder_above_2">Placeholder Button1</string>
+    <string name="place_holder_above_2">HourPicker的响应回调在子线程中执行，其它两者在主线程中执行</string>
     <string name="place_holder_below_1">Placeholder Button2</string>
     <string name="place_holder_below_2">Placeholder Button3</string>
     <string name="place_holder_below_3">Placeholder Button4</string>
+    <string name="current_thread_name">回调所处线程名称: </string>
+    <string name="current_picked_value">当前选中值: </string>
 
     <string-array name="test_display_1">
         <item>《咏鹅》</item>

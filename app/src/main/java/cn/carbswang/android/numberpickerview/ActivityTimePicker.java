@@ -1,6 +1,9 @@
 package cn.carbswang.android.numberpickerview;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -14,12 +17,19 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 /**
  * Created by Carbs.Wang on 2016/6/24.
  */
-public class ActivityTimePicker extends AppCompatActivity implements View.OnClickListener{
+public class ActivityTimePicker extends AppCompatActivity implements View.OnClickListener, NumberPickerView.OnValueChangeListener{
 
     private NumberPickerView mPickerViewH;
     private NumberPickerView mPickerViewM;
     private NumberPickerView mPickerViewD;
     private Button mButtonInfo;
+    private Button mButtonInfo2;
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            mButtonInfo2.setText((String)msg.obj);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +38,12 @@ public class ActivityTimePicker extends AppCompatActivity implements View.OnClic
         mPickerViewH = (NumberPickerView)this.findViewById(R.id.picker_hour);
         mPickerViewM = (NumberPickerView)this.findViewById(R.id.picker_minute);
         mPickerViewD = (NumberPickerView)this.findViewById(R.id.picker_half_day);
+        mPickerViewH.setOnValueChangedListener(this);
+        mPickerViewM.setOnValueChangedListener(this);
+        mPickerViewD.setOnValueChangedListener(this);
 
         mButtonInfo = (Button)this.findViewById(R.id.button_get_info);
+        mButtonInfo2 = (Button)this.findViewById(R.id.show_info_button);
         mButtonInfo.setOnClickListener(this);
         initTime();
     }
@@ -62,6 +76,19 @@ public class ActivityTimePicker extends AppCompatActivity implements View.OnClic
                 Toast.makeText(getApplicationContext(),h + getString(R.string.hour_hint) + " "
                         + m + getString(R.string.minute_hint) + " " + d,Toast.LENGTH_LONG).show();
             break;
+        }
+    }
+
+    @Override
+    public void onValueChange(NumberPickerView picker, int oldVal, int newVal) {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            mButtonInfo2.setText(getString(R.string.current_thread_name) + Thread.currentThread().getName()
+                    + "\n" + getString(R.string.current_picked_value) + String.valueOf(newVal));
+        }else{
+            Message message = Message.obtain();
+            message.obj = getString(R.string.current_thread_name) + Thread.currentThread().getName()
+                    + "\n" + getString(R.string.current_picked_value) + String.valueOf(newVal);
+            mHandler.sendMessage(message);
         }
     }
 }
