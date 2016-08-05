@@ -44,8 +44,9 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 9. has some other attibutes to refine UI
 10. not respond `onValueChanged()` during scrolling
 11. press the certain item, NumberPickerView will scroll to this item automatically
-12. NumberPickerView has some same compatible fuctions and interfaces with NumberPicker, this makes it easier to change NumberPicker to NumberPickerView in project:
-```
+12. you can set if the `onValueChanged` callbacks invoked in main thread or in sub thread;
+13. NumberPickerView has some same compatible fuctions and interfaces with NumberPicker, this makes it easier to change NumberPicker to NumberPickerView in project:
+```java
     //compatible fuctions
     setOnValueChangedListener()
     setOnScrollListener()
@@ -63,20 +64,20 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ### How to use
 ====
 1.import to project
-```
-    compile 'cn.carbswang.android:NumberPickerView:1.0.8'
+```groovy
+    compile 'cn.carbswang.android:NumberPickerView:1.0.9'
 ```
 or
-```
+```xml
     <dependency>
       <groupId>cn.carbswang.android</groupId>
       <artifactId>NumberPickerView</artifactId>
-      <version>1.0.8</version>
+      <version>1.0.9</version>
       <type>pom</type>
     </dependency>
 ```
 2.add a NumberPickerView in xml
-```
+```xml
     <cn.carbswang.android.numberpickerview.library.NumberPickerView
         android:id="@+id/picker"
         android:layout_width="wrap_content"
@@ -96,13 +97,13 @@ or
 ```
 3.control NumberPickerView in Java code
   1)if the displayedValues in NumberPickerView will NOT change, you can set data by this way: (same as using NumberPicker)
-```
+```java
         picker.setMinValue(minValue);
         picker.setMaxValue(maxValue);
         picker.setValue(value);
 ```
   2)if the displayedValues in NumberPickerView will change, you can set data by this way: (same as using NumberPicker)
-```
+```java
         int minValue = getMinValue();
         int oldMaxValue = getMaxValue();
         int oldSpan = oldMaxValue - minValue + 1;
@@ -127,7 +128,7 @@ the same point between this method and `setValue(int)`is you can set the current
 
 and you'd better not use this method in `onCreate(Bundle savedInstanceState)`, if have to do this, you can use in this way:
 
-```
+```java
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,7 +143,7 @@ and you'd better not use this method in `onCreate(Bundle savedInstanceState)`, i
 ```
 
 5.introduction of attibutes in xml
-```
+```xml
     <declare-styleable name="NumberPickerView">
         <attr name="npv_ShowCount" format="reference|integer" />//the count of shown items , default is 3
         <attr name="npv_ShowDivider" format="reference|boolean" />//if show dividers
@@ -175,6 +176,9 @@ and you'd better not use this method in `onCreate(Bundle savedInstanceState)`, i
         //and set `npv_RespondChangeOnDetached` false to avoid respondding `onValueChange` callbacks. 
         //See dialog in my `GregorianLunarCalendar` project. 
 
+        <attr name="npv_RespondChangeInMainThread" format="reference|boolean" />//set if the `onValueChanged` callbacks invoked 
+        // in mainThread or in subThread, default is true, in mainThread. set it false if you want to run `onValueChanged` in 
+        // subThread.
 
     //these attibutes below are used under wrap_content mode, 
     //and if you want to change displayedValues with out making NumberPickerView changing its original position(four points of this view), 
@@ -214,6 +218,11 @@ But I highly recommend every time showing a `Dialog/PopupWindow` please set cert
 ####1.0.8
 1.modify method `stopScrolling`, add scroll to current Y method before `abortAnimation()` is invoked <br>
 2.modify `npv_RespondChangeOnDetached`'s default value to false<br>
+
+####1.0.9
+1.add attr `app:npv_RespondChangeInMainThread="true"` to set if the `onValueChanged` callbacks invoked in mainThread or in subThread, default is true, in mainThread. set it false if you want to run `onValueChanged` in subThread.
+2.update `TimePickerActivity` example, to give a How-To-Use of `app:npv_RespondChangeInMainThread="true"`.
+3.fix bug: when change displayed values, if it is scrolling, then the new displayed values' position is not rewised
 
 ### Mechanisms
 ====
