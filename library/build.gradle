@@ -29,7 +29,7 @@ publish {
     userOrg = 'carbs'
     groupId = 'cn.carbswang.android'
     artifactId = 'NumberPickerView'
-    publishVersion = '1.0.9'
+    publishVersion = '1.1.0'
     desc = 'another NumberPicker with more flexible attributes on Android platform'
     website = 'https://github.com/Carbs0126/NumberPickerView'
 }

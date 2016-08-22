@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
     <cn.carbswang.android.numberpickerview.library.NumberPickerView
         android:id="@+id/picker"
@@ -17,7 +17,7 @@
         app:npv_ShowCount="5"
         app:npv_TextSizeNormal="16sp"
         app:npv_TextSizeSelected="20sp"
-        app:npv_WrapSelectorWheel="true" />
+        app:npv_WrapSelectorWheel="true"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:text="@string/switch_wrap_mode"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"/>
             </LinearLayout>
 
             <LinearLayout
@@ -56,12 +56,12 @@
                     android:layout_height="56dp"
                     android:layout_weight="1"
                     android:text="@string/content_1"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"/>
 
                 <View
                     android:layout_width="2dp"
                     android:layout_height="56dp"
-                    android:background="#ffffffff" />
+                    android:background="#ffffffff"/>
 
                 <Button
                     android:id="@+id/button3"
@@ -69,7 +69,7 @@
                     android:layout_height="56dp"
                     android:layout_weight="1"
                     android:text="@string/content_2"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"/>
 
             </LinearLayout>
 
@@ -86,12 +86,12 @@
                     android:layout_height="56dp"
                     android:layout_weight="1"
                     android:text="@string/scroll_downwards_2"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"/>
 
                 <View
                     android:layout_width="2dp"
                     android:layout_height="56dp"
-                    android:background="#ffffffff" />
+                    android:background="#ffffffff"/>
 
                 <Button
                     android:id="@+id/button5"
@@ -99,27 +99,39 @@
                     android:layout_height="56dp"
                     android:layout_weight="1"
                     android:text="@string/get_current_content"
-                    android:textAllCaps="false" />
+                    android:textAllCaps="false"/>
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/button6"
+            <LinearLayout
+                android:id="@+id/content_buttons_3"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/content_buttons_2"
-                android:layout_marginTop="2dp"
-                android:text="@string/to_time_picker_view"
-                android:textAllCaps="false" />
+                android:layout_marginTop="2dp">
 
-            <Button
-                android:id="@+id/button7"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_below="@id/button6"
-                android:layout_marginTop="2dp"
-                android:text="@string/show_in_dialog"
-                android:textAllCaps="false" />
+                <Button
+                    android:id="@+id/button6"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_weight="1"
+                    android:text="@string/to_time_picker_view"
+                    android:textAllCaps="false"/>
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="56dp"
+                    android:background="#ffffffff"/>
+
+                <Button
+                    android:id="@+id/button7"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    android:layout_weight="1"
+                    android:text="@string/show_in_dialog"
+                    android:textAllCaps="false"/>
+
+            </LinearLayout>
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

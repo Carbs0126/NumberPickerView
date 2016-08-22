@@ -74,7 +74,7 @@ public class NumberPickerView extends View{
     private static final int HANDLER_WHAT_REQUEST_LAYOUT = 3;
 
     // interval time to scroll the distance of one item's height
-    private static final int HANDLER_INTERVAL_REFRESH = 30;//millisecond
+    private static final int HANDLER_INTERVAL_REFRESH = 32;//millisecond
 
     // in millisecond unit, default duration of scrolling an item' distance
     private static final int DEFAULT_INTERVAL_REVISE_DURATION = 300;
@@ -336,12 +336,12 @@ public class NumberPickerView extends View{
                                 if(mCurrDrawFirstItemY < (-mItemHeight/2)){
                                     //adjust to scroll upward
                                     duration = (int)((float)DEFAULT_INTERVAL_REVISE_DURATION * (mItemHeight + mCurrDrawFirstItemY) / mItemHeight);
-                                    mScroller.startScroll(0, mCurrDrawGlobalY, 0, mItemHeight + mCurrDrawFirstItemY, duration * 2);
+                                    mScroller.startScroll(0, mCurrDrawGlobalY, 0, mItemHeight + mCurrDrawFirstItemY, duration * 3);
                                     willPickIndex = getWillPickIndexByGlobalY(mCurrDrawGlobalY + mItemHeight + mCurrDrawFirstItemY);
                                 }else{
                                     //adjust to scroll downward
                                     duration = (int)((float)DEFAULT_INTERVAL_REVISE_DURATION * (-mCurrDrawFirstItemY) / mItemHeight);
-                                    mScroller.startScroll(0, mCurrDrawGlobalY, 0, mCurrDrawFirstItemY, duration * 2);
+                                    mScroller.startScroll(0, mCurrDrawGlobalY, 0, mCurrDrawFirstItemY, duration * 3);
                                     willPickIndex = getWillPickIndexByGlobalY(mCurrDrawGlobalY + mCurrDrawFirstItemY);
                                 }
                                 postInvalidate();
