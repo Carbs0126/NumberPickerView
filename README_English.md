@@ -65,14 +65,14 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ====
 1.import to project
 ```groovy
-    compile 'cn.carbswang.android:NumberPickerView:1.0.9'
+    compile 'cn.carbswang.android:NumberPickerView:1.1.0'
 ```
 or
 ```xml
     <dependency>
       <groupId>cn.carbswang.android</groupId>
       <artifactId>NumberPickerView</artifactId>
-      <version>1.0.9</version>
+      <version>1.1.0</version>
       <type>pom</type>
     </dependency>
 ```
@@ -224,6 +224,11 @@ But I highly recommend every time showing a `Dialog/PopupWindow` please set cert
 2.update `TimePickerActivity` example, to give a How-To-Use of `app:npv_RespondChangeInMainThread="true"`.
 3.fix bug: when change displayed values, if it is scrolling, then the new displayed values' position is not rewised
 
+####1.1.0
+1.refine the duration of position rewising<br>
+2.refine the interval of sending refreshing message<br>
+3.refine the sample's UI<br>
+<br>
 ### Mechanisms
 ====
 ####1.how to generate scrolling animation
