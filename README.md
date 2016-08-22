@@ -70,14 +70,14 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ====
 1.导入至工程
 ```groovy
-    compile 'cn.carbswang.android:NumberPickerView:1.0.9'
+    compile 'cn.carbswang.android:NumberPickerView:1.1.0'
 ```
 或者
 ```xml
     <dependency>
       <groupId>cn.carbswang.android</groupId>
       <artifactId>NumberPickerView</artifactId>
-      <version>1.0.9</version>
+      <version>1.1.0</version>
       <type>pom</type>
     </dependency>
 ```
@@ -214,6 +214,11 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 1.添加属性`app:npv_RespondChangeInMainThread="true"`，指定`onValueChanged`响应事件在什么线程中执行。默认为`true`，即在主线程中执行。如果设置为`false`则在子线程中执行。<br>
 2.更新`TimePickerActivity`示例，以说明属性`app:npv_RespondChangeInMainThread="true"`的用法。<br>
 3.修复bug: 在更新内容时，如果滑动没有停止，那么新的内容显示出来后，滚动的位置不正确的bug。<br>
+<br>
+####1.1.0
+1.优化位置校正时的滚动时间。<br>
+2.微调刷新时间。<br>
+3.优化示例界面显示布局。<br>
 <br>
 ###主要原理
 ====
