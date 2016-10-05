@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.support.v4.widget.ScrollerCompat;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -83,6 +84,10 @@ public class NumberPickerView extends View{
     private static final int DEFAULT_MIN_SCROLL_BY_INDEX_DURATION = DEFAULT_INTERVAL_REVISE_DURATION * 1;
     private static final int DEFAULT_MAX_SCROLL_BY_INDEX_DURATION = DEFAULT_INTERVAL_REVISE_DURATION * 2;
 
+    private static final String TEXT_ELLIPSIZE_START = "start";
+    private static final String TEXT_ELLIPSIZE_MIDDLE = "middle";
+    private static final String TEXT_ELLIPSIZE_END = "end";
+
     private static final boolean DEFAULT_SHOW_DIVIDER = true;
     private static final boolean DEFAULT_WRAP_SELECTOR_WHEEL = true;
     private static final boolean DEFAULT_CURRENT_ITEM_INDEX_EFFECT = false;
@@ -122,6 +127,7 @@ public class NumberPickerView extends View{
     private int mMiniVelocityFling = 150;
     private int mScaledTouchSlop = 8;
     private String mHintText;
+    private String mTextEllipsize;
     private String mEmptyItemHint;
     private String mAlterHint;
     //friction used by scroller when fling
@@ -160,7 +166,7 @@ public class NumberPickerView extends View{
     private VelocityTracker mVelocityTracker;
 
     private Paint mPaintDivider = new Paint();
-    private Paint mPaintText = new Paint();
+    private TextPaint mPaintText = new TextPaint();
     private Paint mPaintHint = new Paint();
 
     private String[] mDisplayedValues;
@@ -273,6 +279,8 @@ public class NumberPickerView extends View{
                 mRespondChangeOnDetach = a.getBoolean(attr, DEFAULT_RESPOND_CHANGE_ON_DETACH);
             }else if(attr == R.styleable.NumberPickerView_npv_RespondChangeInMainThread){
                 mRespondChangeInMainThread = a.getBoolean(attr, DEFAULT_RESPOND_CHANGE_IN_MAIN_THREAD);
+            }else if (attr == R.styleable.NumberPickerView_npv_TextEllipsize) {
+                mTextEllipsize = a.getString(attr);
             }
         }
         a.recycle();
@@ -1203,12 +1211,29 @@ public class NumberPickerView extends View{
             mPaintText.setTextSize(textSize);
 
             if(0 <= index && index < getOneRecycleSize()){
-                canvas.drawText(mDisplayedValues[index + mMinShowIndex].toString(), mViewCenterX,
+                CharSequence str = mDisplayedValues[index + mMinShowIndex];
+                if (mTextEllipsize != null) {
+                    str = TextUtils.ellipsize(str, mPaintText, getWidth() - 2 * mItemPaddingHorizontal, getEllipsizeType());
+                }
+                canvas.drawText(str.toString(), mViewCenterX,
                         y + mItemHeight / 2 + textSizeCenterYOffset, mPaintText);
             } else if(!TextUtils.isEmpty(mEmptyItemHint)){
                 canvas.drawText(mEmptyItemHint, mViewCenterX,
                         y + mItemHeight / 2 + textSizeCenterYOffset, mPaintText);
             }
+        }
+    }
+
+    private TextUtils.TruncateAt getEllipsizeType() {
+        switch (mTextEllipsize) {
+            case TEXT_ELLIPSIZE_START:
+                return TextUtils.TruncateAt.START;
+            case TEXT_ELLIPSIZE_MIDDLE:
+                return TextUtils.TruncateAt.MIDDLE;
+            case TEXT_ELLIPSIZE_END:
+                return TextUtils.TruncateAt.END;
+            default:
+                throw new IllegalArgumentException("Illegal text ellipsize type.");
         }
     }
 
