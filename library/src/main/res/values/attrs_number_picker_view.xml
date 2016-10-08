@@ -28,6 +28,7 @@
         <attr name="npv_ItemPaddingHorizontal" format="reference|dimension" />
         <attr name="npv_ItemPaddingVertical" format="reference|dimension" />
         <attr name="npv_RespondChangeInMainThread" format="reference|boolean" />
+        <attr name="npv_TextEllipsize" format="reference|string" />
 
         <!--just used to measure maxWidth for wrap_content without hint,
             the string array will never be displayed.
