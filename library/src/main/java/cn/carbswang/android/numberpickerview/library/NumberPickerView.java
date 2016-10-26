@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
@@ -892,6 +893,14 @@ public class NumberPickerView extends View{
 
     public void setOnValueChangedListenerRelativeToRaw(OnValueChangeListenerRelativeToRaw listener){
         mOnValueChangeListenerRaw = listener;
+    }
+
+    public void setContentTextTypeface(Typeface typeface){
+        mPaintText.setTypeface(typeface);
+    }
+
+    public void setHintTextTypeface(Typeface typeface){
+        mPaintHint.setTypeface(typeface);
     }
 
     //return index relative to mDisplayedValues from 0.

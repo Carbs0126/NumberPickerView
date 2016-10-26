@@ -1,5 +1,6 @@
 package cn.carbswang.android.numberpickerview;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -24,6 +25,7 @@ public class ActivityTimePicker extends AppCompatActivity implements View.OnClic
     private NumberPickerView mPickerViewD;
     private Button mButtonInfo;
     private Button mButtonInfo2;
+    private Button mButton4;
     private Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -42,9 +44,14 @@ public class ActivityTimePicker extends AppCompatActivity implements View.OnClic
         mPickerViewM.setOnValueChangedListener(this);
         mPickerViewD.setOnValueChangedListener(this);
 
+        /*Typeface font = Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD);
+        mPickerViewH.setHintTextTypeface(font);*/
+
         mButtonInfo = (Button)this.findViewById(R.id.button_get_info);
         mButtonInfo2 = (Button)this.findViewById(R.id.show_info_button);
+        mButton4 = (Button)this.findViewById(R.id.button4);
         mButtonInfo.setOnClickListener(this);
+        mButton4.setOnClickListener(this);
         initTime();
     }
 
@@ -76,6 +83,11 @@ public class ActivityTimePicker extends AppCompatActivity implements View.OnClic
                 Toast.makeText(getApplicationContext(),h + getString(R.string.hour_hint) + " "
                         + m + getString(R.string.minute_hint) + " " + d,Toast.LENGTH_LONG).show();
             break;
+            case R.id.button4:
+                Typeface font = Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD);
+                mPickerViewH.setHintTextTypeface(font);
+                mPickerViewH.invalidate();
+                break;
         }
     }
 
