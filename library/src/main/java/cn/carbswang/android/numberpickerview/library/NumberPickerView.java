@@ -188,6 +188,10 @@ public class NumberPickerView extends View{
                                         String[] displayedValues);
     }
 
+    public interface OnValueChangeListenerInScrolling{
+        void onValueChangeInScrolling(NumberPickerView picker, int oldVal, int newVal);
+    }
+
     // compatible for NumberPicker
     public interface OnScrollListener {
         int SCROLL_STATE_IDLE = 0;
@@ -199,6 +203,7 @@ public class NumberPickerView extends View{
     private OnValueChangeListenerRelativeToRaw mOnValueChangeListenerRaw;
     private OnValueChangeListener mOnValueChangeListener; //compatible for NumberPicker
     private OnScrollListener mOnScrollListener;//compatible for NumberPicker
+    private OnValueChangeListenerInScrolling mOnValueChangeListenerInScrolling;//response onValueChanged in scrolling
 
     // The current scroll state of the NumberPickerView.
     private int mScrollState = OnScrollListener.SCROLL_STATE_IDLE;
@@ -387,6 +392,13 @@ public class NumberPickerView extends View{
                 }
             }
         };
+    }
+
+    private int mInScrollingPickedOldValue;
+    private int mInScrollingPickedNewValue;
+
+    private void respondPickedValueChangedInScrolling(int oldVal, int newVal) {
+        mOnValueChangeListenerInScrolling.onValueChangeInScrolling(this, oldVal, newVal);
     }
 
     @Override
@@ -895,6 +907,10 @@ public class NumberPickerView extends View{
         mOnValueChangeListenerRaw = listener;
     }
 
+    public void setOnValueChangeListenerInScrolling(OnValueChangeListenerInScrolling listener){
+        mOnValueChangeListenerInScrolling = listener;
+    }
+
     public void setContentTextTypeface(Typeface typeface){
         mPaintText.setTypeface(typeface);
     }
@@ -1097,6 +1113,13 @@ public class NumberPickerView extends View{
             mCurrentItemIndexEffect = true;
         }else {
             mCurrDrawGlobalY = mCurrDrawFirstItemIndex * mItemHeight;
+
+            mInScrollingPickedOldValue = mCurrDrawFirstItemIndex + mShowCount / 2;
+            mInScrollingPickedOldValue = mInScrollingPickedOldValue % getOneRecycleSize();
+            if (mInScrollingPickedOldValue < 0){
+                mInScrollingPickedOldValue = mInScrollingPickedOldValue + getOneRecycleSize();
+            }
+            mInScrollingPickedNewValue = mInScrollingPickedOldValue;
             calculateFirstItemParameterByGlobalY();
         }
     }
@@ -1121,6 +1144,21 @@ public class NumberPickerView extends View{
     private void calculateFirstItemParameterByGlobalY(){
         mCurrDrawFirstItemIndex = (int)Math.floor((float)mCurrDrawGlobalY / mItemHeight);
         mCurrDrawFirstItemY = -(mCurrDrawGlobalY - mCurrDrawFirstItemIndex * mItemHeight);
+        if (mOnValueChangeListenerInScrolling != null){
+            if (-mCurrDrawFirstItemY > mItemHeight / 2){
+                mInScrollingPickedNewValue = mCurrDrawFirstItemIndex + 1 + mShowCount / 2;
+            }else{
+                mInScrollingPickedNewValue = mCurrDrawFirstItemIndex + mShowCount / 2;
+            }
+            mInScrollingPickedNewValue = mInScrollingPickedNewValue % getOneRecycleSize();
+            if (mInScrollingPickedNewValue < 0){
+                mInScrollingPickedNewValue = mInScrollingPickedNewValue + getOneRecycleSize();
+            }
+            if (mInScrollingPickedOldValue != mInScrollingPickedNewValue){
+                respondPickedValueChangedInScrolling(mInScrollingPickedNewValue, mInScrollingPickedOldValue);
+            }
+            mInScrollingPickedOldValue = mInScrollingPickedNewValue;
+        }
     }
 
     private void releaseVelocityTracker() {

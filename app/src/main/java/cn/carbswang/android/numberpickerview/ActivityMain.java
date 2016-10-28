@@ -14,7 +14,8 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
  * Created by Carbs.Wang.
  */
 public class ActivityMain extends AppCompatActivity implements View.OnClickListener,
-                    NumberPickerView.OnScrollListener, NumberPickerView.OnValueChangeListener {
+                    NumberPickerView.OnScrollListener, NumberPickerView.OnValueChangeListener,
+                    NumberPickerView.OnValueChangeListenerInScrolling{
 
     private static final String TAG = "picker";
 
@@ -44,6 +45,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 
         picker.setOnScrollListener(this);
         picker.setOnValueChangedListener(this);
+        picker.setOnValueChangeListenerInScrolling(this);
         button1.setOnClickListener(this);
         button2.setOnClickListener(this);
         button3.setOnClickListener(this);
@@ -140,5 +142,8 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
                     .show();
     }
 
-
+    @Override
+    public void onValueChangeInScrolling(NumberPickerView picker, int oldVal, int newVal) {
+        Log.d("wangjj", "onValueChangeInScrolling oldVal : " + oldVal + " newVal : " + newVal);
+    }
 }
