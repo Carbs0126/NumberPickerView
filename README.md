@@ -64,20 +64,23 @@ https://github.com/Carbs0126/GregorianLunarCalendar
     兼容的内部接口有：
     OnValueChangeListener
     OnScrollListener
+    
+    添加的接口有：
+    OnValueChangeListenerInScrolling//滑动过程中响应value change
 ```
 
 ###使用方法
 ====
 1.导入至工程
 ```groovy
-    compile 'cn.carbswang.android:NumberPickerView:1.1.0'
+    compile 'cn.carbswang.android:NumberPickerView:1.1.1'
 ```
 或者
 ```xml
     <dependency>
       <groupId>cn.carbswang.android</groupId>
       <artifactId>NumberPickerView</artifactId>
-      <version>1.1.0</version>
+      <version>1.1.1</version>
       <type>pom</type>
     </dependency>
 ```
@@ -125,6 +128,11 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 或者直接使用NumberPickerView提供的方法：<br>
     `refreshByNewDisplayedValues(String[] display)`<br>
 使用此方法时需要注意保证数据改变前后的minValue值不变，以及设置的display不能够为null，且长度不能够为0。
+  3)添加了滑动过程中响应value change的函数
+  ```java
+    picker.setOnValueChangeListenerInScrolling(...);
+  ```
+
 
 4.另外，NumberPickerView提供了平滑滚动的方法：<br>
     `public void smoothScrollToValue(int fromValue, int toValue, boolean needRespond)`<br>
@@ -193,33 +201,42 @@ https://github.com/Carbs0126/GregorianLunarCalendar
     
 ###版本更新
 ====
-####1.0.3
-1.修复不能够在`ScrollView`中滑动的bug，感谢anjiao以及Elektroktay的issue<br>
-<br>
-####1.0.4
-1.更改部分属性名称，更改部分注释<br>
-<br>
-####1.0.5
-1.在`onAttachToWindow()`函数中添加判断`mHandlerThread`有没有已经被`quit`掉的函数，避免在第二次进入dialog/popupWindow时无法刷新位置的问题<br>
-####1.0.6
-1.在`onDetachToWindow()`函数中添加响应判断，主要针对多次调用的Dialog/PopupWindow<br>
-####1.0.7
-1.完善在`onDetachToWindow()`函数中添加的响应判断，主要针对多次调用`Dialog/PopupWindow`，如果此时`Dialog/PopupWindow`在隐藏时，`NumberPickerView`仍然在滑动，那么需要停止滑动+可选响应`OnValueChange`回调+更改上次选中索引。添加属性`npv_RespondChangeOnDetached`作为判断是否响应onValueChange回调，主要用在多个NumberPickerView联动的场景。同时建议每次在显示`Dialog/PopupWindow`时，重新为每个NumberPickerView设定确定的值，且将`npv_RespondChangeOnDetached`属性置为false，具体可见`GregorianLunarCalendar`项目中的dialog相关用法。此次更改方式较为笨拙，如果有好的方法，还请告知，非常感谢。<br>
-<br>
-####1.0.8
-1.更改`stopScrolling`方法，在`abortAnimation()`之前添加滚动到当前坐标的代码<br>
-2.更改`npv_RespondChangeOnDetached`的默认值为false<br>
-<br>
-####1.0.9
-1.添加属性`app:npv_RespondChangeInMainThread="true"`，指定`onValueChanged`响应事件在什么线程中执行。默认为`true`，即在主线程中执行。如果设置为`false`则在子线程中执行。<br>
-2.更新`TimePickerActivity`示例，以说明属性`app:npv_RespondChangeInMainThread="true"`的用法。<br>
-3.修复bug: 在更新内容时，如果滑动没有停止，那么新的内容显示出来后，滚动的位置不正确的bug。<br>
+####1.1.1
+1.添加更改文字typeface的方法<br>
+2.添加滑动过程中响应valuechange的方法<br>
+  ```java
+    picker.setOnValueChangeListenerInScrolling(...);
+  ```
 <br>
 ####1.1.0
 1.优化位置校正时的滚动时间。<br>
 2.微调刷新时间。<br>
 3.优化示例界面显示布局。<br>
 <br>
+####1.0.9
+1.添加属性`app:npv_RespondChangeInMainThread="true"`，指定`onValueChanged`响应事件在什么线程中执行。默认为`true`，即在主线程中执行。如果设置为`false`则在子线程中执行。<br>
+2.更新`TimePickerActivity`示例，以说明属性`app:npv_RespondChangeInMainThread="true"`的用法。<br>
+3.修复bug: 在更新内容时，如果滑动没有停止，那么新的内容显示出来后，滚动的位置不正确的bug。<br>
+<br>
+####1.0.8
+1.更改`stopScrolling`方法，在`abortAnimation()`之前添加滚动到当前坐标的代码<br>
+2.更改`npv_RespondChangeOnDetached`的默认值为false<br>
+<br>
+####1.0.7
+1.完善在`onDetachToWindow()`函数中添加的响应判断，主要针对多次调用`Dialog/PopupWindow`，如果此时`Dialog/PopupWindow`在隐藏时，`NumberPickerView`仍然在滑动，那么需要停止滑动+可选响应`OnValueChange`回调+更改上次选中索引。添加属性`npv_RespondChangeOnDetached`作为判断是否响应onValueChange回调，主要用在多个NumberPickerView联动的场景。同时建议每次在显示`Dialog/PopupWindow`时，重新为每个NumberPickerView设定确定的值，且将`npv_RespondChangeOnDetached`属性置为false，具体可见`GregorianLunarCalendar`项目中的dialog相关用法。此次更改方式较为笨拙，如果有好的方法，还请告知，非常感谢。<br>
+<br>
+####1.0.6
+1.在`onDetachToWindow()`函数中添加响应判断，主要针对多次调用的Dialog/PopupWindow<br>
+####1.0.5
+1.在`onAttachToWindow()`函数中添加判断`mHandlerThread`有没有已经被`quit`掉的函数，避免在第二次进入dialog/popupWindow时无法刷新位置的问题<br>
+####1.0.4
+1.更改部分属性名称，更改部分注释<br>
+<br>
+####1.0.3
+1.修复不能够在`ScrollView`中滑动的bug，感谢anjiao以及Elektroktay的issue<br>
+<br>
+
+
 ###主要原理
 ====
 ####1.滚动效果的产生：
