@@ -1406,13 +1406,20 @@ public class NumberPickerView extends View{
         }
     }
 
-    private void stopScrolling(){
+    public void stopScrolling(){
         if(mScroller != null){
             if(!mScroller.isFinished()){
                 mScroller.startScroll(0, mScroller.getCurrY(), 0, 0, 1);
                 mScroller.abortAnimation();
                 postInvalidate();
             }
+        }
+    }
+
+    public void stopScrollingAndCorrectPosition(){
+        stopScrolling();
+        if (mHandlerInNewThread != null){
+            mHandlerInNewThread.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH), 0);
         }
     }
 
