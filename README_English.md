@@ -1,11 +1,11 @@
 # NumberPickerView
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-NumberPickerView-green.svg?style=true)](https://android-arsenal.com/details/1/3817)
-#####Another NumberPicker with more flexible attributes on Android platform
+##### Another NumberPicker with more flexible attributes on Android platform
 
-##Foreword
+## Foreword
 some android projects use the android.widget.NumberPicker to provide alternative choices, but the default style of `NumberPicker` has some inflexible attibutes, and complicated to be customized.This NumberPickerView extends from View, and provide a friendly experience.
 
-###ScreenShot
+### ScreenShot
 ====
 ![Example Image][4]<br>
 picking an item dynamically
@@ -18,7 +18,7 @@ picking an item dynamically
 a small project powered by NumberPickerView, a view which can pick or jump to a certain date with two modes, in Gregorian mode or in Chinese Lunar mode. The gif seem to be a little lag, but actually it runs smoothly. Check the project here:
 https://github.com/Carbs0126/GregorianLunarCalendar
 
-###Introduction
+### Introduction
 ====
 `NumberPickerView`extends from `View` and has almost all functions of `android.widget.NumberPicker` except inputting fuction by EditText, but it has some advanced features, here are these two views' differences below:
 
@@ -199,45 +199,45 @@ and you'd better not use this method in `onCreate(Bundle savedInstanceState)`, i
 
 ### Version
 ====
-####1.0.3
+#### 1.0.3
 1.fix bug : cannot scroll in `ScrollView`. Thanks Elektroktay's and anjiao's issues<br>
 <br>
-####1.0.4
+#### 1.0.4
 1.modify some attrs' name<br>
 <br>
-####1.0.5
+#### 1.0.5
 1.in method `onAttachToWindow()`, add code to judge if `mHandlerThread`has been `quit()`, this is to avoid of 'can not correct position when show the same Dialog(or PopupWindow) twice '<br>
 <br>
-####1.0.6
+#### 1.0.6
 1.add code in `onDetachToWindow()` to respond callbacks, for reusable `Dialog/PopupWindow`.<br>
 <br>
-####1.0.7
+#### 1.0.7
 1.refine code in `onDetachToWindow()` to respond callbacks or not, for reusable `Dialog/PopupWindow`. <br>If `Dialog/PopupWindow` is hiding meanwhile `NumberPickerView` is still scrolling, then we need it to stop scrolling and respond (or not) `OnValueChange` callbacks and change the previous picked value. <br>Add a new attr `npv_RespondChangeOnDetached` as a flag to set if respondding `onValueChange` callbacks, mainly for multi linked NumberPickerViews to correct other NumberPickerView's position or value.<br>
 But I highly recommend every time showing a `Dialog/PopupWindow` please set certain data for NumberPickerView, and set `npv_RespondChangeOnDetached` false to avoid respondding `onValueChange` callbacks. See dialog in my `GregorianLunarCalendar` project. <br>These codes are not elegant, If you have any idea, please let me know, thank you.<br>
 <br>
-####1.0.8
+#### 1.0.8
 1.modify method `stopScrolling`, add scroll to current Y method before `abortAnimation()` is invoked <br>
 2.modify `npv_RespondChangeOnDetached`'s default value to false<br>
 
-####1.0.9
+#### 1.0.9
 1.add attr `app:npv_RespondChangeInMainThread="true"` to set if the `onValueChanged` callbacks invoked in mainThread or in subThread, default is true, in mainThread. set it false if you want to run `onValueChanged` in subThread.
 2.update `TimePickerActivity` example, to give a How-To-Use of `app:npv_RespondChangeInMainThread="true"`.
 3.fix bug: when change displayed values, if it is scrolling, then the new displayed values' position is not rewised
 
-####1.1.0
+#### 1.1.0
 1.refine the duration of position rewising<br>
 2.refine the interval of sending refreshing message<br>
 3.refine the sample's UI<br>
 <br>
 ### Mechanisms
 ====
-####1.how to generate scrolling animation
+#### 1.how to generate scrolling animation
 `Scroller` + `VelocityTracker` + `onDraw(Canvas canvas)`
 
-####2.how to correct position automatically when scrolling finished
+#### 2.how to correct position automatically when scrolling finished
 `Handler` refresh current position
 
-####3.how to generate Gradient effection
+#### 3.how to generate Gradient effection
 by calculating the current coordinate, get the items which should be shown and the positions of each shown items, comparing the positions and center coordinate of NumberPickerView, get the current color and size of item's text<br>
 <br>
 ### how to CHANGE NumberPicker to NumberPickerView
