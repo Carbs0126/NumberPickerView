@@ -4,6 +4,7 @@
 
 [English] [6]
 
+
 ## 前言
 在Android项目的开发中会用到`NumberPicker`组件，但是默认风格的`NumberPicker`具有一些不灵活的属性，定制起来也比较麻烦，并且缺少一些过渡动效，因此在应用开发时，一般采用自定义的控件来完成选择功能。
 
@@ -255,6 +256,7 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 
 ### 另
 UI设计借鉴了meizu的多个应用的设计。感谢google的android平台以及meizu的设计。
+
 
 
 欢迎大家不吝指教。
