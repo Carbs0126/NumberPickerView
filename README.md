@@ -9,7 +9,12 @@
 在Android项目的开发中会用到`NumberPicker`组件，但是默认风格的`NumberPicker`具有一些不灵活的属性，定制起来也比较麻烦，并且缺少一些过渡动效，因此在应用开发时，一般采用自定义的控件来完成选择功能。
 
 ### 控件截图
-====
+
+- [x] 感谢作者 [Carbs0126](https://github.com/Carbs0126/NumberPickerView) 
+#### 自适应内容文本 (当文本内容大小超过控件宽度时，自适应)
+
+![自适应文本大小](https://github.com/uni7corn/NumberPickerView/blob/master/picture/scaleAutoTextNumberPickerView.gif "自适应文本大小")<br>
+
 ![Example Image][4]<br>
 效果图1
 

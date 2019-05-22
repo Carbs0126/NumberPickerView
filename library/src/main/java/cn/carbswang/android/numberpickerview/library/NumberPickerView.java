@@ -18,12 +18,14 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 
+import cn.carbswang.android.numberpickerview.library.delagate.AutoMeasureDelegate;
+
 /**
  * Created by Carbs.Wang.
  * email : yeah0126@yeah.net
  * github : https://github.com/Carbs0126/NumberPickerView
  */
-public class NumberPickerView extends View{
+public class NumberPickerView extends View {
 
     // default text color of not selected item
     private static final int DEFAULT_TEXT_COLOR_NORMAL = 0XFF333333;
@@ -179,16 +181,16 @@ public class NumberPickerView extends View{
     private Handler mHandlerInMainThread;
 
     // compatible for NumberPicker
-    public interface OnValueChangeListener{
+    public interface OnValueChangeListener {
         void onValueChange(NumberPickerView picker, int oldVal, int newVal);
     }
 
-    public interface OnValueChangeListenerRelativeToRaw{
+    public interface OnValueChangeListenerRelativeToRaw {
         void onValueChangeRelativeToRaw(NumberPickerView picker, int oldPickedIndex, int newPickedIndex,
                                         String[] displayedValues);
     }
 
-    public interface OnValueChangeListenerInScrolling{
+    public interface OnValueChangeListenerInScrolling {
         void onValueChangeInScrolling(NumberPickerView picker, int oldVal, int newVal);
     }
 
@@ -197,6 +199,7 @@ public class NumberPickerView extends View{
         int SCROLL_STATE_IDLE = 0;
         int SCROLL_STATE_TOUCH_SCROLL = 1;
         int SCROLL_STATE_FLING = 2;
+
         void onScrollStateChange(NumberPickerView view, int scrollState);
     }
 
@@ -212,18 +215,20 @@ public class NumberPickerView extends View{
         super(context);
         init(context);
     }
+
     public NumberPickerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initAttr(context, attrs);
         init(context);
     }
+
     public NumberPickerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initAttr(context, attrs);
         init(context);
     }
 
-    private void initAttr(Context context, AttributeSet attrs){
+    private void initAttr(Context context, AttributeSet attrs) {
         if (attrs == null) {
             return;
         }
@@ -231,76 +236,78 @@ public class NumberPickerView extends View{
         int n = a.getIndexCount();
         for (int i = 0; i < n; i++) {
             int attr = a.getIndex(i);
-            if(attr == R.styleable.NumberPickerView_npv_ShowCount){
+            if (attr == R.styleable.NumberPickerView_npv_ShowCount) {
                 mShowCount = a.getInt(attr, DEFAULT_SHOW_COUNT);
-            }else if(attr == R.styleable.NumberPickerView_npv_DividerColor){
+            } else if (attr == R.styleable.NumberPickerView_npv_DividerColor) {
                 mDividerColor = a.getColor(attr, DEFAULT_DIVIDER_COLOR);
-            }else if(attr == R.styleable.NumberPickerView_npv_DividerHeight){
+            } else if (attr == R.styleable.NumberPickerView_npv_DividerHeight) {
                 mDividerHeight = a.getDimensionPixelSize(attr, DEFAULT_DIVIDER_HEIGHT);
-            }else if(attr == R.styleable.NumberPickerView_npv_DividerMarginLeft){
+            } else if (attr == R.styleable.NumberPickerView_npv_DividerMarginLeft) {
                 mDividerMarginL = a.getDimensionPixelSize(attr, DEFAULT_DIVIDER_MARGIN_HORIZONTAL);
-            }else if(attr == R.styleable.NumberPickerView_npv_DividerMarginRight){
+            } else if (attr == R.styleable.NumberPickerView_npv_DividerMarginRight) {
                 mDividerMarginR = a.getDimensionPixelSize(attr, DEFAULT_DIVIDER_MARGIN_HORIZONTAL);
-            }else if(attr == R.styleable.NumberPickerView_npv_TextArray){
+            } else if (attr == R.styleable.NumberPickerView_npv_TextArray) {
                 mDisplayedValues = convertCharSequenceArrayToStringArray(a.getTextArray(attr));
-            }else if(attr == R.styleable.NumberPickerView_npv_TextColorNormal){
+            } else if (attr == R.styleable.NumberPickerView_npv_TextColorNormal) {
                 mTextColorNormal = a.getColor(attr, DEFAULT_TEXT_COLOR_NORMAL);
-            }else if(attr == R.styleable.NumberPickerView_npv_TextColorSelected){
+            } else if (attr == R.styleable.NumberPickerView_npv_TextColorSelected) {
                 mTextColorSelected = a.getColor(attr, DEFAULT_TEXT_COLOR_SELECTED);
-            }else if(attr == R.styleable.NumberPickerView_npv_TextColorHint){
+            } else if (attr == R.styleable.NumberPickerView_npv_TextColorHint) {
                 mTextColorHint = a.getColor(attr, DEFAULT_TEXT_COLOR_SELECTED);
-            }else if(attr == R.styleable.NumberPickerView_npv_TextSizeNormal){
+            } else if (attr == R.styleable.NumberPickerView_npv_TextSizeNormal) {
                 mTextSizeNormal = a.getDimensionPixelSize(attr, sp2px(context, DEFAULT_TEXT_SIZE_NORMAL_SP));
-            }else if(attr == R.styleable.NumberPickerView_npv_TextSizeSelected){
+            } else if (attr == R.styleable.NumberPickerView_npv_TextSizeSelected) {
                 mTextSizeSelected = a.getDimensionPixelSize(attr, sp2px(context, DEFAULT_TEXT_SIZE_SELECTED_SP));
-            }else if(attr == R.styleable.NumberPickerView_npv_TextSizeHint){
+            } else if (attr == R.styleable.NumberPickerView_npv_TextSizeHint) {
                 mTextSizeHint = a.getDimensionPixelSize(attr, sp2px(context, DEFAULT_TEXT_SIZE_HINT_SP));
-            }else if(attr == R.styleable.NumberPickerView_npv_MinValue){
+            } else if (attr == R.styleable.NumberPickerView_npv_MinValue) {
                 mMinShowIndex = a.getInteger(attr, 0);
-            }else if(attr == R.styleable.NumberPickerView_npv_MaxValue){
+            } else if (attr == R.styleable.NumberPickerView_npv_MaxValue) {
                 mMaxShowIndex = a.getInteger(attr, 0);
-            }else if(attr == R.styleable.NumberPickerView_npv_WrapSelectorWheel){
+            } else if (attr == R.styleable.NumberPickerView_npv_WrapSelectorWheel) {
                 mWrapSelectorWheel = a.getBoolean(attr, DEFAULT_WRAP_SELECTOR_WHEEL);
-            }else if(attr == R.styleable.NumberPickerView_npv_ShowDivider){
+            } else if (attr == R.styleable.NumberPickerView_npv_ShowDivider) {
                 mShowDivider = a.getBoolean(attr, DEFAULT_SHOW_DIVIDER);
-            }else if(attr == R.styleable.NumberPickerView_npv_HintText){
+            } else if (attr == R.styleable.NumberPickerView_npv_HintText) {
                 mHintText = a.getString(attr);
-            }else if(attr == R.styleable.NumberPickerView_npv_AlternativeHint){
+            } else if (attr == R.styleable.NumberPickerView_npv_AlternativeHint) {
                 mAlterHint = a.getString(attr);
-            }else if(attr == R.styleable.NumberPickerView_npv_EmptyItemHint){
+            } else if (attr == R.styleable.NumberPickerView_npv_EmptyItemHint) {
                 mEmptyItemHint = a.getString(attr);
-            }else if(attr == R.styleable.NumberPickerView_npv_MarginStartOfHint){
+            } else if (attr == R.styleable.NumberPickerView_npv_MarginStartOfHint) {
                 mMarginStartOfHint = a.getDimensionPixelSize(attr, dp2px(context, DEFAULT_MARGIN_START_OF_HINT_DP));
-            }else if(attr == R.styleable.NumberPickerView_npv_MarginEndOfHint){
+            } else if (attr == R.styleable.NumberPickerView_npv_MarginEndOfHint) {
                 mMarginEndOfHint = a.getDimensionPixelSize(attr, dp2px(context, DEFAULT_MARGIN_END_OF_HINT_DP));
-            }else if(attr == R.styleable.NumberPickerView_npv_ItemPaddingVertical){
+            } else if (attr == R.styleable.NumberPickerView_npv_ItemPaddingVertical) {
                 mItemPaddingVertical = a.getDimensionPixelSize(attr, dp2px(context, DEFAULT_ITEM_PADDING_DP_V));
-            }else if(attr == R.styleable.NumberPickerView_npv_ItemPaddingHorizontal){
+            } else if (attr == R.styleable.NumberPickerView_npv_ItemPaddingHorizontal) {
                 mItemPaddingHorizontal = a.getDimensionPixelSize(attr, dp2px(context, DEFAULT_ITEM_PADDING_DP_H));
-            }else if(attr == R.styleable.NumberPickerView_npv_AlternativeTextArrayWithMeasureHint){
+            } else if (attr == R.styleable.NumberPickerView_npv_AlternativeTextArrayWithMeasureHint) {
                 mAlterTextArrayWithMeasureHint = a.getTextArray(attr);
-            }else if(attr == R.styleable.NumberPickerView_npv_AlternativeTextArrayWithoutMeasureHint){
+            } else if (attr == R.styleable.NumberPickerView_npv_AlternativeTextArrayWithoutMeasureHint) {
                 mAlterTextArrayWithoutMeasureHint = a.getTextArray(attr);
-            }else if(attr == R.styleable.NumberPickerView_npv_RespondChangeOnDetached){
+            } else if (attr == R.styleable.NumberPickerView_npv_RespondChangeOnDetached) {
                 mRespondChangeOnDetach = a.getBoolean(attr, DEFAULT_RESPOND_CHANGE_ON_DETACH);
-            }else if(attr == R.styleable.NumberPickerView_npv_RespondChangeInMainThread){
+            } else if (attr == R.styleable.NumberPickerView_npv_RespondChangeInMainThread) {
                 mRespondChangeInMainThread = a.getBoolean(attr, DEFAULT_RESPOND_CHANGE_IN_MAIN_THREAD);
-            }else if (attr == R.styleable.NumberPickerView_npv_TextEllipsize) {
+            } else if (attr == R.styleable.NumberPickerView_npv_TextEllipsize) {
                 mTextEllipsize = a.getString(attr);
             }
         }
         a.recycle();
     }
 
-    private void init(Context context){
+    private void init(Context context) {
         mScroller = ScrollerCompat.create(context);
         mMiniVelocityFling = ViewConfiguration.get(getContext()).getScaledMinimumFlingVelocity();
         mScaledTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
-        if(mTextSizeNormal == 0) mTextSizeNormal = sp2px(context, DEFAULT_TEXT_SIZE_NORMAL_SP);
-        if(mTextSizeSelected == 0) mTextSizeSelected = sp2px(context, DEFAULT_TEXT_SIZE_SELECTED_SP);
-        if(mTextSizeHint == 0) mTextSizeHint = sp2px(context, DEFAULT_TEXT_SIZE_HINT_SP);
-        if(mMarginStartOfHint == 0) mMarginStartOfHint = dp2px(context, DEFAULT_MARGIN_START_OF_HINT_DP);
-        if(mMarginEndOfHint == 0) mMarginEndOfHint = dp2px(context, DEFAULT_MARGIN_END_OF_HINT_DP);
+        if (mTextSizeNormal == 0) mTextSizeNormal = sp2px(context, DEFAULT_TEXT_SIZE_NORMAL_SP);
+        if (mTextSizeSelected == 0)
+            mTextSizeSelected = sp2px(context, DEFAULT_TEXT_SIZE_SELECTED_SP);
+        if (mTextSizeHint == 0) mTextSizeHint = sp2px(context, DEFAULT_TEXT_SIZE_HINT_SP);
+        if (mMarginStartOfHint == 0)
+            mMarginStartOfHint = dp2px(context, DEFAULT_MARGIN_START_OF_HINT_DP);
+        if (mMarginEndOfHint == 0) mMarginEndOfHint = dp2px(context, DEFAULT_MARGIN_END_OF_HINT_DP);
 
         mPaintDivider.setColor(mDividerColor);
         mPaintDivider.setAntiAlias(true);
@@ -316,58 +323,58 @@ public class NumberPickerView extends View{
         mPaintHint.setTextAlign(Align.CENTER);
         mPaintHint.setTextSize(mTextSizeHint);
 
-        if(mShowCount % 2 == 0){
+        if (mShowCount % 2 == 0) {
             mShowCount++;
         }
-        if(mMinShowIndex == -1 || mMaxShowIndex == -1){
+        if (mMinShowIndex == -1 || mMaxShowIndex == -1) {
             updateValueForInit();
         }
         initHandler();
     }
 
-    private void initHandler(){
+    private void initHandler() {
         mHandlerThread = new HandlerThread("HandlerThread-For-Refreshing");
         mHandlerThread.start();
 
-        mHandlerInNewThread = new Handler(mHandlerThread.getLooper()){
+        mHandlerInNewThread = new Handler(mHandlerThread.getLooper()) {
             @Override
             public void handleMessage(Message msg) {
-                switch(msg.what){
+                switch (msg.what) {
                     case HANDLER_WHAT_REFRESH:
-                        if(!mScroller.isFinished()){
-                            if(mScrollState == OnScrollListener.SCROLL_STATE_IDLE){
+                        if (!mScroller.isFinished()) {
+                            if (mScrollState == OnScrollListener.SCROLL_STATE_IDLE) {
                                 onScrollStateChange(OnScrollListener.SCROLL_STATE_TOUCH_SCROLL);
                             }
                             mHandlerInNewThread.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH, 0, 0, msg.obj), HANDLER_INTERVAL_REFRESH);
-                        }else{
+                        } else {
                             int duration = 0;
                             int willPickIndex;
                             //if scroller finished(not scrolling), then adjust the position
-                            if(mCurrDrawFirstItemY != 0){//need to adjust
-                                if(mScrollState == OnScrollListener.SCROLL_STATE_IDLE){
+                            if (mCurrDrawFirstItemY != 0) {//need to adjust
+                                if (mScrollState == OnScrollListener.SCROLL_STATE_IDLE) {
                                     onScrollStateChange(OnScrollListener.SCROLL_STATE_TOUCH_SCROLL);
                                 }
-                                if(mCurrDrawFirstItemY < (-mItemHeight/2)){
+                                if (mCurrDrawFirstItemY < (-mItemHeight / 2)) {
                                     //adjust to scroll upward
-                                    duration = (int)((float)DEFAULT_INTERVAL_REVISE_DURATION * (mItemHeight + mCurrDrawFirstItemY) / mItemHeight);
+                                    duration = (int) ((float) DEFAULT_INTERVAL_REVISE_DURATION * (mItemHeight + mCurrDrawFirstItemY) / mItemHeight);
                                     mScroller.startScroll(0, mCurrDrawGlobalY, 0, mItemHeight + mCurrDrawFirstItemY, duration * 3);
                                     willPickIndex = getWillPickIndexByGlobalY(mCurrDrawGlobalY + mItemHeight + mCurrDrawFirstItemY);
-                                }else{
+                                } else {
                                     //adjust to scroll downward
-                                    duration = (int)((float)DEFAULT_INTERVAL_REVISE_DURATION * (-mCurrDrawFirstItemY) / mItemHeight);
+                                    duration = (int) ((float) DEFAULT_INTERVAL_REVISE_DURATION * (-mCurrDrawFirstItemY) / mItemHeight);
                                     mScroller.startScroll(0, mCurrDrawGlobalY, 0, mCurrDrawFirstItemY, duration * 3);
                                     willPickIndex = getWillPickIndexByGlobalY(mCurrDrawGlobalY + mCurrDrawFirstItemY);
                                 }
                                 postInvalidate();
-                            }else{
+                            } else {
                                 onScrollStateChange(OnScrollListener.SCROLL_STATE_IDLE);
                                 //get the index which will be selected
                                 willPickIndex = getWillPickIndexByGlobalY(mCurrDrawGlobalY);
                             }
                             Message changeMsg = getMsg(HANDLER_WHAT_LISTENER_VALUE_CHANGED, mPrevPickedIndex, willPickIndex, msg.obj);
-                            if(mRespondChangeInMainThread){
+                            if (mRespondChangeInMainThread) {
                                 mHandlerInMainThread.sendMessageDelayed(changeMsg, duration * 2);
-                            }else{
+                            } else {
                                 mHandlerInNewThread.sendMessageDelayed(changeMsg, duration * 2);
                             }
                         }
@@ -378,17 +385,17 @@ public class NumberPickerView extends View{
                 }
             }
         };
-        mHandlerInMainThread = new Handler(){
+        mHandlerInMainThread = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                switch (msg.what){
+                switch (msg.what) {
                     case HANDLER_WHAT_REQUEST_LAYOUT:
                         requestLayout();
-                    break;
+                        break;
                     case HANDLER_WHAT_LISTENER_VALUE_CHANGED:
                         respondPickedValueChanged(msg.arg1, msg.arg2, msg.obj);
-                    break;
+                        break;
                 }
             }
         };
@@ -415,14 +422,14 @@ public class NumberPickerView extends View{
         mViewWidth = w;
         mViewHeight = h;
         mItemHeight = mViewHeight / mShowCount;
-        mViewCenterX = ((float)(mViewWidth + getPaddingLeft() - getPaddingRight()))/2;
+        mViewCenterX = ((float) (mViewWidth + getPaddingLeft() - getPaddingRight())) / 2;
         int defaultValue = 0;
-        if(getOneRecycleSize() > 1){
-            if(mHasInit) {
+        if (getOneRecycleSize() > 1) {
+            if (mHasInit) {
                 defaultValue = getValue() - mMinValue;
-            }else if(mCurrentItemIndexEffect) {
+            } else if (mCurrentItemIndexEffect) {
                 defaultValue = mCurrDrawFirstItemIndex + (mShowCount - 1) / 2;
-            }else{
+            } else {
                 defaultValue = 0;
             }
         }
@@ -436,7 +443,7 @@ public class NumberPickerView extends View{
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if(mHandlerThread == null || !mHandlerThread.isAlive()) {
+        if (mHandlerThread == null || !mHandlerThread.isAlive()) {
             initHandler();
         }
     }
@@ -447,15 +454,15 @@ public class NumberPickerView extends View{
         mHandlerThread.quit();
         //These codes are for dialog or PopupWindow which will be used for more than once.
         //Not an elegant solution, if you have any good idea, please let me know, thank you.
-        if(mItemHeight == 0) return;
-        if(!mScroller.isFinished()){
+        if (mItemHeight == 0) return;
+        if (!mScroller.isFinished()) {
             mScroller.abortAnimation();
             mCurrDrawGlobalY = mScroller.getCurrY();
             calculateFirstItemParameterByGlobalY();
-            if(mCurrDrawFirstItemY != 0){
-                if(mCurrDrawFirstItemY < (-mItemHeight/2)){
+            if (mCurrDrawFirstItemY != 0) {
+                if (mCurrDrawFirstItemY < (-mItemHeight / 2)) {
                     mCurrDrawGlobalY = mCurrDrawGlobalY + mItemHeight + mCurrDrawFirstItemY;
-                }else{
+                } else {
                     mCurrDrawGlobalY = mCurrDrawGlobalY + mCurrDrawFirstItemY;
                 }
                 calculateFirstItemParameterByGlobalY();
@@ -466,7 +473,7 @@ public class NumberPickerView extends View{
         // please initialize NumberPickerView's data every time setting up NumberPickerView,
         // set the demo of GregorianLunarCalendar
         int currPickedIndex = getWillPickIndexByGlobalY(mCurrDrawGlobalY);
-        if(currPickedIndex != mPrevPickedIndex && mRespondChangeOnDetach){
+        if (currPickedIndex != mPrevPickedIndex && mRespondChangeOnDetach) {
             try {
                 if (mOnValueChangeListener != null) {
                     mOnValueChangeListener.onValueChange(NumberPickerView.this, mPrevPickedIndex + mMinValue, currPickedIndex + mMinValue);
@@ -474,29 +481,29 @@ public class NumberPickerView extends View{
                 if (mOnValueChangeListenerRaw != null) {
                     mOnValueChangeListenerRaw.onValueChangeRelativeToRaw(NumberPickerView.this, mPrevPickedIndex, currPickedIndex, mDisplayedValues);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         mPrevPickedIndex = currPickedIndex;
     }
 
-    public int getOneRecycleSize(){
+    public int getOneRecycleSize() {
         return mMaxShowIndex - mMinShowIndex + 1;
     }
 
-    public int getRawContentSize(){
-        if(mDisplayedValues != null)
+    public int getRawContentSize() {
+        if (mDisplayedValues != null)
             return mDisplayedValues.length;
         return 0;
     }
 
-    public void setDisplayedValuesAndPickedIndex(String[] newDisplayedValues, int pickedIndex, boolean needRefresh){
+    public void setDisplayedValuesAndPickedIndex(String[] newDisplayedValues, int pickedIndex, boolean needRefresh) {
         stopScrolling();
-        if(newDisplayedValues == null){
+        if (newDisplayedValues == null) {
             throw new IllegalArgumentException("newDisplayedValues should not be null.");
         }
-        if(pickedIndex < 0){
+        if (pickedIndex < 0) {
             throw new IllegalArgumentException("pickedIndex should not be negative, now pickedIndex is " + pickedIndex);
         }
         updateContent(newDisplayedValues);
@@ -505,24 +512,24 @@ public class NumberPickerView extends View{
         updateValue();
         mPrevPickedIndex = pickedIndex + mMinShowIndex;
         correctPositionByDefaultValue(pickedIndex, mWrapSelectorWheel && mWrapSelectorWheelCheck);
-        if(needRefresh){
+        if (needRefresh) {
             mHandlerInNewThread.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH), 0);
             postInvalidate();
         }
     }
 
-    public void setDisplayedValues(String[] newDisplayedValues, boolean needRefresh){
+    public void setDisplayedValues(String[] newDisplayedValues, boolean needRefresh) {
         setDisplayedValuesAndPickedIndex(newDisplayedValues, 0, needRefresh);
     }
 
-    public void setDisplayedValues(String[] newDisplayedValues){
+    public void setDisplayedValues(String[] newDisplayedValues) {
         stopRefreshing();
         stopScrolling();
-        if(newDisplayedValues == null){
+        if (newDisplayedValues == null) {
             throw new IllegalArgumentException("newDisplayedValues should not be null.");
         }
 
-        if(mMaxValue - mMinValue + 1 > newDisplayedValues.length){
+        if (mMaxValue - mMinValue + 1 > newDisplayedValues.length) {
             throw new IllegalArgumentException("mMaxValue - mMinValue + 1 should not be greater than mDisplayedValues.length, now "
                     + "((mMaxValue - mMinValue + 1) is " + (mMaxValue - mMinValue + 1)
                     + " newDisplayedValues.length is " + newDisplayedValues.length
@@ -538,21 +545,22 @@ public class NumberPickerView extends View{
 
     /**
      * Gets the values to be displayed instead of string values.
+     *
      * @return The displayed values.
      */
     public String[] getDisplayedValues() {
         return mDisplayedValues;
     }
 
-    public void setWrapSelectorWheel(boolean wrapSelectorWheel){
-        if(mWrapSelectorWheel != wrapSelectorWheel) {
-            if(!wrapSelectorWheel) {
-                if(mScrollState == OnScrollListener.SCROLL_STATE_IDLE){
+    public void setWrapSelectorWheel(boolean wrapSelectorWheel) {
+        if (mWrapSelectorWheel != wrapSelectorWheel) {
+            if (!wrapSelectorWheel) {
+                if (mScrollState == OnScrollListener.SCROLL_STATE_IDLE) {
                     internalSetWrapToLinear();
-                }else{
+                } else {
                     mPendingWrapToLinear = true;
                 }
-            }else{
+            } else {
                 mWrapSelectorWheel = wrapSelectorWheel;
                 updateWrapStateByContent();
                 postInvalidate();
@@ -564,9 +572,10 @@ public class NumberPickerView extends View{
      * get the "fromValue" by using getValue(), if your picker's minValue is not 0,
      * make sure you can get the accurate value by getValue(), or you can use
      * smoothScrollToValue(int fromValue, int toValue, boolean needRespond)
+     *
      * @param toValue the value you want picker to scroll to
      */
-    public void smoothScrollToValue(int toValue){
+    public void smoothScrollToValue(int toValue) {
         smoothScrollToValue(getValue(), toValue, true);
     }
 
@@ -574,46 +583,47 @@ public class NumberPickerView extends View{
      * get the "fromValue" by using getValue(), if your picker's minValue is not 0,
      * make sure you can get the accurate value by getValue(), or you can use
      * smoothScrollToValue(int fromValue, int toValue, boolean needRespond)
-     * @param toValue the value you want picker to scroll to
+     *
+     * @param toValue     the value you want picker to scroll to
      * @param needRespond set if you want picker to respond onValueChange listener
      */
-    public void smoothScrollToValue(int toValue, boolean needRespond){
+    public void smoothScrollToValue(int toValue, boolean needRespond) {
         smoothScrollToValue(getValue(), toValue, needRespond);
     }
 
-    public void smoothScrollToValue(int fromValue, int toValue){
+    public void smoothScrollToValue(int fromValue, int toValue) {
         smoothScrollToValue(fromValue, toValue, true);
     }
 
     /**
-     *
-     * @param fromValue need to set the fromValue, can be greater than mMaxValue or less than mMinValue
-     * @param toValue the value you want picker to scroll to
+     * @param fromValue   need to set the fromValue, can be greater than mMaxValue or less than mMinValue
+     * @param toValue     the value you want picker to scroll to
      * @param needRespond need Respond to the ValueChange callback When Scrolling, default is false
      */
-    public void smoothScrollToValue(int fromValue, int toValue, boolean needRespond){
+    public void smoothScrollToValue(int fromValue, int toValue, boolean needRespond) {
         int deltaIndex;
         fromValue = refineValueByLimit(fromValue, mMinValue, mMaxValue,
                 mWrapSelectorWheel && mWrapSelectorWheelCheck);
         toValue = refineValueByLimit(toValue, mMinValue, mMaxValue,
                 mWrapSelectorWheel && mWrapSelectorWheelCheck);
-        if(mWrapSelectorWheel && mWrapSelectorWheelCheck) {
+        if (mWrapSelectorWheel && mWrapSelectorWheelCheck) {
             deltaIndex = toValue - fromValue;
             int halfOneRecycleSize = getOneRecycleSize() / 2;
-            if(deltaIndex < -halfOneRecycleSize || halfOneRecycleSize < deltaIndex ){
+            if (deltaIndex < -halfOneRecycleSize || halfOneRecycleSize < deltaIndex) {
                 deltaIndex = deltaIndex > 0 ? deltaIndex - getOneRecycleSize() : deltaIndex + getOneRecycleSize();
             }
-        }else{
+        } else {
             deltaIndex = toValue - fromValue;
         }
         setValue(fromValue);
-        if(fromValue == toValue) return;
+        if (fromValue == toValue) return;
         scrollByIndexSmoothly(deltaIndex, needRespond);
     }
 
     /**
      * simplify the "setDisplayedValue() + setMinValue() + setMaxValue()" process,
      * default minValue is 0, and make sure you do NOT change the minValue.
+     *
      * @param display new values to be displayed
      */
     public void refreshByNewDisplayedValues(String[] display) {
@@ -636,102 +646,102 @@ public class NumberPickerView extends View{
 
     /**
      * used by handlers to respond onchange callbacks
-     * @param oldVal    prevPicked value
-     * @param newVal    currPicked value
+     *
+     * @param oldVal        prevPicked value
+     * @param newVal        currPicked value
      * @param respondChange if want to respond onchange callbacks
      */
-    private void respondPickedValueChanged(int oldVal, int newVal, Object respondChange){
+    private void respondPickedValueChanged(int oldVal, int newVal, Object respondChange) {
         onScrollStateChange(OnScrollListener.SCROLL_STATE_IDLE);
-        if(oldVal != newVal){
-            if(respondChange == null || !(respondChange instanceof Boolean) || (Boolean) respondChange) {
-                if(mOnValueChangeListener != null) {
+        if (oldVal != newVal) {
+            if (respondChange == null || !(respondChange instanceof Boolean) || (Boolean) respondChange) {
+                if (mOnValueChangeListener != null) {
                     mOnValueChangeListener.onValueChange(NumberPickerView.this, oldVal + mMinValue, newVal + mMinValue);
                 }
-                if(mOnValueChangeListenerRaw != null){
+                if (mOnValueChangeListenerRaw != null) {
                     mOnValueChangeListenerRaw.onValueChangeRelativeToRaw(NumberPickerView.this, oldVal, newVal, mDisplayedValues);
                 }
             }
         }
         mPrevPickedIndex = newVal;
-        if(mPendingWrapToLinear){
+        if (mPendingWrapToLinear) {
             mPendingWrapToLinear = false;
             internalSetWrapToLinear();
         }
     }
 
-    private void scrollByIndexSmoothly(int deltaIndex){
+    private void scrollByIndexSmoothly(int deltaIndex) {
         scrollByIndexSmoothly(deltaIndex, true);
     }
 
     /**
-     *
-     * @param deltaIndex the delta index it will scroll by
+     * @param deltaIndex  the delta index it will scroll by
      * @param needRespond need Respond to the ValueChange callback When Scrolling, default is false
      */
-    private void scrollByIndexSmoothly(int deltaIndex, boolean needRespond){
-        if(!(mWrapSelectorWheel && mWrapSelectorWheelCheck)){
+    private void scrollByIndexSmoothly(int deltaIndex, boolean needRespond) {
+        if (!(mWrapSelectorWheel && mWrapSelectorWheelCheck)) {
             int willPickRawIndex = getPickedIndexRelativeToRaw();
-            if(willPickRawIndex + deltaIndex > mMaxShowIndex){
+            if (willPickRawIndex + deltaIndex > mMaxShowIndex) {
                 deltaIndex = mMaxShowIndex - willPickRawIndex;
-            }else if(willPickRawIndex + deltaIndex < mMinShowIndex){
+            } else if (willPickRawIndex + deltaIndex < mMinShowIndex) {
                 deltaIndex = mMinShowIndex - willPickRawIndex;
             }
         }
         int duration;
         int dy;
-        if(mCurrDrawFirstItemY < (-mItemHeight/2)){
+        if (mCurrDrawFirstItemY < (-mItemHeight / 2)) {
             //scroll upwards for a distance of less than mItemHeight
-            dy =  mItemHeight + mCurrDrawFirstItemY;
-            duration = (int)((float)DEFAULT_INTERVAL_REVISE_DURATION * (mItemHeight + mCurrDrawFirstItemY) / mItemHeight);
-            if(deltaIndex < 0){
+            dy = mItemHeight + mCurrDrawFirstItemY;
+            duration = (int) ((float) DEFAULT_INTERVAL_REVISE_DURATION * (mItemHeight + mCurrDrawFirstItemY) / mItemHeight);
+            if (deltaIndex < 0) {
                 duration = -duration - deltaIndex * DEFAULT_INTERVAL_REVISE_DURATION;
-            }else{
+            } else {
                 duration = duration + deltaIndex * DEFAULT_INTERVAL_REVISE_DURATION;
             }
-        }else{
+        } else {
             //scroll downwards for a distance of less than mItemHeight
             dy = mCurrDrawFirstItemY;
-            duration = (int)((float)DEFAULT_INTERVAL_REVISE_DURATION * (-mCurrDrawFirstItemY) / mItemHeight);
-            if(deltaIndex < 0){
+            duration = (int) ((float) DEFAULT_INTERVAL_REVISE_DURATION * (-mCurrDrawFirstItemY) / mItemHeight);
+            if (deltaIndex < 0) {
                 duration = duration - deltaIndex * DEFAULT_INTERVAL_REVISE_DURATION;
-            }else{
+            } else {
                 duration = duration + deltaIndex * DEFAULT_INTERVAL_REVISE_DURATION;
             }
         }
         dy = dy + deltaIndex * mItemHeight;
-        if(duration < DEFAULT_MIN_SCROLL_BY_INDEX_DURATION)
+        if (duration < DEFAULT_MIN_SCROLL_BY_INDEX_DURATION)
             duration = DEFAULT_MIN_SCROLL_BY_INDEX_DURATION;
-        if(duration > DEFAULT_MAX_SCROLL_BY_INDEX_DURATION)
+        if (duration > DEFAULT_MAX_SCROLL_BY_INDEX_DURATION)
             duration = DEFAULT_MAX_SCROLL_BY_INDEX_DURATION;
         mScroller.startScroll(0, mCurrDrawGlobalY, 0, dy, duration);
-        if(needRespond){
+        if (needRespond) {
             mHandlerInNewThread.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH), duration / 4);
-        }else{
+        } else {
             mHandlerInNewThread.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH, 0, 0, new Boolean(needRespond)), duration / 4);
         }
         postInvalidate();
     }
 
-    public int getMinValue(){
+    public int getMinValue() {
         return mMinValue;
     }
 
-    public int getMaxValue(){
+    public int getMaxValue() {
         return mMaxValue;
     }
 
-    public void setMinValue(int minValue){
+    public void setMinValue(int minValue) {
         mMinValue = minValue;
         mMinShowIndex = 0;
         updateNotWrapYLimit();
     }
 
     //compatible for android.widget.NumberPicker
-    public void setMaxValue(int maxValue){
-        if(mDisplayedValues == null){
+    public void setMaxValue(int maxValue) {
+        if (mDisplayedValues == null) {
             throw new NullPointerException("mDisplayedValues should not be null");
         }
-        if(maxValue - mMinValue + 1 > mDisplayedValues.length){
+        if (maxValue - mMinValue + 1 > mDisplayedValues.length) {
             throw new IllegalArgumentException("(maxValue - mMinValue + 1) should not be greater than mDisplayedValues.length now " +
                     " (maxValue - mMinValue + 1) is " + (maxValue - mMinValue + 1) + " and mDisplayedValues.length is " + mDisplayedValues.length);
         }
@@ -742,78 +752,78 @@ public class NumberPickerView extends View{
     }
 
     //compatible for android.widget.NumberPicker
-    public void setValue(int value){
-        if(value < mMinValue){
+    public void setValue(int value) {
+        if (value < mMinValue) {
             throw new IllegalArgumentException("should not set a value less than mMinValue, value is " + value);
         }
-        if(value > mMaxValue){
+        if (value > mMaxValue) {
             throw new IllegalArgumentException("should not set a value greater than mMaxValue, value is " + value);
         }
         setPickedIndexRelativeToRaw(value - mMinValue);
     }
 
     //compatible for android.widget.NumberPicker
-    public int getValue(){
+    public int getValue() {
         return getPickedIndexRelativeToRaw() + mMinValue;
     }
 
-    public String getContentByCurrValue(){
+    public String getContentByCurrValue() {
         return mDisplayedValues[getValue() - mMinValue];
     }
 
-    public boolean getWrapSelectorWheel(){
+    public boolean getWrapSelectorWheel() {
         return mWrapSelectorWheel;
     }
 
-    public boolean getWrapSelectorWheelAbsolutely(){
+    public boolean getWrapSelectorWheelAbsolutely() {
         return mWrapSelectorWheel && mWrapSelectorWheelCheck;
     }
 
-    public void setHintText(String hintText){
-        if(isStringEqual(mHintText, hintText)) return;
+    public void setHintText(String hintText) {
+        if (isStringEqual(mHintText, hintText)) return;
         mHintText = hintText;
         mTextSizeHintCenterYOffset = getTextCenterYOffset(mPaintHint.getFontMetrics());
         mWidthOfHintText = getTextWidth(mHintText, mPaintHint);
         mHandlerInMainThread.sendEmptyMessage(HANDLER_WHAT_REQUEST_LAYOUT);
     }
 
-    public void setPickedIndexRelativeToMin(int pickedIndexToMin){
-        if(0 <= pickedIndexToMin && pickedIndexToMin < getOneRecycleSize()){
+    public void setPickedIndexRelativeToMin(int pickedIndexToMin) {
+        if (0 <= pickedIndexToMin && pickedIndexToMin < getOneRecycleSize()) {
             mPrevPickedIndex = pickedIndexToMin + mMinShowIndex;
             correctPositionByDefaultValue(pickedIndexToMin, mWrapSelectorWheel && mWrapSelectorWheelCheck);
             postInvalidate();
         }
     }
 
-    public void setNormalTextColor(int normalTextColor){
-        if(mTextColorNormal == normalTextColor) return;
+    public void setNormalTextColor(int normalTextColor) {
+        if (mTextColorNormal == normalTextColor) return;
         mTextColorNormal = normalTextColor;
         postInvalidate();
     }
 
-    public void setSelectedTextColor(int selectedTextColor){
-        if(mTextColorSelected == selectedTextColor) return;
+    public void setSelectedTextColor(int selectedTextColor) {
+        if (mTextColorSelected == selectedTextColor) return;
         mTextColorSelected = selectedTextColor;
         postInvalidate();
     }
 
-    public void setHintTextColor(int hintTextColor){
-        if(mTextColorHint == hintTextColor) return;
+    public void setHintTextColor(int hintTextColor) {
+        if (mTextColorHint == hintTextColor) return;
         mTextColorHint = hintTextColor;
         mPaintHint.setColor(mTextColorHint);
         postInvalidate();
     }
 
-    public void setDividerColor(int dividerColor){
-        if(mDividerColor == dividerColor) return;
+    public void setDividerColor(int dividerColor) {
+        if (mDividerColor == dividerColor) return;
         mDividerColor = dividerColor;
         mPaintDivider.setColor(mDividerColor);
         postInvalidate();
     }
 
-    public void setPickedIndexRelativeToRaw(int pickedIndexToRaw){
-        if(mMinShowIndex > -1){
-            if(mMinShowIndex <= pickedIndexToRaw && pickedIndexToRaw <= mMaxShowIndex){
+    public void setPickedIndexRelativeToRaw(int pickedIndexToRaw) {
+        if (mMinShowIndex > -1) {
+            if (mMinShowIndex <= pickedIndexToRaw && pickedIndexToRaw <= mMaxShowIndex) {
                 mPrevPickedIndex = pickedIndexToRaw;
                 correctPositionByDefaultValue(pickedIndexToRaw - mMinShowIndex, mWrapSelectorWheel && mWrapSelectorWheelCheck);
                 postInvalidate();
@@ -821,49 +831,49 @@ public class NumberPickerView extends View{
         }
     }
 
-    public int getPickedIndexRelativeToRaw(){
+    public int getPickedIndexRelativeToRaw() {
         int willPickIndex;
-        if(mCurrDrawFirstItemY != 0){
-            if(mCurrDrawFirstItemY < (-mItemHeight/2)){
+        if (mCurrDrawFirstItemY != 0) {
+            if (mCurrDrawFirstItemY < (-mItemHeight / 2)) {
                 willPickIndex = getWillPickIndexByGlobalY(mCurrDrawGlobalY + mItemHeight + mCurrDrawFirstItemY);
-            }else{
+            } else {
                 willPickIndex = getWillPickIndexByGlobalY(mCurrDrawGlobalY + mCurrDrawFirstItemY);
             }
-        }else{
+        } else {
             willPickIndex = getWillPickIndexByGlobalY(mCurrDrawGlobalY);
         }
         return willPickIndex;
     }
 
-    public void setMinAndMaxShowIndex(int minShowIndex, int maxShowIndex){
+    public void setMinAndMaxShowIndex(int minShowIndex, int maxShowIndex) {
         setMinAndMaxShowIndex(minShowIndex, maxShowIndex, true);
     }
 
-    public void setMinAndMaxShowIndex(int minShowIndex, int maxShowIndex, boolean needRefresh){
-        if(minShowIndex > maxShowIndex){
+    public void setMinAndMaxShowIndex(int minShowIndex, int maxShowIndex, boolean needRefresh) {
+        if (minShowIndex > maxShowIndex) {
             throw new IllegalArgumentException("minShowIndex should be less than maxShowIndex, minShowIndex is "
                     + minShowIndex + ", maxShowIndex is " + maxShowIndex + ".");
         }
-        if(mDisplayedValues == null){
+        if (mDisplayedValues == null) {
             throw new IllegalArgumentException("mDisplayedValues should not be null, you need to set mDisplayedValues first.");
         } else {
-            if(minShowIndex < 0){
+            if (minShowIndex < 0) {
                 throw new IllegalArgumentException("minShowIndex should not be less than 0, now minShowIndex is " + minShowIndex);
-            } else if(minShowIndex > mDisplayedValues.length - 1){
+            } else if (minShowIndex > mDisplayedValues.length - 1) {
                 throw new IllegalArgumentException("minShowIndex should not be greater than (mDisplayedValues.length - 1), now " +
                         "(mDisplayedValues.length - 1) is " + (mDisplayedValues.length - 1) + " minShowIndex is " + minShowIndex);
             }
 
-            if(maxShowIndex < 0){
+            if (maxShowIndex < 0) {
                 throw new IllegalArgumentException("maxShowIndex should not be less than 0, now maxShowIndex is " + maxShowIndex);
-            } else if(maxShowIndex > mDisplayedValues.length - 1){
+            } else if (maxShowIndex > mDisplayedValues.length - 1) {
                 throw new IllegalArgumentException("maxShowIndex should not be greater than (mDisplayedValues.length - 1), now " +
                         "(mDisplayedValues.length - 1) is " + (mDisplayedValues.length - 1) + " maxShowIndex is " + maxShowIndex);
             }
         }
         mMinShowIndex = minShowIndex;
         mMaxShowIndex = maxShowIndex;
-        if(needRefresh){
+        if (needRefresh) {
             mPrevPickedIndex = 0 + mMinShowIndex;
             correctPositionByDefaultValue(0, mWrapSelectorWheel && mWrapSelectorWheelCheck);
             postInvalidate();
@@ -872,12 +882,13 @@ public class NumberPickerView extends View{
 
     /**
      * set the friction of scroller, it will effect the scroller's acceleration when fling
+     *
      * @param friction default is ViewConfiguration.get(mContext).getScrollFriction()
      *                 if setFriction(2 * ViewConfiguration.get(mContext).getScrollFriction()),
      *                 the friction will be twice as much as before
      */
-    public void setFriction(float friction){
-        if(friction <= 0)
+    public void setFriction(float friction) {
+        if (friction <= 0)
             throw new IllegalArgumentException("you should set a a positive float friction, now friction is " + friction);
         mFriction = ViewConfiguration.get(getContext()).getScrollFriction() / friction;
     }
@@ -894,95 +905,95 @@ public class NumberPickerView extends View{
     }
 
     //compatible for NumberPicker
-    public void setOnScrollListener(OnScrollListener listener){
+    public void setOnScrollListener(OnScrollListener listener) {
         mOnScrollListener = listener;
     }
 
     //compatible for NumberPicker
-    public void setOnValueChangedListener(OnValueChangeListener listener){
+    public void setOnValueChangedListener(OnValueChangeListener listener) {
         mOnValueChangeListener = listener;
     }
 
-    public void setOnValueChangedListenerRelativeToRaw(OnValueChangeListenerRelativeToRaw listener){
+    public void setOnValueChangedListenerRelativeToRaw(OnValueChangeListenerRelativeToRaw listener) {
         mOnValueChangeListenerRaw = listener;
     }
 
-    public void setOnValueChangeListenerInScrolling(OnValueChangeListenerInScrolling listener){
+    public void setOnValueChangeListenerInScrolling(OnValueChangeListenerInScrolling listener) {
         mOnValueChangeListenerInScrolling = listener;
     }
 
-    public void setContentTextTypeface(Typeface typeface){
+    public void setContentTextTypeface(Typeface typeface) {
         mPaintText.setTypeface(typeface);
     }
 
-    public void setHintTextTypeface(Typeface typeface){
+    public void setHintTextTypeface(Typeface typeface) {
         mPaintHint.setTypeface(typeface);
     }
 
     //return index relative to mDisplayedValues from 0.
-    private int getWillPickIndexByGlobalY(int globalY){
-        if(mItemHeight == 0) return 0;
+    private int getWillPickIndexByGlobalY(int globalY) {
+        if (mItemHeight == 0) return 0;
         int willPickIndex = globalY / mItemHeight + mShowCount / 2;
         int index = getIndexByRawIndex(willPickIndex, getOneRecycleSize(), mWrapSelectorWheel && mWrapSelectorWheelCheck);
-        if(0 <= index && index < getOneRecycleSize()){
+        if (0 <= index && index < getOneRecycleSize()) {
             return index + mMinShowIndex;
-        }else{
+        } else {
             throw new IllegalArgumentException("getWillPickIndexByGlobalY illegal index : " + index
                     + " getOneRecycleSize() : " + getOneRecycleSize() + " mWrapSelectorWheel : " + mWrapSelectorWheel);
         }
     }
 
-    private int getIndexByRawIndex(int index, int size, boolean wrap){
-        if(size <= 0) return 0;
-        if(wrap){
+    private int getIndexByRawIndex(int index, int size, boolean wrap) {
+        if (size <= 0) return 0;
+        if (wrap) {
             index = index % size;
-            if(index < 0){
+            if (index < 0) {
                 index = index + size;
             }
             return index;
-        }else{
+        } else {
             return index;
         }
     }
 
-    private void internalSetWrapToLinear(){
+    private void internalSetWrapToLinear() {
         int rawIndex = getPickedIndexRelativeToRaw();
         correctPositionByDefaultValue(rawIndex - mMinShowIndex, false);
         mWrapSelectorWheel = false;
         postInvalidate();
     }
 
-    private void updateDividerAttr(){
+    private void updateDividerAttr() {
         mDividerIndex0 = mShowCount / 2;
         mDividerIndex1 = mDividerIndex0 + 1;
         dividerY0 = mDividerIndex0 * mViewHeight / mShowCount;
         dividerY1 = mDividerIndex1 * mViewHeight / mShowCount;
-        if(mDividerMarginL < 0) mDividerMarginL = 0;
-        if(mDividerMarginR < 0) mDividerMarginR = 0;
+        if (mDividerMarginL < 0) mDividerMarginL = 0;
+        if (mDividerMarginR < 0) mDividerMarginR = 0;
 
-        if(mDividerMarginL + mDividerMarginR == 0) return;
-        if(getPaddingLeft() + mDividerMarginL >= mViewWidth - getPaddingRight() - mDividerMarginR){
+        if (mDividerMarginL + mDividerMarginR == 0) return;
+        if (getPaddingLeft() + mDividerMarginL >= mViewWidth - getPaddingRight() - mDividerMarginR) {
             int surplusMargin = getPaddingLeft() + mDividerMarginL + getPaddingRight() + mDividerMarginR - mViewWidth;
-            mDividerMarginL = (int)(mDividerMarginL - (float)surplusMargin * mDividerMarginL/(mDividerMarginL + mDividerMarginR));
-            mDividerMarginR = (int)(mDividerMarginR - (float)surplusMargin * mDividerMarginR/(mDividerMarginL + mDividerMarginR));
+            mDividerMarginL = (int) (mDividerMarginL - (float) surplusMargin * mDividerMarginL / (mDividerMarginL + mDividerMarginR));
+            mDividerMarginR = (int) (mDividerMarginR - (float) surplusMargin * mDividerMarginR / (mDividerMarginL + mDividerMarginR));
         }
     }
 
     private int mNotWrapLimitYTop;
     private int mNotWrapLimitYBottom;
 
-    private void updateFontAttr(){
-        if(mTextSizeNormal > mItemHeight) mTextSizeNormal = mItemHeight;
-        if(mTextSizeSelected > mItemHeight) mTextSizeSelected = mItemHeight;
+    private void updateFontAttr() {
+        if (mTextSizeNormal > mItemHeight) mTextSizeNormal = mItemHeight;
+        if (mTextSizeSelected > mItemHeight) mTextSizeSelected = mItemHeight;
 
-        if(mPaintHint == null){
+        if (mPaintHint == null) {
             throw new IllegalArgumentException("mPaintHint should not be null.");
         }
         mPaintHint.setTextSize(mTextSizeHint);
         mTextSizeHintCenterYOffset = getTextCenterYOffset(mPaintHint.getFontMetrics());
         mWidthOfHintText = getTextWidth(mHintText, mPaintHint);
 
-        if(mPaintText == null){
+        if (mPaintText == null) {
             throw new IllegalArgumentException("mPaintText should not be null.");
         }
         mPaintText.setTextSize(mTextSizeSelected);
@@ -991,33 +1002,34 @@ public class NumberPickerView extends View{
         mTextSizeNormalCenterYOffset = getTextCenterYOffset(mPaintText.getFontMetrics());
     }
 
-    private void updateNotWrapYLimit(){
+    private void updateNotWrapYLimit() {
         mNotWrapLimitYTop = 0;
         mNotWrapLimitYBottom = -mShowCount * mItemHeight;
-        if(mDisplayedValues != null){
-            mNotWrapLimitYTop = (getOneRecycleSize() - mShowCount / 2 - 1)* mItemHeight;
+        if (mDisplayedValues != null) {
+            mNotWrapLimitYTop = (getOneRecycleSize() - mShowCount / 2 - 1) * mItemHeight;
             mNotWrapLimitYBottom = -(mShowCount / 2) * mItemHeight;
         }
     }
 
-    private float downYGlobal = 0 ;
+    private float downYGlobal = 0;
     private float downY = 0;
     private float currY = 0;
 
-    private int limitY(int currDrawGlobalYPreferred){
-        if(mWrapSelectorWheel && mWrapSelectorWheelCheck) return currDrawGlobalYPreferred;
-        if(currDrawGlobalYPreferred < mNotWrapLimitYBottom){
+    private int limitY(int currDrawGlobalYPreferred) {
+        if (mWrapSelectorWheel && mWrapSelectorWheelCheck) return currDrawGlobalYPreferred;
+        if (currDrawGlobalYPreferred < mNotWrapLimitYBottom) {
             currDrawGlobalYPreferred = mNotWrapLimitYBottom;
-        }else if(currDrawGlobalYPreferred > mNotWrapLimitYTop){
+        } else if (currDrawGlobalYPreferred > mNotWrapLimitYTop) {
             currDrawGlobalYPreferred = mNotWrapLimitYTop;
         }
         return currDrawGlobalYPreferred;
     }
 
     private boolean mFlagMayPress = false;
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if(mItemHeight == 0) return true;
+        if (mItemHeight == 0) return true;
 
         if (mVelocityTracker == null) {
             mVelocityTracker = VelocityTracker.obtain();
@@ -1025,7 +1037,7 @@ public class NumberPickerView extends View{
         mVelocityTracker.addMovement(event);
         currY = event.getY();
 
-        switch(event.getAction()){
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 mFlagMayPress = true;
                 mHandlerInNewThread.removeMessages(HANDLER_WHAT_REFRESH);
@@ -1038,20 +1050,20 @@ public class NumberPickerView extends View{
             case MotionEvent.ACTION_MOVE:
                 float spanY = downY - currY;
 
-                if(mFlagMayPress && (-mScaledTouchSlop < spanY && spanY < mScaledTouchSlop)){
+                if (mFlagMayPress && (-mScaledTouchSlop < spanY && spanY < mScaledTouchSlop)) {
 
-                }else{
+                } else {
                     mFlagMayPress = false;
-                    mCurrDrawGlobalY = limitY((int)(downYGlobal + spanY));
+                    mCurrDrawGlobalY = limitY((int) (downYGlobal + spanY));
                     calculateFirstItemParameterByGlobalY();
                     invalidate();
                 }
                 onScrollStateChange(OnScrollListener.SCROLL_STATE_TOUCH_SCROLL);
                 break;
             case MotionEvent.ACTION_UP:
-                if(mFlagMayPress){
+                if (mFlagMayPress) {
                     click(event);
-                }else {
+                } else {
                     final VelocityTracker velocityTracker = mVelocityTracker;
                     velocityTracker.computeCurrentVelocity(1000);
                     int velocityY = (int) (velocityTracker.getYVelocity() * mFriction);
@@ -1071,31 +1083,31 @@ public class NumberPickerView extends View{
                 mHandlerInNewThread.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH), 0);
                 break;
         }
-        return true ;
+        return true;
     }
 
-    private void click(MotionEvent event){
+    private void click(MotionEvent event) {
         float y = event.getY();
-        for(int i = 0; i < mShowCount; i++){
-            if(mItemHeight * i <= y && y < mItemHeight * (i + 1)){
+        for (int i = 0; i < mShowCount; i++) {
+            if (mItemHeight * i <= y && y < mItemHeight * (i + 1)) {
                 clickItem(i);
                 break;
             }
         }
     }
 
-    private void clickItem(int showCountIndex){
-        if(0 <= showCountIndex && showCountIndex < mShowCount) {
+    private void clickItem(int showCountIndex) {
+        if (0 <= showCountIndex && showCountIndex < mShowCount) {
             //clicked the showCountIndex of the view
-            scrollByIndexSmoothly(showCountIndex - mShowCount/2);
-        }else{
+            scrollByIndexSmoothly(showCountIndex - mShowCount / 2);
+        } else {
             //wrong
         }
     }
 
-    private float getTextCenterYOffset(Paint.FontMetrics fontMetrics){
-        if(fontMetrics == null) return 0;
-        return Math.abs(fontMetrics.top + fontMetrics.bottom)/2;
+    private float getTextCenterYOffset(Paint.FontMetrics fontMetrics) {
+        if (fontMetrics == null) return 0;
+        return Math.abs(fontMetrics.top + fontMetrics.bottom) / 2;
     }
 
     private int mViewWidth;
@@ -1106,17 +1118,17 @@ public class NumberPickerView extends View{
     private float mViewCenterX;
 
     //defaultPickedIndex relative to the shown part
-    private void correctPositionByDefaultValue(int defaultPickedIndex, boolean wrap){
+    private void correctPositionByDefaultValue(int defaultPickedIndex, boolean wrap) {
         mCurrDrawFirstItemIndex = defaultPickedIndex - (mShowCount - 1) / 2;
         mCurrDrawFirstItemIndex = getIndexByRawIndex(mCurrDrawFirstItemIndex, getOneRecycleSize(), wrap);
-        if(mItemHeight == 0){
+        if (mItemHeight == 0) {
             mCurrentItemIndexEffect = true;
-        }else {
+        } else {
             mCurrDrawGlobalY = mCurrDrawFirstItemIndex * mItemHeight;
 
             mInScrollingPickedOldValue = mCurrDrawFirstItemIndex + mShowCount / 2;
             mInScrollingPickedOldValue = mInScrollingPickedOldValue % getOneRecycleSize();
-            if (mInScrollingPickedOldValue < 0){
+            if (mInScrollingPickedOldValue < 0) {
                 mInScrollingPickedOldValue = mInScrollingPickedOldValue + getOneRecycleSize();
             }
             mInScrollingPickedNewValue = mInScrollingPickedOldValue;
@@ -1133,7 +1145,7 @@ public class NumberPickerView extends View{
 
     @Override
     public void computeScroll() {
-        if(mItemHeight == 0) return;
+        if (mItemHeight == 0) return;
         if (mScroller.computeScrollOffset()) {
             mCurrDrawGlobalY = mScroller.getCurrY();
             calculateFirstItemParameterByGlobalY();
@@ -1141,20 +1153,20 @@ public class NumberPickerView extends View{
         }
     }
 
-    private void calculateFirstItemParameterByGlobalY(){
-        mCurrDrawFirstItemIndex = (int)Math.floor((float)mCurrDrawGlobalY / mItemHeight);
+    private void calculateFirstItemParameterByGlobalY() {
+        mCurrDrawFirstItemIndex = (int) Math.floor((float) mCurrDrawGlobalY / mItemHeight);
         mCurrDrawFirstItemY = -(mCurrDrawGlobalY - mCurrDrawFirstItemIndex * mItemHeight);
-        if (mOnValueChangeListenerInScrolling != null){
-            if (-mCurrDrawFirstItemY > mItemHeight / 2){
+        if (mOnValueChangeListenerInScrolling != null) {
+            if (-mCurrDrawFirstItemY > mItemHeight / 2) {
                 mInScrollingPickedNewValue = mCurrDrawFirstItemIndex + 1 + mShowCount / 2;
-            }else{
+            } else {
                 mInScrollingPickedNewValue = mCurrDrawFirstItemIndex + mShowCount / 2;
             }
             mInScrollingPickedNewValue = mInScrollingPickedNewValue % getOneRecycleSize();
-            if (mInScrollingPickedNewValue < 0){
+            if (mInScrollingPickedNewValue < 0) {
                 mInScrollingPickedNewValue = mInScrollingPickedNewValue + getOneRecycleSize();
             }
-            if (mInScrollingPickedOldValue != mInScrollingPickedNewValue){
+            if (mInScrollingPickedOldValue != mInScrollingPickedNewValue) {
                 respondPickedValueChangedInScrolling(mInScrollingPickedOldValue, mInScrollingPickedNewValue);
             }
             mInScrollingPickedOldValue = mInScrollingPickedNewValue;
@@ -1162,18 +1174,18 @@ public class NumberPickerView extends View{
     }
 
     private void releaseVelocityTracker() {
-        if(mVelocityTracker != null) {
+        if (mVelocityTracker != null) {
             mVelocityTracker.clear();
             mVelocityTracker.recycle();
             mVelocityTracker = null;
         }
     }
 
-    private void updateMaxWHOfDisplayedValues(boolean needRequestLayout){
+    private void updateMaxWHOfDisplayedValues(boolean needRequestLayout) {
         updateMaxWidthOfDisplayedValues();
         updateMaxHeightOfDisplayedValues();
-        if(needRequestLayout &&
-                (mSpecModeW == MeasureSpec.AT_MOST || mSpecModeH == MeasureSpec.AT_MOST)){
+        if (needRequestLayout &&
+                (mSpecModeW == MeasureSpec.AT_MOST || mSpecModeH == MeasureSpec.AT_MOST)) {
             mHandlerInMainThread.sendEmptyMessage(HANDLER_WHAT_REQUEST_LAYOUT);
         }
     }
@@ -1228,43 +1240,50 @@ public class NumberPickerView extends View{
         drawHint(canvas);
     }
 
-    private void drawContent(Canvas canvas){
+    private void drawContent(Canvas canvas) {
         int index;
         int textColor;
         float textSize;
         float fraction = 0f;// fraction of the item in state between normal and selected, in[0, 1]
         float textSizeCenterYOffset;
 
-        for(int i = 0; i < mShowCount + 1; i++){
+        for (int i = 0; i < mShowCount + 1; i++) {
             float y = mCurrDrawFirstItemY + mItemHeight * i;
             index = getIndexByRawIndex(mCurrDrawFirstItemIndex + i, getOneRecycleSize(), mWrapSelectorWheel && mWrapSelectorWheelCheck);
-            if(i == mShowCount / 2){//this will be picked
-                fraction = (float)(mItemHeight + mCurrDrawFirstItemY) / mItemHeight;
+            if (i == mShowCount / 2) {//this will be picked
+                fraction = (float) (mItemHeight + mCurrDrawFirstItemY) / mItemHeight;
                 textColor = getEvaluateColor(fraction, mTextColorNormal, mTextColorSelected);
                 textSize = getEvaluateSize(fraction, mTextSizeNormal, mTextSizeSelected);
                 textSizeCenterYOffset = getEvaluateSize(fraction, mTextSizeNormalCenterYOffset,
                         mTextSizeSelectedCenterYOffset);
-            }else if(i == mShowCount / 2 + 1){
+            } else if (i == mShowCount / 2 + 1) {
                 textColor = getEvaluateColor(1 - fraction, mTextColorNormal, mTextColorSelected);
                 textSize = getEvaluateSize(1 - fraction, mTextSizeNormal, mTextSizeSelected);
                 textSizeCenterYOffset = getEvaluateSize(1 - fraction, mTextSizeNormalCenterYOffset,
                         mTextSizeSelectedCenterYOffset);
-            }else{
+            } else {
                 textColor = mTextColorNormal;
                 textSize = mTextSizeNormal;
                 textSizeCenterYOffset = mTextSizeNormalCenterYOffset;
             }
-            mPaintText.setColor(textColor);
-            mPaintText.setTextSize(textSize);
 
-            if(0 <= index && index < getOneRecycleSize()){
+            //mPaintText.setColor(textColor);
+            //mPaintText.setTextSize(textSize);
+
+            if (0 <= index && index < getOneRecycleSize()) {
                 CharSequence str = mDisplayedValues[index + mMinShowIndex];
                 if (mTextEllipsize != null) {
                     str = TextUtils.ellipsize(str, mPaintText, getWidth() - 2 * mItemPaddingHorizontal, getEllipsizeType());
                 }
+
+                //自动缩放自适应 text
+                int autoTextSize = AutoMeasureDelegate.autoMeasureTextSize(textSize, getWidth(), str.toString());
+                mPaintText.setColor(textColor);
+                mPaintText.setTextSize(autoTextSize);
+
                 canvas.drawText(str.toString(), mViewCenterX,
                         y + mItemHeight / 2 + textSizeCenterYOffset, mPaintText);
-            } else if(!TextUtils.isEmpty(mEmptyItemHint)){
+            } else if (!TextUtils.isEmpty(mEmptyItemHint)) {
                 canvas.drawText(mEmptyItemHint, mViewCenterX,
                         y + mItemHeight / 2 + textSizeCenterYOffset, mPaintText);
             }
@@ -1284,8 +1303,8 @@ public class NumberPickerView extends View{
         }
     }
 
-    private void drawLine(Canvas canvas){
-        if(mShowDivider){
+    private void drawLine(Canvas canvas) {
+        if (mShowDivider) {
             canvas.drawLine(getPaddingLeft() + mDividerMarginL,
                     dividerY0, mViewWidth - getPaddingRight() - mDividerMarginR, dividerY0, mPaintDivider);
             canvas.drawLine(getPaddingLeft() + mDividerMarginL,
@@ -1293,14 +1312,14 @@ public class NumberPickerView extends View{
         }
     }
 
-    private void drawHint(Canvas canvas){
-        if(TextUtils.isEmpty(mHintText)) return;
+    private void drawHint(Canvas canvas) {
+        if (TextUtils.isEmpty(mHintText)) return;
         canvas.drawText(mHintText,
-                mViewCenterX + (mMaxWidthOfDisplayedValues + mWidthOfHintText)/2 + mMarginStartOfHint,
+                mViewCenterX + (mMaxWidthOfDisplayedValues + mWidthOfHintText) / 2 + mMarginStartOfHint,
                 (dividerY0 + dividerY1) / 2 + mTextSizeHintCenterYOffset, mPaintHint);
     }
 
-    private void updateMaxWidthOfDisplayedValues(){
+    private void updateMaxWidthOfDisplayedValues() {
         float savedTextSize = mPaintText.getTextSize();
         mPaintText.setTextSize(mTextSizeSelected);
         mMaxWidthOfDisplayedValues = getMaxWidthOfTextArray(mDisplayedValues, mPaintText);
@@ -1311,13 +1330,13 @@ public class NumberPickerView extends View{
         mPaintText.setTextSize(savedTextSize);
     }
 
-    private int getMaxWidthOfTextArray(CharSequence[] array, Paint paint){
-        if(array == null){
+    private int getMaxWidthOfTextArray(CharSequence[] array, Paint paint) {
+        if (array == null) {
             return 0;
         }
         int maxWidth = 0;
-        for(CharSequence item : array){
-            if(item != null){
+        for (CharSequence item : array) {
+            if (item != null) {
                 int itemWidth = getTextWidth(item, paint);
                 maxWidth = Math.max(itemWidth, maxWidth);
             }
@@ -1325,60 +1344,60 @@ public class NumberPickerView extends View{
         return maxWidth;
     }
 
-    private int getTextWidth(CharSequence text, Paint paint){
-        if(!TextUtils.isEmpty(text)){
-            return (int)(paint.measureText(text.toString()) + 0.5f);
+    private int getTextWidth(CharSequence text, Paint paint) {
+        if (!TextUtils.isEmpty(text)) {
+            return (int) (paint.measureText(text.toString()) + 0.5f);
         }
         return 0;
     }
 
-    private void updateMaxHeightOfDisplayedValues(){
+    private void updateMaxHeightOfDisplayedValues() {
         float savedTextSize = mPaintText.getTextSize();
         mPaintText.setTextSize(mTextSizeSelected);
-        mMaxHeightOfDisplayedValues = (int)(mPaintText.getFontMetrics().bottom - mPaintText.getFontMetrics().top + 0.5);
+        mMaxHeightOfDisplayedValues = (int) (mPaintText.getFontMetrics().bottom - mPaintText.getFontMetrics().top + 0.5);
         mPaintText.setTextSize(savedTextSize);
     }
 
-    private void updateContentAndIndex(String[] newDisplayedValues){
+    private void updateContentAndIndex(String[] newDisplayedValues) {
         mMinShowIndex = 0;
         mMaxShowIndex = newDisplayedValues.length - 1;
         mDisplayedValues = newDisplayedValues;
         updateWrapStateByContent();
     }
 
-    private void updateContent(String[] newDisplayedValues){
+    private void updateContent(String[] newDisplayedValues) {
         mDisplayedValues = newDisplayedValues;
         updateWrapStateByContent();
     }
 
     //used in setDisplayedValues
-    private void updateValue(){
+    private void updateValue() {
         inflateDisplayedValuesIfNull();
         updateWrapStateByContent();
         mMinShowIndex = 0;
         mMaxShowIndex = mDisplayedValues.length - 1;
     }
 
-    private void updateValueForInit(){
+    private void updateValueForInit() {
         inflateDisplayedValuesIfNull();
         updateWrapStateByContent();
-        if(mMinShowIndex == -1){
+        if (mMinShowIndex == -1) {
             mMinShowIndex = 0;
         }
-        if(mMaxShowIndex == -1){
+        if (mMaxShowIndex == -1) {
             mMaxShowIndex = mDisplayedValues.length - 1;
         }
         setMinAndMaxShowIndex(mMinShowIndex, mMaxShowIndex, false);
     }
 
-    private void inflateDisplayedValuesIfNull(){
-        if(mDisplayedValues == null) {
+    private void inflateDisplayedValuesIfNull() {
+        if (mDisplayedValues == null) {
             mDisplayedValues = new String[1];
             mDisplayedValues[0] = "0";
         }
     }
 
-    private void updateWrapStateByContent(){
+    private void updateWrapStateByContent() {
         mWrapSelectorWheelCheck = mDisplayedValues.length <= mShowCount ? false : true;
     }
 
@@ -1391,24 +1410,24 @@ public class NumberPickerView extends View{
             }
             return value;
         } else {
-            if(value > maxValue){
+            if (value > maxValue) {
                 value = maxValue;
-            }else if(value < minValue){
+            } else if (value < minValue) {
                 value = minValue;
             }
             return value;
         }
     }
 
-    private void stopRefreshing(){
-        if (mHandlerInNewThread != null){
+    private void stopRefreshing() {
+        if (mHandlerInNewThread != null) {
             mHandlerInNewThread.removeMessages(HANDLER_WHAT_REFRESH);
         }
     }
 
-    public void stopScrolling(){
-        if(mScroller != null){
-            if(!mScroller.isFinished()){
+    public void stopScrolling() {
+        if (mScroller != null) {
+            if (!mScroller.isFinished()) {
                 mScroller.startScroll(0, mScroller.getCurrY(), 0, 0, 1);
                 mScroller.abortAnimation();
                 postInvalidate();
@@ -1416,18 +1435,18 @@ public class NumberPickerView extends View{
         }
     }
 
-    public void stopScrollingAndCorrectPosition(){
+    public void stopScrollingAndCorrectPosition() {
         stopScrolling();
-        if (mHandlerInNewThread != null){
+        if (mHandlerInNewThread != null) {
             mHandlerInNewThread.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH), 0);
         }
     }
 
-    private Message getMsg(int what){
+    private Message getMsg(int what) {
         return getMsg(what, 0, 0, null);
     }
 
-    private Message getMsg(int what, int arg1, int arg2, Object obj){
+    private Message getMsg(int what, int arg1, int arg2, Object obj) {
         Message msg = Message.obtain();
         msg.what = what;
         msg.arg1 = arg1;
@@ -1437,14 +1456,14 @@ public class NumberPickerView extends View{
     }
 
     //===tool functions===//
-    private boolean isStringEqual(String a, String b){
-        if(a == null){
-            if(b == null){
+    private boolean isStringEqual(String a, String b) {
+        if (a == null) {
+            if (b == null) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
-        }else{
+        } else {
             return a.equals(b);
         }
     }
@@ -1459,7 +1478,7 @@ public class NumberPickerView extends View{
         return (int) (dpValue * densityScale + 0.5f);
     }
 
-    private int getEvaluateColor(float fraction, int startColor, int endColor){
+    private int getEvaluateColor(float fraction, int startColor, int endColor) {
 
         int a, r, g, b;
 
@@ -1473,22 +1492,22 @@ public class NumberPickerView extends View{
         int eG = (endColor & 0x0000ff00) >>> 8;
         int eB = (endColor & 0x000000ff) >>> 0;
 
-        a = (int)(sA + (eA - sA) * fraction);
-        r = (int)(sR + (eR - sR) * fraction);
-        g = (int)(sG + (eG - sG) * fraction);
-        b = (int)(sB + (eB - sB) * fraction);
+        a = (int) (sA + (eA - sA) * fraction);
+        r = (int) (sR + (eR - sR) * fraction);
+        g = (int) (sG + (eG - sG) * fraction);
+        b = (int) (sB + (eB - sB) * fraction);
 
         return a << 24 | r << 16 | g << 8 | b;
     }
 
-    private float getEvaluateSize(float fraction, float startSize, float endSize){
+    private float getEvaluateSize(float fraction, float startSize, float endSize) {
         return startSize + (endSize - startSize) * fraction;
     }
 
-    private String[] convertCharSequenceArrayToStringArray(CharSequence[] charSequences){
-        if(charSequences == null) return null;
+    private String[] convertCharSequenceArrayToStringArray(CharSequence[] charSequences) {
+        if (charSequences == null) return null;
         String[] ret = new String[charSequences.length];
-        for(int i = 0; i < charSequences.length; i++){
+        for (int i = 0; i < charSequences.length; i++) {
             ret[i] = charSequences[i].toString();
         }
         return ret;
