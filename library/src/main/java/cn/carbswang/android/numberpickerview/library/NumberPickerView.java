@@ -18,6 +18,9 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * Created by Carbs.Wang.
  * email : yeah0126@yeah.net
@@ -177,6 +180,8 @@ public class NumberPickerView extends View{
     private HandlerThread mHandlerThread;
     private Handler mHandlerInNewThread;
     private Handler mHandlerInMainThread;
+
+    private Map<String, Integer> textWidthCache = new ConcurrentHashMap<>();
 
     // compatible for NumberPicker
     public interface OnValueChangeListener{
@@ -1326,10 +1331,20 @@ public class NumberPickerView extends View{
     }
 
     private int getTextWidth(CharSequence text, Paint paint){
-        if(!TextUtils.isEmpty(text)){
-            return (int)(paint.measureText(text.toString()) + 0.5f);
+        if(TextUtils.isEmpty(text)){
+           return 0;
         }
-        return 0;
+        String key = text.toString();
+
+        if (textWidthCache.containsKey(key)) {
+            return textWidthCache.get(key);
+        }
+
+        int value = (int)(paint.measureText(text.toString()) + 0.5f);
+        textWidthCache.put(key, value);
+
+        return value;
+
     }
 
     private void updateMaxHeightOfDisplayedValues(){
