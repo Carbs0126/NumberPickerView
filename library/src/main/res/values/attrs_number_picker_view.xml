@@ -3,7 +3,7 @@
 
     <declare-styleable name="NumberPickerView">
         <!--set number of item displayed, default is 3-->
-        <attr name="npv_ShowCount" format="reference|integer" />
+        <attr name="npv_ShownCount" format="reference|integer" />
         <!--set if show divider, default is true-->
         <attr name="npv_ShowDivider" format="reference|boolean" />
         <attr name="npv_DividerColor" format="reference|color" />

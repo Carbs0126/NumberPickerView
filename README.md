@@ -97,7 +97,7 @@ https://github.com/Carbs0126/GregorianLunarCalendar
         android:contentDescription="test_number_picker_view"
         app:npv_ItemPaddingHorizontal="5dp"
         app:npv_ItemPaddingVertical="5dp"
-        app:npv_ShowCount="5"
+        app:npv_ShownCount="5"
         app:npv_RespondChangeOnDetached="false"
         app:npv_TextSizeNormal="16sp"
         app:npv_TextSizeSelected="20sp"
@@ -159,7 +159,7 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 5.各项自定义属性的说明
 ```xml
     <declare-styleable name="NumberPickerView">
-        <attr name="npv_ShowCount" format="reference|integer" />//显示的条目个数，默认3个
+        <attr name="npv_ShownCount" format="reference|integer" />//显示的条目个数，默认3个
         <attr name="npv_ShowDivider" format="reference|boolean" />//是否显示两条divider，默认显示
         <attr name="npv_DividerColor" format="reference|color" />//两条divider的颜色
         <attr name="npv_DividerMarginLeft" format="reference|dimension" />//divider距左侧的距离

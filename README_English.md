@@ -89,7 +89,7 @@ or
         app:npv_RespondChangeOnDetached="false"
         app:npv_ItemPaddingHorizontal="5dp"
         app:npv_ItemPaddingVertical="5dp"
-        app:npv_ShowCount="5"
+        app:npv_ShownCount="5"
         app:npv_TextSizeNormal="16sp"
         app:npv_TextSizeSelected="20sp"
         app:npv_WrapSelectorWheel="true"/>
@@ -145,7 +145,7 @@ and you'd better not use this method in `onCreate(Bundle savedInstanceState)`, i
 5.introduction of attibutes in xml
 ```xml
     <declare-styleable name="NumberPickerView">
-        <attr name="npv_ShowCount" format="reference|integer" />//the count of shown items , default is 3
+        <attr name="npv_ShownCount" format="reference|integer" />//the count of shown items , default is 3
         <attr name="npv_ShowDivider" format="reference|boolean" />//if show dividers
         <attr name="npv_DividerColor" format="reference|color" />//color of two dividers
         <attr name="npv_DividerMarginLeft" format="reference|dimension" />//divider's margin to the left

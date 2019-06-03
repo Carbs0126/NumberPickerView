@@ -16,7 +16,7 @@
         app:npv_ItemPaddingHorizontal="5dp"
         app:npv_ItemPaddingVertical="5dp"
         app:npv_RespondChangeOnDetached="false"
-        app:npv_ShowCount="5"
+        app:npv_ShownCount="5"
         app:npv_TextSizeNormal="16sp"
         app:npv_TextSizeSelected="20sp"
         app:npv_WrapSelectorWheel="true" />
