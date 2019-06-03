@@ -1160,7 +1160,7 @@ public class NumberPickerView extends View{
                 mInScrollingPickedNewValue = mInScrollingPickedNewValue + getOneRecycleSize();
             }
             if (mInScrollingPickedOldValue != mInScrollingPickedNewValue){
-                respondPickedValueChangedInScrolling(mInScrollingPickedOldValue, mInScrollingPickedNewValue);
+                respondPickedValueChangedInScrolling(mInScrollingPickedOldValue + mMinValue, mInScrollingPickedNewValue + mMinValue);
             }
             mInScrollingPickedOldValue = mInScrollingPickedNewValue;
         }
