@@ -2,7 +2,7 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-NumberPickerView-green.svg?style=true)](https://android-arsenal.com/details/1/3817)
 ##### Another NumberPicker with more flexible attributes on Android platform
 
-## Foreword
+## Forewords
 some android projects use the android.widget.NumberPicker to provide alternative choices, but the default style of `NumberPicker` has some inflexible attibutes, and complicated to be customized.This NumberPickerView extends from View, and provide a friendly experience.
 
 ### ScreenShot
