@@ -2,7 +2,7 @@
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-NumberPickerView-green.svg?style=true)](https://android-arsenal.com/details/1/3817)
 ##### Another NumberPicker with more flexible attributes on Android platform 
 
-[English] [6]
+[English][6]
 
 
 ## 前言
@@ -71,7 +71,7 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ```
 
 ### 使用方法
-====
+
 1.导入至工程
 ```groovy
     compile 'cn.carbswang.android:NumberPickerView:1.2.0'
