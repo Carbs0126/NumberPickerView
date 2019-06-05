@@ -14,8 +14,8 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
  * Created by Carbs.Wang.
  */
 public class ActivityMain extends AppCompatActivity implements View.OnClickListener,
-                    NumberPickerView.OnScrollListener, NumberPickerView.OnValueChangeListener,
-                    NumberPickerView.OnValueChangeListenerInScrolling{
+        NumberPickerView.OnScrollListener, NumberPickerView.OnValueChangeListener,
+        NumberPickerView.OnValueChangeListenerInScrolling {
 
     private static final String TAG = "picker";
 
@@ -101,13 +101,13 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void showNPVDialog(){
-        if(mDialogNPV == null){
+    private void showNPVDialog() {
+        if (mDialogNPV == null) {
             mDialogNPV = new DialogNPV(this);
         }
-        if(mDialogNPV.isShowing()){
+        if (mDialogNPV.isShowing()) {
             mDialogNPV.dismiss();
-        }else {
+        } else {
             mDialogNPV.setCancelable(true);
             mDialogNPV.setCanceledOnTouchOutside(true);
             mDialogNPV.show();
@@ -120,7 +120,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void getCurrentContent(){
+    private void getCurrentContent() {
         String[] content = picker.getDisplayedValues();
         if (content != null)
             Toast.makeText(getApplicationContext(),
@@ -137,7 +137,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     public void onValueChange(NumberPickerView picker, int oldVal, int newVal) {
         String[] content = picker.getDisplayedValues();
         if (content != null)
-            Toast.makeText(getApplicationContext(),"oldVal : " + oldVal + " newVal : " + newVal + "\n" +
+            Toast.makeText(getApplicationContext(), "oldVal : " + oldVal + " newVal : " + newVal + "\n" +
                     getString(R.string.picked_content_is) + content[newVal - picker.getMinValue()], Toast.LENGTH_SHORT)
                     .show();
     }

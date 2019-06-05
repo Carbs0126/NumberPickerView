@@ -18,7 +18,7 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 /**
  * Created by Carbs.Wang on 2016/6/24.
  */
-public class ActivityTimePicker extends AppCompatActivity implements View.OnClickListener, NumberPickerView.OnValueChangeListener{
+public class ActivityTimePicker extends AppCompatActivity implements View.OnClickListener, NumberPickerView.OnValueChangeListener {
 
     private NumberPickerView mPickerViewH;
     private NumberPickerView mPickerViewM;
@@ -26,10 +26,10 @@ public class ActivityTimePicker extends AppCompatActivity implements View.OnClic
     private Button mButtonInfo;
     private Button mButtonInfo2;
     private Button mButton4;
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            mButtonInfo2.setText((String)msg.obj);
+            mButtonInfo2.setText((String) msg.obj);
         }
     };
 
@@ -37,9 +37,9 @@ public class ActivityTimePicker extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_picker);
-        mPickerViewH = (NumberPickerView)this.findViewById(R.id.picker_hour);
-        mPickerViewM = (NumberPickerView)this.findViewById(R.id.picker_minute);
-        mPickerViewD = (NumberPickerView)this.findViewById(R.id.picker_half_day);
+        mPickerViewH = (NumberPickerView) this.findViewById(R.id.picker_hour);
+        mPickerViewM = (NumberPickerView) this.findViewById(R.id.picker_minute);
+        mPickerViewD = (NumberPickerView) this.findViewById(R.id.picker_half_day);
         mPickerViewH.setOnValueChangedListener(this);
         mPickerViewM.setOnValueChangedListener(this);
         mPickerViewD.setOnValueChangedListener(this);
@@ -47,15 +47,15 @@ public class ActivityTimePicker extends AppCompatActivity implements View.OnClic
         /*Typeface font = Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD);
         mPickerViewH.setHintTextTypeface(font);*/
 
-        mButtonInfo = (Button)this.findViewById(R.id.button_get_info);
-        mButtonInfo2 = (Button)this.findViewById(R.id.show_info_button);
-        mButton4 = (Button)this.findViewById(R.id.button4);
+        mButtonInfo = (Button) this.findViewById(R.id.button_get_info);
+        mButtonInfo2 = (Button) this.findViewById(R.id.show_info_button);
+        mButton4 = (Button) this.findViewById(R.id.button4);
         mButtonInfo.setOnClickListener(this);
         mButton4.setOnClickListener(this);
         initTime();
     }
 
-    private void initTime(){
+    private void initTime() {
         GregorianCalendar calendar = (GregorianCalendar) GregorianCalendar.getInstance();
         int h = calendar.get(Calendar.HOUR_OF_DAY);
         int m = calendar.get(Calendar.MINUTE);
@@ -67,7 +67,7 @@ public class ActivityTimePicker extends AppCompatActivity implements View.OnClic
         setData(mPickerViewD, 0, 1, d);
     }
 
-    private void setData(NumberPickerView picker, int minValue, int maxValue, int value){
+    private void setData(NumberPickerView picker, int minValue, int maxValue, int value) {
         picker.setMinValue(minValue);
         picker.setMaxValue(maxValue);
         picker.setValue(value);
@@ -75,14 +75,14 @@ public class ActivityTimePicker extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.button_get_info:
                 String h = mPickerViewH.getContentByCurrValue();
                 String m = mPickerViewM.getContentByCurrValue();
                 String d = mPickerViewD.getContentByCurrValue();
-                Toast.makeText(getApplicationContext(),h + getString(R.string.hour_hint) + " "
-                        + m + getString(R.string.minute_hint) + " " + d,Toast.LENGTH_LONG).show();
-            break;
+                Toast.makeText(getApplicationContext(), h + getString(R.string.hour_hint) + " "
+                        + m + getString(R.string.minute_hint) + " " + d, Toast.LENGTH_LONG).show();
+                break;
             case R.id.button4:
                 Typeface font = Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD);
                 mPickerViewH.setHintTextTypeface(font);
@@ -96,7 +96,7 @@ public class ActivityTimePicker extends AppCompatActivity implements View.OnClic
         if (Looper.myLooper() == Looper.getMainLooper()) {
             mButtonInfo2.setText(getString(R.string.current_thread_name) + Thread.currentThread().getName()
                     + "\n" + getString(R.string.current_picked_value) + String.valueOf(newVal));
-        }else{
+        } else {
             Message message = Message.obtain();
             message.obj = getString(R.string.current_thread_name) + Thread.currentThread().getName()
                     + "\n" + getString(R.string.current_picked_value) + String.valueOf(newVal);

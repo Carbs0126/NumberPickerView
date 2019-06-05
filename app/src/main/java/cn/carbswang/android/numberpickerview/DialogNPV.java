@@ -15,7 +15,7 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
  */
 
 public class DialogNPV extends Dialog implements View.OnClickListener,
-        NumberPickerView.OnScrollListener, NumberPickerView.OnValueChangeListener{
+        NumberPickerView.OnScrollListener, NumberPickerView.OnValueChangeListener {
 
     private static final String TAG = "picker";
 
@@ -45,7 +45,7 @@ public class DialogNPV extends Dialog implements View.OnClickListener,
     }
 
     // this method should be called after onCreate()
-    public void initNPV(){
+    public void initNPV() {
         mNumberPickerView.refreshByNewDisplayedValues(mDisplayValues);
     }
 
@@ -67,14 +67,14 @@ public class DialogNPV extends Dialog implements View.OnClickListener,
     public void onValueChange(NumberPickerView picker, int oldVal, int newVal) {
         String[] content = picker.getDisplayedValues();
         if (content != null) {
-            Log.d(TAG,"onValueChange content : " + content[newVal - picker.getMinValue()]);
+            Log.d(TAG, "onValueChange content : " + content[newVal - picker.getMinValue()]);
             Toast.makeText(mContext.getApplicationContext(), "oldVal : " + oldVal + " newVal : " + newVal + "\n" +
                     mContext.getString(R.string.picked_content_is) + content[newVal - picker.getMinValue()], Toast.LENGTH_SHORT)
                     .show();
         }
     }
 
-    private void getCurrentContent(){
+    private void getCurrentContent() {
         String[] content = mNumberPickerView.getDisplayedValues();
         if (content != null)
             Toast.makeText(mContext.getApplicationContext(),
