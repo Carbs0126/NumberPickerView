@@ -9,7 +9,7 @@
 在Android项目的开发中会用到`NumberPicker`组件，但是默认风格的`NumberPicker`具有一些不灵活的属性，定制起来也比较麻烦，并且缺少一些过渡动效，因此在应用开发时，一般采用自定义的控件来完成选择功能。
 
 ### 控件截图
-====
+
 ![Example Image][4]<br>
 效果图1
 
@@ -25,7 +25,7 @@ NumberPickerView的实际应用，一款可以选择公历/农历日期的View�
 https://github.com/Carbs0126/GregorianLunarCalendar
 
 ### 说明
-====
+
 `NumberPickerView`是一款与android原生`NumberPicker`具有类似界面以及类似功能的`View`。
 主要功能同样是从多个候选项中通过上下滚动的方式选择需要的选项，但是与`NumberPicker`相比较，有几个主要不同点，下面是两者的不同之处。
 
@@ -74,14 +74,14 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ====
 1.导入至工程
 ```groovy
-    compile 'cn.carbswang.android:NumberPickerView:1.1.1'
+    compile 'cn.carbswang.android:NumberPickerView:1.2.0'
 ```
 或者
 ```xml
     <dependency>
       <groupId>cn.carbswang.android</groupId>
       <artifactId>NumberPickerView</artifactId>
-      <version>1.1.1</version>
+      <version>1.2.0</version>
       <type>pom</type>
     </dependency>
 ```
@@ -201,7 +201,12 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 ```
     
 ### 版本更新
-====
+
+#### 1.2.0
+1.合并两个pull request<br>
+2.删除library中不必要的dependences<br>
+<br>
+
 #### 1.1.1
 1.添加更改文字typeface的方法<br>
 2.添加滑动过程中响应valuechange的方法<br>
@@ -209,37 +214,45 @@ https://github.com/Carbs0126/GregorianLunarCalendar
     picker.setOnValueChangeListenerInScrolling(...);
   ```
 <br>
+
 #### 1.1.0
 1.优化位置校正时的滚动时间。<br>
 2.微调刷新时间。<br>
 3.优化示例界面显示布局。<br>
 <br>
+
 #### 1.0.9
 1.添加属性`app:npv_RespondChangeInMainThread="true"`，指定`onValueChanged`响应事件在什么线程中执行。默认为`true`，即在主线程中执行。如果设置为`false`则在子线程中执行。<br>
 2.更新`TimePickerActivity`示例，以说明属性`app:npv_RespondChangeInMainThread="true"`的用法。<br>
 3.修复bug: 在更新内容时，如果滑动没有停止，那么新的内容显示出来后，滚动的位置不正确的bug。<br>
 <br>
+
 #### 1.0.8
 1.更改`stopScrolling`方法，在`abortAnimation()`之前添加滚动到当前坐标的代码<br>
 2.更改`npv_RespondChangeOnDetached`的默认值为false<br>
 <br>
+
 #### 1.0.7
 1.完善在`onDetachToWindow()`函数中添加的响应判断，主要针对多次调用`Dialog/PopupWindow`，如果此时`Dialog/PopupWindow`在隐藏时，`NumberPickerView`仍然在滑动，那么需要停止滑动+可选响应`OnValueChange`回调+更改上次选中索引。添加属性`npv_RespondChangeOnDetached`作为判断是否响应onValueChange回调，主要用在多个NumberPickerView联动的场景。同时建议每次在显示`Dialog/PopupWindow`时，重新为每个NumberPickerView设定确定的值，且将`npv_RespondChangeOnDetached`属性置为false，具体可见`GregorianLunarCalendar`项目中的dialog相关用法。此次更改方式较为笨拙，如果有好的方法，还请告知，非常感谢。<br>
 <br>
+
 #### 1.0.6
 1.在`onDetachToWindow()`函数中添加响应判断，主要针对多次调用的Dialog/PopupWindow<br>
+
 #### 1.0.5
 1.在`onAttachToWindow()`函数中添加判断`mHandlerThread`有没有已经被`quit`掉的函数，避免在第二次进入dialog/popupWindow时无法刷新位置的问题<br>
+
 #### 1.0.4
 1.更改部分属性名称，更改部分注释<br>
 <br>
+
 #### 1.0.3
 1.修复不能够在`ScrollView`中滑动的bug，感谢anjiao以及Elektroktay的issue<br>
 <br>
 
 
 ### 主要原理
-====
+
 #### 1.滚动效果的产生：
 `Scroller` + `VelocityTracker` + `onDraw(Canvas canvas)`
 
@@ -251,7 +264,7 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 
 
 ### 将NumberPicker改为NumberPickerView
-====
+
 要替代项目中使用的NumberPicker，只需要将涉及NumberPicker的代码（如回调中传入了NumberPicker、使用了NumberPicker的内部接口）改为NumberPickerView即可。<br>
 
 ### 另
