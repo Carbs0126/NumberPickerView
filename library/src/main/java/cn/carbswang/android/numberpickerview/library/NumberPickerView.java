@@ -9,7 +9,6 @@ import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
-import android.support.v4.widget.ScrollerCompat;
 import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -17,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.widget.Scroller;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -166,7 +166,7 @@ public class NumberPickerView extends View {
     // scrolling or starts to scroll or stops scrolling.
     private boolean mRespondChangeInMainThread = DEFAULT_RESPOND_CHANGE_IN_MAIN_THREAD;
 
-    private ScrollerCompat mScroller;
+    private Scroller mScroller;
     private VelocityTracker mVelocityTracker;
 
     private Paint mPaintDivider = new Paint();
@@ -301,7 +301,7 @@ public class NumberPickerView extends View {
     }
 
     private void init(Context context) {
-        mScroller = ScrollerCompat.create(context);
+        mScroller = new Scroller(context);
         mMiniVelocityFling = ViewConfiguration.get(getContext()).getScaledMinimumFlingVelocity();
         mScaledTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
         if (mTextSizeNormal == 0) {
