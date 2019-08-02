@@ -464,7 +464,9 @@ public class NumberPickerView extends View {
         mHandlerThread.quit();
         //These codes are for dialog or PopupWindow which will be used for more than once.
         //Not an elegant solution, if you have any good idea, please let me know, thank you.
-        if (mItemHeight == 0) return;
+        if (mItemHeight == 0) {
+            return;
+        }
         if (!mScroller.isFinished()) {
             mScroller.abortAnimation();
             mCurrDrawGlobalY = mScroller.getCurrY();
@@ -503,8 +505,9 @@ public class NumberPickerView extends View {
     }
 
     public int getRawContentSize() {
-        if (mDisplayedValues != null)
+        if (mDisplayedValues != null) {
             return mDisplayedValues.length;
+        }
         return 0;
     }
 
@@ -626,7 +629,9 @@ public class NumberPickerView extends View {
             deltaIndex = toValue - fromValue;
         }
         setValue(fromValue);
-        if (fromValue == toValue) return;
+        if (fromValue == toValue) {
+            return;
+        }
         scrollByIndexSmoothly(deltaIndex, needRespond);
     }
 
@@ -719,10 +724,12 @@ public class NumberPickerView extends View {
             }
         }
         dy = dy + deltaIndex * mItemHeight;
-        if (duration < DEFAULT_MIN_SCROLL_BY_INDEX_DURATION)
+        if (duration < DEFAULT_MIN_SCROLL_BY_INDEX_DURATION) {
             duration = DEFAULT_MIN_SCROLL_BY_INDEX_DURATION;
-        if (duration > DEFAULT_MAX_SCROLL_BY_INDEX_DURATION)
+        }
+        if (duration > DEFAULT_MAX_SCROLL_BY_INDEX_DURATION) {
             duration = DEFAULT_MAX_SCROLL_BY_INDEX_DURATION;
+        }
         mScroller.startScroll(0, mCurrDrawGlobalY, 0, dy, duration);
         if (needRespond) {
             mHandlerInNewThread.sendMessageDelayed(getMsg(HANDLER_WHAT_REFRESH), duration / 4);
@@ -790,7 +797,9 @@ public class NumberPickerView extends View {
     }
 
     public void setHintText(String hintText) {
-        if (isStringEqual(mHintText, hintText)) return;
+        if (isStringEqual(mHintText, hintText)) {
+            return;
+        }
         mHintText = hintText;
         mTextSizeHintCenterYOffset = getTextCenterYOffset(mPaintHint.getFontMetrics());
         mWidthOfHintText = getTextWidth(mHintText, mPaintHint);
@@ -806,26 +815,34 @@ public class NumberPickerView extends View {
     }
 
     public void setNormalTextColor(int normalTextColor) {
-        if (mTextColorNormal == normalTextColor) return;
+        if (mTextColorNormal == normalTextColor) {
+            return;
+        }
         mTextColorNormal = normalTextColor;
         postInvalidate();
     }
 
     public void setSelectedTextColor(int selectedTextColor) {
-        if (mTextColorSelected == selectedTextColor) return;
+        if (mTextColorSelected == selectedTextColor) {
+            return;
+        }
         mTextColorSelected = selectedTextColor;
         postInvalidate();
     }
 
     public void setHintTextColor(int hintTextColor) {
-        if (mTextColorHint == hintTextColor) return;
+        if (mTextColorHint == hintTextColor) {
+            return;
+        }
         mTextColorHint = hintTextColor;
         mPaintHint.setColor(mTextColorHint);
         postInvalidate();
     }
 
     public void setDividerColor(int dividerColor) {
-        if (mDividerColor == dividerColor) return;
+        if (mDividerColor == dividerColor) {
+            return;
+        }
         mDividerColor = dividerColor;
         mPaintDivider.setColor(mDividerColor);
         postInvalidate();
@@ -898,8 +915,9 @@ public class NumberPickerView extends View {
      *                 the friction will be twice as much as before
      */
     public void setFriction(float friction) {
-        if (friction <= 0)
+        if (friction <= 0) {
             throw new IllegalArgumentException("you should set a a positive float friction, now friction is " + friction);
+        }
         mFriction = ViewConfiguration.get(getContext()).getScrollFriction() / friction;
     }
 
@@ -942,7 +960,9 @@ public class NumberPickerView extends View {
 
     //return index relative to mDisplayedValues from 0.
     private int getWillPickIndexByGlobalY(int globalY) {
-        if (mItemHeight == 0) return 0;
+        if (mItemHeight == 0) {
+            return 0;
+        }
         int willPickIndex = globalY / mItemHeight + mShownCount / 2;
         int index = getIndexByRawIndex(willPickIndex, getOneRecycleSize(), mWrapSelectorWheel && mWrapSelectorWheelCheck);
         if (0 <= index && index < getOneRecycleSize()) {
@@ -954,7 +974,9 @@ public class NumberPickerView extends View {
     }
 
     private int getIndexByRawIndex(int index, int size, boolean wrap) {
-        if (size <= 0) return 0;
+        if (size <= 0) {
+            return 0;
+        }
         if (wrap) {
             index = index % size;
             if (index < 0) {
@@ -978,10 +1000,16 @@ public class NumberPickerView extends View {
         mDividerIndex1 = mDividerIndex0 + 1;
         dividerY0 = mDividerIndex0 * mViewHeight / mShownCount;
         dividerY1 = mDividerIndex1 * mViewHeight / mShownCount;
-        if (mDividerMarginL < 0) mDividerMarginL = 0;
-        if (mDividerMarginR < 0) mDividerMarginR = 0;
+        if (mDividerMarginL < 0) {
+            mDividerMarginL = 0;
+        }
+        if (mDividerMarginR < 0) {
+            mDividerMarginR = 0;
+        }
 
-        if (mDividerMarginL + mDividerMarginR == 0) return;
+        if (mDividerMarginL + mDividerMarginR == 0) {
+            return;
+        }
         if (getPaddingLeft() + mDividerMarginL >= mViewWidth - getPaddingRight() - mDividerMarginR) {
             int surplusMargin = getPaddingLeft() + mDividerMarginL + getPaddingRight() + mDividerMarginR - mViewWidth;
             mDividerMarginL = (int) (mDividerMarginL - (float) surplusMargin * mDividerMarginL / (mDividerMarginL + mDividerMarginR));
@@ -993,8 +1021,12 @@ public class NumberPickerView extends View {
     private int mNotWrapLimitYBottom;
 
     private void updateFontAttr() {
-        if (mTextSizeNormal > mItemHeight) mTextSizeNormal = mItemHeight;
-        if (mTextSizeSelected > mItemHeight) mTextSizeSelected = mItemHeight;
+        if (mTextSizeNormal > mItemHeight) {
+            mTextSizeNormal = mItemHeight;
+        }
+        if (mTextSizeSelected > mItemHeight) {
+            mTextSizeSelected = mItemHeight;
+        }
 
         if (mPaintHint == null) {
             throw new IllegalArgumentException("mPaintHint should not be null.");
@@ -1026,7 +1058,9 @@ public class NumberPickerView extends View {
     private float currY = 0;
 
     private int limitY(int currDrawGlobalYPreferred) {
-        if (mWrapSelectorWheel && mWrapSelectorWheelCheck) return currDrawGlobalYPreferred;
+        if (mWrapSelectorWheel && mWrapSelectorWheelCheck) {
+            return currDrawGlobalYPreferred;
+        }
         if (currDrawGlobalYPreferred < mNotWrapLimitYBottom) {
             currDrawGlobalYPreferred = mNotWrapLimitYBottom;
         } else if (currDrawGlobalYPreferred > mNotWrapLimitYTop) {
@@ -1039,7 +1073,9 @@ public class NumberPickerView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (mItemHeight == 0) return true;
+        if (mItemHeight == 0) {
+            return true;
+        }
 
         if (mVelocityTracker == null) {
             mVelocityTracker = VelocityTracker.obtain();
@@ -1116,7 +1152,9 @@ public class NumberPickerView extends View {
     }
 
     private float getTextCenterYOffset(Paint.FontMetrics fontMetrics) {
-        if (fontMetrics == null) return 0;
+        if (fontMetrics == null) {
+            return 0;
+        }
         return Math.abs(fontMetrics.top + fontMetrics.bottom) / 2;
     }
 
@@ -1155,7 +1193,9 @@ public class NumberPickerView extends View {
 
     @Override
     public void computeScroll() {
-        if (mItemHeight == 0) return;
+        if (mItemHeight == 0) {
+            return;
+        }
         if (mScroller.computeScrollOffset()) {
             mCurrDrawGlobalY = mScroller.getCurrY();
             calculateFirstItemParameterByGlobalY();
@@ -1316,7 +1356,9 @@ public class NumberPickerView extends View {
     }
 
     private void drawHint(Canvas canvas) {
-        if (TextUtils.isEmpty(mHintText)) return;
+        if (TextUtils.isEmpty(mHintText)) {
+            return;
+        }
         canvas.drawText(mHintText,
                 mViewCenterX + (mMaxWidthOfDisplayedValues + mWidthOfHintText) / 2 + mMarginStartOfHint,
                 (dividerY0 + dividerY1) / 2 + mTextSizeHintCenterYOffset, mPaintHint);
@@ -1519,7 +1561,9 @@ public class NumberPickerView extends View {
     }
 
     private String[] convertCharSequenceArrayToStringArray(CharSequence[] charSequences) {
-        if (charSequences == null) return null;
+        if (charSequences == null) {
+            return null;
+        }
         String[] ret = new String[charSequences.length];
         for (int i = 0; i < charSequences.length; i++) {
             ret[i] = charSequences[i].toString();
