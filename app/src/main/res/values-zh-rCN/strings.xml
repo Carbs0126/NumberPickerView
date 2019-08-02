@@ -21,6 +21,7 @@
     <string name="place_holder_below_3">Placeholder Button4</string>
     <string name="current_thread_name">回调所处线程名称: </string>
     <string name="current_picked_value">当前选中值: </string>
+    <string name="change_font">更改字体</string>
 
     <string-array name="test_display_1">
         <item>《咏鹅》</item>

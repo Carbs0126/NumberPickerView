@@ -13,7 +13,6 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 /**
  * Created by carbs on 2016/7/11.
  */
-
 public class DialogNPV extends Dialog implements View.OnClickListener,
         NumberPickerView.OnScrollListener, NumberPickerView.OnValueChangeListener {
 
@@ -34,13 +33,13 @@ public class DialogNPV extends Dialog implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_npv);
 
-        mNumberPickerView = (NumberPickerView) this.findViewById(R.id.picker);
+        mNumberPickerView = findViewById(R.id.picker);
         mNumberPickerView.setOnScrollListener(this);
         mNumberPickerView.setOnValueChangedListener(this);
         mDisplayValues = mContext.getResources().getStringArray(R.array.test_display_2);
 //        mNumberPickerView.refreshByNewDisplayedValues(mDisplayValues);
 
-        mButtonGetInfo = (Button) this.findViewById(R.id.button_get_info);
+        mButtonGetInfo = findViewById(R.id.button_get_info);
         mButtonGetInfo.setOnClickListener(this);
     }
 

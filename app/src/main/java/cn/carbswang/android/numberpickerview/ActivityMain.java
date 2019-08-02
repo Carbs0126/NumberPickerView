@@ -1,8 +1,12 @@
 package cn.carbswang.android.numberpickerview;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,54 +21,57 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         NumberPickerView.OnScrollListener, NumberPickerView.OnValueChangeListener,
         NumberPickerView.OnValueChangeListenerInScrolling {
 
-    private static final String TAG = "picker";
+    private static final String TAG = "NumberPickerView";
 
+    private Button mButton1;
+    private Button mButton2;
+    private Button mButton3;
+    private Button mButton4;
+    private Button mButton5;
+    private Button mButton6;
+    private Button mButton7;
+    private Button mButton8;
     private DialogNPV mDialogNPV;
-    private NumberPickerView picker;
-    private Button button1;
-    private Button button2;
-    private Button button3;
-    private Button button4;
-    private Button button5;
-    private Button button6;
-    private Button button7;
+    private NumberPickerView mNumberPickerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        picker = (NumberPickerView) this.findViewById(R.id.picker);
-        button1 = (Button) this.findViewById(R.id.button1);
-        button2 = (Button) this.findViewById(R.id.button2);
-        button3 = (Button) this.findViewById(R.id.button3);
-        button4 = (Button) this.findViewById(R.id.button4);
-        button5 = (Button) this.findViewById(R.id.button5);
-        button6 = (Button) this.findViewById(R.id.button6);
-        button7 = (Button) this.findViewById(R.id.button7);
+        mNumberPickerView = findViewById(R.id.picker);
+        mButton1 = findViewById(R.id.button1);
+        mButton2 = findViewById(R.id.button2);
+        mButton3 = findViewById(R.id.button3);
+        mButton4 = findViewById(R.id.button4);
+        mButton5 = findViewById(R.id.button5);
+        mButton6 = findViewById(R.id.button6);
+        mButton7 = findViewById(R.id.button7);
+        mButton8 = findViewById(R.id.button8);
 
-        picker.setOnScrollListener(this);
-        picker.setOnValueChangedListener(this);
-        picker.setOnValueChangeListenerInScrolling(this);
-        button1.setOnClickListener(this);
-        button2.setOnClickListener(this);
-        button3.setOnClickListener(this);
-        button4.setOnClickListener(this);
-        button5.setOnClickListener(this);
-        button6.setOnClickListener(this);
-        button7.setOnClickListener(this);
+        mNumberPickerView.setOnScrollListener(this);
+        mNumberPickerView.setOnValueChangedListener(this);
+        mNumberPickerView.setOnValueChangeListenerInScrolling(this);
+        mButton1.setOnClickListener(this);
+        mButton2.setOnClickListener(this);
+        mButton3.setOnClickListener(this);
+        mButton4.setOnClickListener(this);
+        mButton5.setOnClickListener(this);
+        mButton6.setOnClickListener(this);
+        mButton7.setOnClickListener(this);
+        mButton8.setOnClickListener(this);
 
-        String[] display_2 = getResources().getStringArray(R.array.test_display_2);
-        picker.refreshByNewDisplayedValues(display_2);
+        String[] displayValues = getResources().getStringArray(R.array.test_display_2);
+        mNumberPickerView.refreshByNewDisplayedValues(displayValues);
         getWrapState();
     }
 
     //获取当前picker是否wrap
     private void getWrapState() {
-        if (picker.getWrapSelectorWheelAbsolutely()) {
-            button1.setText(R.string.switch_wrap_mode_true);
+        if (mNumberPickerView.getWrapSelectorWheelAbsolutely()) {
+            mButton1.setText(R.string.switch_wrap_mode_true);
         } else {
-            button1.setText(R.string.switch_wrap_mode_false);
+            mButton1.setText(R.string.switch_wrap_mode_false);
         }
     }
 
@@ -72,22 +79,22 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button1:
-                picker.setWrapSelectorWheel(!picker.getWrapSelectorWheelAbsolutely());
+                mNumberPickerView.setWrapSelectorWheel(!mNumberPickerView.getWrapSelectorWheelAbsolutely());
                 getWrapState();
                 break;
             case R.id.button2:
                 String[] display_1 = getResources().getStringArray(R.array.test_display_1);
-                picker.refreshByNewDisplayedValues(display_1);
+                mNumberPickerView.refreshByNewDisplayedValues(display_1);
                 getWrapState();
                 break;
             case R.id.button3:
                 String[] display_2 = getResources().getStringArray(R.array.test_display_2);
-                picker.refreshByNewDisplayedValues(display_2);
+                mNumberPickerView.refreshByNewDisplayedValues(display_2);
                 getWrapState();
                 break;
             case R.id.button4:
-                int value = picker.getValue();
-                picker.smoothScrollToValue(value, value + 2);
+                int value = mNumberPickerView.getValue();
+                mNumberPickerView.smoothScrollToValue(value, value + 2);
                 break;
             case R.id.button5:
                 getCurrentContent();
@@ -97,6 +104,9 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.button7:
                 showNPVDialog();
+                break;
+            case R.id.button8:
+                changeFont();
                 break;
         }
     }
@@ -121,11 +131,19 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     }
 
     private void getCurrentContent() {
-        String[] content = picker.getDisplayedValues();
+        String[] content = mNumberPickerView.getDisplayedValues();
         if (content != null)
             Toast.makeText(getApplicationContext(),
-                    getString(R.string.picked_content_is) + content[picker.getValue() - picker.getMinValue()], Toast.LENGTH_SHORT)
+                    getString(R.string.picked_content_is) + content[mNumberPickerView.getValue() - mNumberPickerView.getMinValue()], Toast.LENGTH_SHORT)
                     .show();
+    }
+
+    private void changeFont() {
+        AssetManager assetManager = getAssets();
+        Typeface tf = Typeface.createFromAsset(assetManager, "font/myfont.ttf");
+        mNumberPickerView.setContentTextTypeface(tf);
+        mNumberPickerView.setContentTextTypeface(tf);
+        mNumberPickerView.postInvalidate();
     }
 
     @Override
@@ -144,6 +162,6 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onValueChangeInScrolling(NumberPickerView picker, int oldVal, int newVal) {
-        Log.d("wangjj", "onValueChangeInScrolling oldVal : " + oldVal + " newVal : " + newVal);
+        Log.d(TAG, "onValueChangeInScrolling oldVal : " + oldVal + " newVal : " + newVal);
     }
 }

@@ -1,4 +1,1 @@
-<manifest package="cn.carbswang.android.numberpickerview.library"
-          xmlns:android="http://schemas.android.com/apk/res/android">
-
-</manifest>
+<manifest package="cn.carbswang.android.numberpickerview.library" />

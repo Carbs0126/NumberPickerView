@@ -1,11 +1,14 @@
 package cn.carbswang.android.numberpickerview;
 
+import android.content.res.AssetManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -18,7 +21,8 @@ import cn.carbswang.android.numberpickerview.library.NumberPickerView;
 /**
  * Created by Carbs.Wang on 2016/6/24.
  */
-public class ActivityTimePicker extends AppCompatActivity implements View.OnClickListener, NumberPickerView.OnValueChangeListener {
+public class ActivityTimePicker extends AppCompatActivity
+        implements View.OnClickListener, NumberPickerView.OnValueChangeListener {
 
     private NumberPickerView mPickerViewH;
     private NumberPickerView mPickerViewM;
@@ -37,19 +41,28 @@ public class ActivityTimePicker extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_picker);
-        mPickerViewH = (NumberPickerView) this.findViewById(R.id.picker_hour);
-        mPickerViewM = (NumberPickerView) this.findViewById(R.id.picker_minute);
-        mPickerViewD = (NumberPickerView) this.findViewById(R.id.picker_half_day);
+        mPickerViewH = findViewById(R.id.picker_hour);
+        mPickerViewM = findViewById(R.id.picker_minute);
+        mPickerViewD = findViewById(R.id.picker_half_day);
         mPickerViewH.setOnValueChangedListener(this);
         mPickerViewM.setOnValueChangedListener(this);
         mPickerViewD.setOnValueChangedListener(this);
 
-        /*Typeface font = Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD);
-        mPickerViewH.setHintTextTypeface(font);*/
+        AssetManager assetManager = getAssets();
+        Typeface tf = Typeface.createFromAsset(assetManager, "font/myfont.ttf");
+        mPickerViewH.setContentTextTypeface(tf);
+        mPickerViewM.setContentTextTypeface(tf);
+        mPickerViewD.setContentTextTypeface(tf);
+        mPickerViewH.setHintTextTypeface(tf);
+        mPickerViewM.setHintTextTypeface(tf);
+        mPickerViewD.setHintTextTypeface(tf);
 
-        mButtonInfo = (Button) this.findViewById(R.id.button_get_info);
-        mButtonInfo2 = (Button) this.findViewById(R.id.show_info_button);
-        mButton4 = (Button) this.findViewById(R.id.button4);
+//        Typeface font = Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD);
+//        mPickerViewH.setContentTextTypeface(font);
+
+        mButtonInfo = findViewById(R.id.button_get_info);
+        mButtonInfo2 = findViewById(R.id.show_info_button);
+        mButton4 = findViewById(R.id.button4);
         mButtonInfo.setOnClickListener(this);
         mButton4.setOnClickListener(this);
         initTime();

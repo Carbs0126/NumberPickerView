@@ -15,6 +15,7 @@
     <string name="get_data">get data</string>
     <string name="in_scroll_view">In ScrollView</string>
     <string name="show_in_dialog">Show in Dialog</string>
+    <string name="change_font">Change Font</string>
     <string name="place_holder_above_2">HourPicker\'s callbacks is invoked in a new thread, the other 2 pickers\' in main thread</string>
     <string name="place_holder_below_1">Placeholder Button2</string>
     <string name="place_holder_below_2">Placeholder Button3</string>

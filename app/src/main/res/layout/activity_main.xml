@@ -132,6 +132,15 @@
                     android:textAllCaps="false" />
 
             </LinearLayout>
+
+            <Button
+                android:id="@+id/button8"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_below="@id/content_buttons_3"
+                android:layout_marginTop="2dp"
+                android:text="@string/change_font"
+                android:textAllCaps="false" />
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>
