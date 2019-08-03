@@ -69,6 +69,12 @@ https://github.com/Carbs0126/GregorianLunarCalendar
     添加的接口有：
     OnValueChangeListenerInScrolling//滑动过程中响应value change
 ```
+14. 更改字体的方法
+```java
+    mNumberPickerView.setContentTextTypeface(tf);
+    mNumberPickerView.setContentTextTypeface(tf);
+    mNumberPickerView.postInvalidate();
+```
 
 ### 使用方法
 
