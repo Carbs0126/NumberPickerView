@@ -1073,10 +1073,12 @@ public class NumberPickerView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (!isEnabled()) {
+            return false;
+        }
         if (mItemHeight == 0) {
             return true;
         }
-
         if (mVelocityTracker == null) {
             mVelocityTracker = VelocityTracker.obtain();
         }
