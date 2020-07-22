@@ -277,9 +277,9 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 UI设计借鉴了meizu的多个应用的设计。感谢google的android平台以及meizu的设计。
 
 
+## Contact
 
-欢迎大家不吝指教。
-email: yeah0126@yeah.net
+wechat: AutoReleasePool
 
 ## License
 
