@@ -255,7 +255,6 @@ UI design inspired by Meizu company, a mobile phone Manufacturer in china, thank
 
 
 enjoy<br>
-email: yeah0126@yeah.net
 
 ## License
 
