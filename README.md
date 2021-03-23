@@ -253,7 +253,8 @@ by calculating the current coordinate, get the items which should be shown and t
 just modify `NumberPicker` text into `NumberPickerView` in java code and xml, keep the methods and interfaces called by NumberPicker the same.<br>
 
 ### And something important<br>
-UI design inspired by Meizu company, a mobile phone Manufacturer in china, thanks google and meizu<br>
+UI design inspired by Meizu company, a mobile phone Manufacturer in china. <br>
+A big thanks to google and meizu<br>
 
 
 enjoy<br>
