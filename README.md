@@ -24,7 +24,7 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 
 `NumberPickerView`extends from `View` and has almost all functions of `android.widget.NumberPicker` except inputting fuction by EditText, but it has some advanced features, here are these two views' differences below:
 
-#### the android.widget.NumberPicker
+#### Features of android.widget.NumberPicker
 1. the NumberPicker's viewport can only show three items;
 2. the value of friction is big, you can not pick a new value smoothly by fling;
 3. no animation if you use setValue() in java code to set to a new value;
@@ -34,14 +34,14 @@ https://github.com/Carbs0126/GregorianLunarCalendar
 7. cannot control NumberPicker to smoothly scroll to a certain item (position);
 8. NumberPicker class in early version of some customized framework has bugs when changing maxValue and displayedValues.
 
-#### NumberPickerView
+#### Capabilities of NumberPickerView
 1. the NumberPickerView's viewport can show more than three items;
-2. can set the value of friction in java code, you can pick a new value smoothly by fling, in java code, you can use the code below to make friction be twice as former<br> `mNumberPickerView.setFriction(2 * ViewConfiguration.get(mContext).getScrollFriction());`
+2. able to set the value of friction in java code, you can pick a new value smoothly by fling, in java code, you can use the code below to make friction be twice as former<br> `mNumberPickerView.setFriction(2 * ViewConfiguration.get(mContext).getScrollFriction());`
 3. items' texts has animation between selected mode and normal mode, including Gradient textColor and Gradient textSize;
-4. can choose if use animation when changing displayedValues;
-5. can setWrapSelectorWheel() dynamically in java code or in xml;
-6. can set a hint text at the center position, default is empty; can change the hint text's color and textSize;
-7. can scroll smoothly to a centain item (position);
+4. able to choose if use animation when changing displayedValues;
+5. able to setWrapSelectorWheel() dynamically in java code or in xml;
+6. able to set a hint text at the center position, default is empty; can change the hint text's color and textSize;
+7. able to scroll smoothly to a centain item (position);
 8. support `wrap_content` mode,support item's padding
 9. has some other attibutes to refine UI
 10. not respond `onValueChanged()` during scrolling
