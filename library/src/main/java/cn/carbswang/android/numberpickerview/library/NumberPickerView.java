@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
@@ -166,6 +167,9 @@ public class NumberPickerView extends View {
     // scrolling or starts to scroll or stops scrolling.
     private boolean mRespondChangeInMainThread = DEFAULT_RESPOND_CHANGE_IN_MAIN_THREAD;
 
+    // this drawable will draw for background for selected item
+    private Drawable mSelectedItemBackground = null;
+
     private Scroller mScroller;
     private VelocityTracker mVelocityTracker;
 
@@ -295,6 +299,8 @@ public class NumberPickerView extends View {
                 mRespondChangeInMainThread = a.getBoolean(attr, DEFAULT_RESPOND_CHANGE_IN_MAIN_THREAD);
             } else if (attr == R.styleable.NumberPickerView_npv_TextEllipsize) {
                 mTextEllipsize = a.getString(attr);
+            } else if (attr == R.styleable.NumberPickerView_npv_SelectedItemBackground) {
+                mSelectedItemBackground = a.getDrawable(attr);
             }
         }
         a.recycle();
@@ -1287,9 +1293,23 @@ public class NumberPickerView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        drawSelectedItemBackground(canvas);
         drawContent(canvas);
         drawLine(canvas);
         drawHint(canvas);
+    }
+
+    private void drawSelectedItemBackground(Canvas canvas) {
+        if (mSelectedItemBackground != null) {
+            canvas.save();
+            int left = getPaddingLeft() + mDividerMarginL;
+            int top = (int) dividerY0;
+            int right = mViewWidth - getPaddingRight() - mDividerMarginR;
+            int bottom = (int) dividerY1;
+            mSelectedItemBackground.setBounds(left, top, right, bottom);
+            mSelectedItemBackground.draw(canvas);
+            canvas.restore();
+        }
     }
 
     private void drawContent(Canvas canvas) {

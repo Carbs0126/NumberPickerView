@@ -169,7 +169,8 @@ and you'd better not use this method in `onCreate(Bundle savedInstanceState)`, i
         <attr name="npv_MarginEndOfHint" format="reference|dimension" />//distance between hint and the right side of the view
         <attr name="npv_ItemPaddingHorizontal" format="reference|dimension" />//item's horizontal padding, used for wrap_content mode
         <attr name="npv_ItemPaddingVertical" format="reference|dimension" />//item's vertical padding, used for wrap_content mode
-        <attr name="npv_RespondChangeOnDetached" format="reference|boolean" />//for reusable `Dialog/PopupWindow`. 
+        <attr name="npv_RespondChangeOnDetached" format="reference|boolean" />//for reusable `Dialog/PopupWindow`.
+        <attr name="npv_SelectedItemBackground" format="reference" />//for selected item background.
         //If `Dialog/PopupWindow` is hiding meanwhile `NumberPickerView` is still scrolling, then we need it to stop scrolling 
         //and respond (or not) `OnValueChange` callbacks and change the previous picked value. 
         //Add a new attr `npv_RespondChangeOnDetached` as a flag to set if respondding `onValueChange` callbacks, 
