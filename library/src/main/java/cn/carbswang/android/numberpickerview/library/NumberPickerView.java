@@ -1,3 +1,7 @@
+/**
+ * github : https://github.com/Carbs0126/NumberPickerView
+ */
+
 package cn.carbswang.android.numberpickerview.library;
 
 import android.content.Context;
@@ -22,11 +26,6 @@ import android.widget.Scroller;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Created by Carbs.Wang.
- * email : yeah0126@yeah.net
- * github : https://github.com/Carbs0126/NumberPickerView
- */
 public class NumberPickerView extends View {
 
     // default text color of not selected item

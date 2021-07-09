@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/NumberPickerView.iml" filepath="$PROJECT_DIR$/NumberPickerView.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/NumberPickerView.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/NumberPickerView.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/NumberPickerView.library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/NumberPickerView.library.iml" />
     </modules>
   </component>
 </project>

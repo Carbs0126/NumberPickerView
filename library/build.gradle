@@ -1,12 +1,11 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 28
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
     }
@@ -20,13 +19,4 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-}
-
-publish {
-    userOrg = 'carbs'
-    groupId = 'cn.carbswang.android'
-    artifactId = 'NumberPickerView'
-    publishVersion = '1.2.0'
-    desc = 'another NumberPicker with more flexible attributes on Android platform'
-    website = 'https://github.com/Carbs0126/NumberPickerView'
 }
